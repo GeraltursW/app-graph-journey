@@ -18,6 +18,8 @@ const searchQuery = ref('');
 const searchResultVisible = ref(false);
 const searchDemoOpacity = ref(0);
 const searchExitProgress = ref(0);
+const mergeStage = ref(0);
+const mergeDemoOpacity = ref(0);
 
 const searchTargetUrl = 'aweme://search/result?keyword=性能监控';
 const searchPanelStyle = computed(() => ({
@@ -59,6 +61,13 @@ let activeRouteLinks = [];
 let graphLinks = [];
 let searchTargetNode = null;
 let searchSceneProgress = 0;
+let mergeSceneProgress = 0;
+let mergeParentNode = null;
+let mergeOrphanNode = null;
+let mergeOrphanHalo = null;
+let mergePathLine = null;
+let mergeFinalLine = null;
+let mergePathCurve = null;
 let activeRouteNodeOrders = new Set();
 let activeRouteEdgeIndexes = new Set();
 let movingSignals = [];
@@ -101,8 +110,19 @@ const scenes = [
     side: 'right',
   },
   {
-    id: 'function-tree',
+    id: 'node-merge',
     number: '03',
+    kicker: 'ORPHAN NODE / GRAPH MERGE',
+    title: '发现新页面，把它可靠地接回主树',
+    text: '一个新 URL 先以游离节点建档，截图经过多模态模型补全页面摘要、embedding_text 与动作信息。系统给出候选父节点，确认无环后生成新边，页面从“待归属证据”正式成为主树的一部分。',
+    tags: ['创建节点', 'AI 信息补全', '无环合并'],
+    metric: 'ORPHAN → TREE',
+    metricLabel: '创建、确认父节点、写入边关系',
+    side: 'left',
+  },
+  {
+    id: 'function-tree',
+    number: '04',
     kicker: 'FUNCTION TREE INJECTION',
     title: '官方功能树，从左侧注入',
     text: '厂商提供的 Function Tree 不再是一份孤立清单。900 个功能点经过索引、语义匹配与批量复核，沿着左侧光束进入页面节点，让“发现了什么”和“应该覆盖什么”第一次对齐。',
@@ -113,7 +133,7 @@ const scenes = [
   },
   {
     id: 'test-case',
-    number: '04',
+    number: '05',
     kicker: 'TEST CASE ORCHESTRATION',
     title: '用例从右侧抵达，路径被赋予任务',
     text: '从 root 到末端的每条路径都能成为覆盖用例；任意节点也能组合滑动、长按和回退。右侧注入的不是静态脚本，而是一批能沿图谱执行、采集和复盘的测试意图。',
@@ -124,7 +144,7 @@ const scenes = [
   },
   {
     id: 'observability',
-    number: '05',
+    number: '06',
     kicker: 'LIVE OBSERVABILITY',
     title: '执行数据回流，当前路线被点亮',
     text: '高危 URL 触发按需用例，脚本沿当前路径复现用户行为。功耗、帧率、耗时与异常结果沿边回流，当前路线持续发光，其他分支同步降亮，让每一次抵达都可追溯。',
@@ -135,7 +155,7 @@ const scenes = [
   },
   {
     id: 'platform',
-    number: '06',
+    number: '07',
     kicker: 'CONTINUOUS APP INTELLIGENCE',
     title: '它不再只是一张图，而是持续生长的应用认知',
     text: '游离页面、人工证据、AI 推断、Function Tree、测试用例与性能结果共享同一棵树。每一次采集都补充认知，每一次复核都提高可信度，每一次执行都让下一次探索更聪明。',
@@ -169,6 +189,9 @@ async function openJourney() {
   searchResultVisible.value = false;
   searchDemoOpacity.value = 0;
   searchExitProgress.value = 0;
+  mergeSceneProgress = 0;
+  mergeStage.value = 0;
+  mergeDemoOpacity.value = 0;
   previousBodyOverflow = document.body.style.overflow;
   document.body.style.overflow = 'hidden';
   await nextTick();
@@ -228,6 +251,13 @@ function destroyJourney() {
   activeRouteLinks = [];
   searchTargetNode = null;
   searchSceneProgress = 0;
+  mergeSceneProgress = 0;
+  mergeParentNode = null;
+  mergeOrphanNode = null;
+  mergeOrphanHalo = null;
+  mergePathLine = null;
+  mergeFinalLine = null;
+  mergePathCurve = null;
   movingSignals = [];
   injectionBeams = [];
   starField = null;
@@ -269,6 +299,7 @@ function setupScrollStory() {
           onEnterBack: () => { activeScene.value = index; },
           onUpdate: (self) => {
             if (scenes[index].id === 'exploration') updateSearchDemo(self.progress);
+            if (scenes[index].id === 'node-merge') updateMergeDemo(self.progress);
           },
         },
       })
@@ -294,6 +325,17 @@ function updateSearchDemo(progress) {
       ? 1 - clamp((progress - 0.8) / 0.18)
       : 1;
   searchExitProgress.value = clamp((progress - 0.78) / 0.2);
+  updateThreeScene(currentProgress);
+}
+
+function updateMergeDemo(progress) {
+  mergeSceneProgress = clamp(progress);
+  mergeStage.value = progress < 0.3 ? 0 : progress < 0.64 ? 1 : progress < 0.86 ? 2 : 3;
+  mergeDemoOpacity.value = progress < 0.08
+    ? progress / 0.08
+    : progress > 0.88
+      ? 1 - clamp((progress - 0.88) / 0.11)
+      : 1;
   updateThreeScene(currentProgress);
 }
 
@@ -389,6 +431,7 @@ async function setupThreeScene(version) {
 
   createStarField(THREE);
   createGraphTree(THREE);
+  createNodeMergeDemo(THREE);
   createInjectionBeams(THREE, 'left', 0x1677ff);
   createMovingSignals(THREE);
 
@@ -562,6 +605,7 @@ function createGraphTree(THREE) {
   }
 
   searchTargetNode = pages[2]?.node || sections[1]?.node || treeNodes[20];
+  mergeParentNode = pages[3]?.node || sections[1]?.node || treeNodes[21];
   const searchHalo = new THREE.Mesh(
     new THREE.SphereGeometry(0.3, 14, 12),
     new THREE.MeshBasicMaterial({
@@ -642,6 +686,60 @@ function createGraphTree(THREE) {
   });
   treeBranches.count = 0;
   world.add(treeEdgeGlow, treeBranches, treeEdges, activeRouteBranches);
+}
+
+function createNodeMergeDemo(THREE) {
+  if (!mergeParentNode) return;
+  const start = new THREE.Vector3(10.8, 1.1, 2.6);
+  const end = mergeParentNode.userData.treePosition.clone().add(new THREE.Vector3(0.95, -1.25, 0.34));
+  const control = new THREE.Vector3(7.2, 3.6, 4.8);
+  mergePathCurve = new THREE.QuadraticBezierCurve3(start, control, end);
+
+  mergeOrphanNode = new THREE.Mesh(
+    new THREE.SphereGeometry(0.16, 16, 14),
+    new THREE.MeshBasicMaterial({
+      color: 0x1687ff,
+      transparent: true,
+      opacity: 0,
+      blending: THREE.NormalBlending,
+      depthWrite: false,
+    }),
+  );
+  mergeOrphanHalo = new THREE.Mesh(
+    new THREE.SphereGeometry(0.42, 14, 12),
+    new THREE.MeshBasicMaterial({
+      color: 0x65b5ff,
+      transparent: true,
+      opacity: 0,
+      blending: THREE.NormalBlending,
+      depthWrite: false,
+    }),
+  );
+  mergeOrphanNode.add(mergeOrphanHalo);
+  mergeOrphanNode.position.copy(start);
+  mergeOrphanNode.visible = false;
+
+  mergePathLine = new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints(mergePathCurve.getPoints(56)),
+    new THREE.LineBasicMaterial({
+      color: 0x2494ff,
+      transparent: true,
+      opacity: 0,
+      blending: THREE.NormalBlending,
+      depthWrite: false,
+    }),
+  );
+  mergeFinalLine = new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints([mergeParentNode.userData.treePosition.clone(), end]),
+    new THREE.LineBasicMaterial({
+      color: 0x0b6edc,
+      transparent: true,
+      opacity: 0,
+      blending: THREE.NormalBlending,
+      depthWrite: false,
+    }),
+  );
+  world.add(mergePathLine, mergeFinalLine, mergeOrphanNode);
 }
 
 function updateGraphGeometry(THREE) {
@@ -841,15 +939,19 @@ function updateThreeScene(progress) {
   treeEdgeGlow?.geometry.setDrawRange(0, revealedEdges * 2);
   if (treeBranches) treeBranches.count = Math.min(revealedEdges, graphLinks.length);
 
-  const functionArrival = smoothstep((storyProgress - 0.32) / 0.17);
-  const reportArrival = smoothstep((storyProgress - 0.68) / 0.18);
-  const functionDeparture = 1 - smoothstep((storyProgress - 0.56) / 0.1);
+  const functionArrival = smoothstep((storyProgress - 0.4) / 0.15);
+  const reportArrival = smoothstep((storyProgress - 0.72) / 0.17);
+  const functionDeparture = 1 - smoothstep((storyProgress - 0.61) / 0.1);
   const searchHighlight = smoothstep((searchSceneProgress - 0.43) / 0.13)
     * (1 - smoothstep((searchSceneProgress - 0.8) / 0.18));
+  const mergeCreate = smoothstep((mergeSceneProgress - 0.04) / 0.2);
+  const mergeTravel = smoothstep((mergeSceneProgress - 0.28) / 0.44);
+  const mergeSettle = smoothstep((mergeSceneProgress - 0.7) / 0.17);
+  const mergeFocus = mergeCreate * (1 - smoothstep((mergeSceneProgress - 0.9) / 0.09));
 
-  if (treeEdges) treeEdges.material.opacity = edgeFormation * (0.58 - reportArrival * 0.576) * (1 - searchHighlight * 0.72);
-  if (treeEdgeGlow) treeEdgeGlow.material.opacity = edgeFormation * (0.12 - reportArrival * 0.118) * (1 - searchHighlight * 0.72);
-  if (treeBranches) treeBranches.material.opacity = edgeFormation * (0.34 - reportArrival * 0.336) * (1 - searchHighlight * 0.72);
+  if (treeEdges) treeEdges.material.opacity = edgeFormation * (0.58 - reportArrival * 0.576) * (1 - searchHighlight * 0.72) * (1 - mergeFocus * 0.58);
+  if (treeEdgeGlow) treeEdgeGlow.material.opacity = edgeFormation * (0.12 - reportArrival * 0.118) * (1 - searchHighlight * 0.72) * (1 - mergeFocus * 0.58);
+  if (treeBranches) treeBranches.material.opacity = edgeFormation * (0.34 - reportArrival * 0.336) * (1 - searchHighlight * 0.72) * (1 - mergeFocus * 0.58);
   if (activeRouteBranches) activeRouteBranches.material.opacity = reportArrival * 0.96;
 
   treeNodes.forEach((node, index) => {
@@ -860,10 +962,13 @@ function updateThreeScene(progress) {
       : 1;
     const routeActive = activeRouteNodeOrders.has(node.userData.order);
     const isSearchTarget = node === searchTargetNode;
+    const isMergeParent = node === mergeParentNode;
     const pulse = 1 + reportArrival * (routeActive
       ? 0.14 + Math.sin(progress * 42 + node.userData.phase) * 0.1
       : 0) + searchHighlight * (isSearchTarget
       ? 0.95 + Math.sin(searchSceneProgress * 36) * 0.12
+      : 0) + mergeFocus * (isMergeParent
+      ? 0.42 + Math.sin(mergeSceneProgress * 32) * 0.08
       : 0);
     node.scale.setScalar(node.userData.baseScale * introduction * pulse);
 
@@ -874,16 +979,19 @@ function updateThreeScene(progress) {
       ? (node.userData.level === 0 ? 0x084f9f : 0x0b6edc)
       : 0x9bb2c9;
     if (searchHighlight > 0.01) color = isSearchTarget ? 0x006cff : 0x9db4ca;
+    if (mergeFocus > 0.01) color = isMergeParent ? 0x0879ea : 0x9fb6cb;
     node.material.color.setHex(color);
     node.material.opacity = node.userData.level === 0
       ? 0
-      : routeActive ? 0.98 : (0.98 - reportArrival * 0.91) * (isSearchTarget ? 1 : 1 - searchHighlight * 0.82);
+      : routeActive ? 0.98 : (0.98 - reportArrival * 0.91)
+        * (isSearchTarget ? 1 : 1 - searchHighlight * 0.82)
+        * (isMergeParent ? 1 : 1 - mergeFocus * 0.68);
     if (node.userData.halo) {
       node.userData.halo.material.color.setHex(color);
       const haloOpacity = node.userData.level === 0 ? 0.24 : 0.13;
       node.userData.halo.material.opacity = node.userData.level === 0
         ? 0
-        : haloOpacity * (routeActive ? 1 : 1 - reportArrival * 0.95);
+        : haloOpacity * (routeActive ? 1 : 1 - reportArrival * 0.95) * (isMergeParent ? 1 : 1 - mergeFocus * 0.7);
     }
     if (node.userData.searchHalo) {
       node.userData.searchHalo.material.opacity = searchHighlight * (0.2 + Math.sin(searchSceneProgress * 28) * 0.08);
@@ -911,7 +1019,23 @@ function updateThreeScene(progress) {
     rootPreview.label.material.opacity = 1 - searchHighlight * 0.76;
     rootPreview.frame.material.opacity = 0.96 - searchHighlight * 0.76;
     rootPreview.glow.material.opacity *= 1 - searchHighlight * 0.72;
+    rootPreview.screenshot.material.opacity *= 1 - mergeFocus * 0.62;
+    rootPreview.label.material.opacity *= 1 - mergeFocus * 0.62;
+    rootPreview.frame.material.opacity *= 1 - mergeFocus * 0.62;
+    rootPreview.glow.material.opacity *= 1 - mergeFocus * 0.62;
     rootPreview.frame.material.color.setHex(reportArrival > 0.01 ? 0x075fc7 : 0x0b63ce);
+  }
+
+  if (mergeOrphanNode && mergePathCurve) {
+    mergeOrphanNode.visible = mergeCreate > 0.01;
+    mergeOrphanNode.position.copy(mergePathCurve.getPoint(mergeTravel));
+    const mergePulse = 1 + Math.sin(mergeSceneProgress * 38) * 0.12 * (1 - mergeSettle);
+    mergeOrphanNode.scale.setScalar((0.72 + mergeCreate * 0.48 - mergeSettle * 0.48) * mergePulse);
+    mergeOrphanNode.material.opacity = mergeCreate * (1 - reportArrival * 0.88);
+    mergeOrphanNode.material.color.setHex(mergeSettle > 0.5 ? 0x0b6edc : 0x1687ff);
+    mergeOrphanHalo.material.opacity = mergeCreate * (0.2 + Math.sin(mergeSceneProgress * 30) * 0.06) * (1 - mergeSettle);
+    mergePathLine.material.opacity = mergeCreate * (1 - mergeSettle) * 0.56;
+    mergeFinalLine.material.opacity = mergeSettle * (0.68 - reportArrival * 0.64);
   }
 
   injectionBeams.forEach((beam) => {
@@ -997,7 +1121,11 @@ onMounted(() => {
       v-if="open"
       ref="overlayRef"
       class="journey-overlay"
-      :class="{ 'is-dragging': dragging, 'search-result-active': searchResultVisible && searchDemoOpacity > 0.05 }"
+      :class="{
+        'is-dragging': dragging,
+        'search-result-active': searchResultVisible && searchDemoOpacity > 0.05,
+        'merge-demo-active': mergeDemoOpacity > 0.05,
+      }"
       role="dialog"
       aria-modal="true"
       aria-label="App Graph 三维项目旅程"
@@ -1063,13 +1191,39 @@ onMounted(() => {
           </div>
         </div>
 
-        <div class="journey-stream stream-function" :class="{ visible: activeScene >= 3 }">
+        <div
+          class="journey-merge-demo"
+          :class="{ visible: mergeDemoOpacity > 0.01, complete: mergeStage === 3 }"
+          :style="{ opacity: mergeDemoOpacity }"
+        >
+          <div class="journey-merge-heading">
+            <span>NODE INTAKE PIPELINE</span><strong>#N-308</strong>
+          </div>
+          <div class="journey-merge-url">aweme://poi/detail/98231</div>
+          <div class="journey-merge-steps">
+            <div class="journey-merge-rail"><i :style="{ height: `${Math.min(mergeStage / 3, 1) * 100}%` }" /></div>
+            <div class="journey-merge-step" :class="{ active: mergeStage === 0, done: mergeStage > 0 }">
+              <b>01</b><span><strong>创建游离节点</strong><small>写入 URL 与原始截图证据</small></span><em>{{ mergeStage > 0 ? 'CREATED' : 'CREATING' }}</em>
+            </div>
+            <div class="journey-merge-step" :class="{ active: mergeStage === 1, done: mergeStage > 1 }">
+              <b>02</b><span><strong>AI 补全页面信息</strong><small>摘要 · embedding_text · actions</small></span><em>{{ mergeStage > 1 ? 'READY' : mergeStage === 1 ? 'ANALYZING' : 'WAIT' }}</em>
+            </div>
+            <div class="journey-merge-step" :class="{ active: mergeStage === 2, done: mergeStage > 2 }">
+              <b>03</b><span><strong>确认候选父节点</strong><small>语义匹配并校验新边无环</small></span><em>{{ mergeStage > 2 ? 'VERIFIED' : mergeStage === 2 ? 'MATCHING' : 'WAIT' }}</em>
+            </div>
+            <div class="journey-merge-step" :class="{ active: mergeStage === 3, done: mergeStage === 3 }">
+              <b>04</b><span><strong>并入应用主树</strong><small>生成边关系并刷新图谱</small></span><em>{{ mergeStage === 3 ? 'MERGED' : 'WAIT' }}</em>
+            </div>
+          </div>
+        </div>
+
+        <div class="journey-stream stream-function" :class="{ visible: activeScene >= 4 && mergeDemoOpacity < 0.05 }">
           <span>FUNCTION TREE</span><strong>900 功能点</strong><i />
         </div>
-        <div class="journey-stream stream-cases" :class="{ visible: activeScene >= 4 }">
+        <div class="journey-stream stream-cases" :class="{ visible: activeScene >= 5 }">
           <span>TEST CASE ENGINE</span><strong>路径 × 动作</strong><i />
         </div>
-        <div class="journey-stream stream-report" :class="{ visible: activeScene >= 5 }">
+        <div class="journey-stream stream-report" :class="{ visible: activeScene >= 6 }">
           <span>LIVE SIGNAL</span><strong>性能数据回流</strong><i />
         </div>
 
@@ -1184,6 +1338,27 @@ onMounted(() => {
 .journey-search-analysis dl div { display: flex; min-width: 0; align-items: center; justify-content: space-between; gap: 8px; border-top: 1px solid #e1ebf5; padding-top: 4px; }
 .journey-search-analysis dt { color: #8aa0b5; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 7px; }
 .journey-search-analysis dd { overflow: hidden; margin: 0; color: #365e83; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 7px; text-overflow: ellipsis; white-space: nowrap; }
+.journey-merge-demo { position: absolute; top: 17%; right: 5.5%; width: min(390px,35vw); padding: 14px; border: 1px solid rgba(139,184,226,.78); background: rgba(255,255,255,.94); box-shadow: 0 22px 52px rgba(45,99,151,.16); opacity: 0; visibility: hidden; transform: translateX(34px); transition: transform .45s ease,visibility .2s; }
+.journey-merge-demo.visible { visibility: visible; transform: translateX(0); }
+.journey-merge-demo.complete { border-color: #6baff2; box-shadow: 0 22px 52px rgba(22,119,255,.2),inset 0 0 0 1px rgba(22,119,255,.08); }
+.journey-merge-heading { display: flex; align-items: center; justify-content: space-between; color: #6584a1; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 8px; font-weight: 700; letter-spacing: .14em; }
+.journey-merge-heading strong { color: #1677ff; font-size: 9px; }
+.journey-merge-url { overflow: hidden; margin-top: 10px; padding: 9px 10px; border: 1px solid #c5dbef; background: #f5faff; color: #315d84; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
+.journey-merge-steps { position: relative; display: grid; gap: 3px; margin-top: 11px; padding-left: 23px; }
+.journey-merge-rail { position: absolute; top: 12px; bottom: 12px; left: 8px; width: 1px; background: #d5e5f3; }
+.journey-merge-rail i { position: absolute; top: 0; left: 0; width: 1px; background: #1677ff; box-shadow: 0 0 8px rgba(22,119,255,.5); transition: height .38s ease; }
+.journey-merge-step { position: relative; display: grid; min-height: 47px; grid-template-columns: 25px minmax(0,1fr) auto; align-items: center; gap: 8px; padding: 6px 7px; border: 1px solid transparent; opacity: .46; transition: opacity .25s ease,border-color .25s ease,background .25s ease; }
+.journey-merge-step::before { position: absolute; top: 50%; left: -19px; width: 7px; height: 7px; border: 1px solid #a8bfd5; background: #fff; content: ''; transform: translateY(-50%) rotate(45deg); }
+.journey-merge-step.active { border-color: #b5d3ed; background: #f5faff; opacity: 1; }
+.journey-merge-step.done { opacity: .82; }
+.journey-merge-step.active::before,.journey-merge-step.done::before { border-color: #1677ff; background: #1677ff; box-shadow: 0 0 10px rgba(22,119,255,.42); }
+.journey-merge-step > b { color: #9bb0c4; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 9px; }
+.journey-merge-step.active > b,.journey-merge-step.done > b { color: #1677ff; }
+.journey-merge-step > span { display: grid; min-width: 0; gap: 3px; }
+.journey-merge-step > span strong { color: #315a80; font-size: 10px; font-weight: 700; }
+.journey-merge-step > span small { overflow: hidden; color: #8299ae; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
+.journey-merge-step > em { color: #8ba1b5; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 7px; font-style: normal; font-weight: 700; letter-spacing: .06em; }
+.journey-merge-step.active > em,.journey-merge-step.done > em { color: #1677ff; }
 .journey-loading { position: absolute; top: 50%; left: 50%; display: grid; gap: 11px; place-items: center; transform: translate(-50%,-50%); }
 .journey-loading span { width: 34px; height: 34px; border: 1px solid #c5d9ec; border-top-color: #1677ff; border-radius: 50%; animation: journey-spin .8s linear infinite; }
 .journey-loading small { color: #6785a2; font-size: 9px; letter-spacing: .16em; }
@@ -1201,6 +1376,7 @@ onMounted(() => {
 .journey-copy em { color: #1677ff; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 10px; font-style: normal; font-weight: 700; letter-spacing: .2em; }
 .section-function-tree .journey-copy em { color: #1677ff; }
 .section-prelude .journey-copy em { color: #0b63ce; }
+.section-node-merge .journey-copy em { color: #1687ff; }
 .section-test-case .journey-copy em { color: #4d91d7; }
 .section-observability .journey-copy em { color: #0b63ce; }
 .journey-copy h2 { max-width: 540px; margin: 0; color: #12385f; font-size: clamp(34px,4vw,58px); font-weight: 670; line-height: 1.12; letter-spacing: 0; text-wrap: balance; }
@@ -1212,6 +1388,7 @@ onMounted(() => {
 .journey-metric span { color: #65839f; font-size: 10px; }
 .section-function-tree .journey-metric { border-color: #1677ff; }
 .section-prelude .journey-metric { border-color: #0b63ce; }
+.section-node-merge .journey-metric { border-color: #1687ff; }
 .section-test-case .journey-metric { border-color: #4d91d7; }
 .section-observability .journey-metric { border-color: #0b63ce; }
 .journey-nav { position: absolute; z-index: 12; top: 50%; left: 24px; display: grid; gap: 0; transform: translateY(-50%); }
@@ -1235,6 +1412,8 @@ onMounted(() => {
   .journey-nav { left: 10px; }
   .journey-search-demo { top: 14%; left: 4%; width: min(330px,42vw); }
   .search-result-active .section-exploration .journey-copy { opacity: 0 !important; visibility: hidden; }
+  .journey-merge-demo { top: 14%; right: 4%; width: min(350px,44vw); }
+  .merge-demo-active .section-node-merge .journey-copy { opacity: 0 !important; visibility: hidden; }
   .stream-function { left: 3%; }
   .stream-cases { right: 3%; }
 }
@@ -1254,6 +1433,8 @@ onMounted(() => {
   .journey-nav button span { display: none; }
   .journey-stream { display: none; }
   .journey-search-demo { top: 88px; right: 16px; left: 16px; width: auto; }
+  .journey-merge-demo { top: 88px; right: 16px; left: 16px; width: auto; padding: 10px; }
+  .journey-merge-step { min-height: 43px; grid-template-columns: 23px minmax(0,1fr) auto; padding: 4px 5px; }
   .journey-search-result { grid-template-columns: 70px 1fr; gap: 10px; padding: 9px; }
   .journey-search-analysis p { display: none; }
   .journey-search-analysis h3 { font-size: 13px; }
