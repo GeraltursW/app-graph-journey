@@ -66,8 +66,12 @@ let mergeParentNode = null;
 let mergeOrphanNode = null;
 let mergeOrphanHalo = null;
 let mergePathLine = null;
+let mergePathGlow = null;
 let mergeFinalLine = null;
 let mergePathCurve = null;
+let mergeImpactRing = null;
+let mergeOrbitRings = [];
+let mergeTrailParticles = [];
 let activeRouteNodeOrders = new Set();
 let activeRouteEdgeIndexes = new Set();
 let movingSignals = [];
@@ -121,14 +125,14 @@ const scenes = [
     side: 'left',
   },
   {
-    id: 'function-tree',
+    id: 'scene-function',
     number: '04',
-    kicker: 'FUNCTION TREE INJECTION',
-    title: '官方功能树，从左侧注入',
-    text: '厂商提供的 Function Tree 不再是一份孤立清单。900 个功能点经过索引、语义匹配与批量复核，沿着左侧光束进入页面节点，让“发现了什么”和“应该覆盖什么”第一次对齐。',
-    tags: ['功能目录', '语义匹配', '覆盖缺口'],
+    kicker: 'SCENARIO FUNCTION INJECTION',
+    title: '场景功能，从左侧注入',
+    text: '场景功能不再是一份孤立清单。900 个场景检查点经过索引、语义匹配与批量复核，沿着左侧光束进入页面节点，让“发现了什么”和“应该覆盖什么”第一次对齐。',
+    tags: ['场景目录', '语义匹配', '覆盖缺口'],
     metric: '900',
-    metricLabel: '厂商功能点可定位',
+    metricLabel: '场景功能点可定位',
     side: 'left',
   },
   {
@@ -158,7 +162,7 @@ const scenes = [
     number: '07',
     kicker: 'CONTINUOUS APP INTELLIGENCE',
     title: '它不再只是一张图，而是持续生长的应用认知',
-    text: '游离页面、人工证据、AI 推断、Function Tree、测试用例与性能结果共享同一棵树。每一次采集都补充认知，每一次复核都提高可信度，每一次执行都让下一次探索更聪明。',
+    text: '游离页面、人工证据、AI 推断、场景功能、测试用例与性能结果共享同一棵树。每一次采集都补充认知，每一次复核都提高可信度，每一次执行都让下一次探索更聪明。',
     tags: ['持续覆盖', '人机共审', '图谱治理'],
     metric: '8 STAGES',
     metricLabel: '从图谱原型走向工程平台',
@@ -256,8 +260,12 @@ function destroyJourney() {
   mergeOrphanNode = null;
   mergeOrphanHalo = null;
   mergePathLine = null;
+  mergePathGlow = null;
   mergeFinalLine = null;
   mergePathCurve = null;
+  mergeImpactRing = null;
+  mergeOrbitRings = [];
+  mergeTrailParticles = [];
   movingSignals = [];
   injectionBeams = [];
   starField = null;
@@ -715,6 +723,20 @@ function createNodeMergeDemo(THREE) {
       depthWrite: false,
     }),
   );
+  const ringGeometry = new THREE.TorusGeometry(0.31, 0.012, 8, 48);
+  for (let index = 0; index < 2; index += 1) {
+    const ring = new THREE.Mesh(ringGeometry, new THREE.MeshBasicMaterial({
+      color: index === 0 ? 0x1687ff : 0x8dcbff,
+      transparent: true,
+      opacity: 0,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    }));
+    ring.rotation.x = index === 0 ? Math.PI / 2 : Math.PI / 3;
+    ring.rotation.y = index === 0 ? 0 : Math.PI / 4;
+    mergeOrphanNode.add(ring);
+    mergeOrbitRings.push(ring);
+  }
   mergeOrphanNode.add(mergeOrphanHalo);
   mergeOrphanNode.position.copy(start);
   mergeOrphanNode.visible = false;
@@ -729,6 +751,16 @@ function createNodeMergeDemo(THREE) {
       depthWrite: false,
     }),
   );
+  mergePathGlow = new THREE.Line(
+    mergePathLine.geometry,
+    new THREE.LineBasicMaterial({
+      color: 0x9bd2ff,
+      transparent: true,
+      opacity: 0,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    }),
+  );
   mergeFinalLine = new THREE.Line(
     new THREE.BufferGeometry().setFromPoints([mergeParentNode.userData.treePosition.clone(), end]),
     new THREE.LineBasicMaterial({
@@ -739,7 +771,36 @@ function createNodeMergeDemo(THREE) {
       depthWrite: false,
     }),
   );
-  world.add(mergePathLine, mergeFinalLine, mergeOrphanNode);
+  mergeImpactRing = new THREE.Mesh(
+    new THREE.TorusGeometry(0.2, 0.018, 8, 48),
+    new THREE.MeshBasicMaterial({
+      color: 0x47a5ff,
+      transparent: true,
+      opacity: 0,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    }),
+  );
+  mergeImpactRing.position.copy(end);
+  mergeImpactRing.rotation.x = Math.PI / 2;
+
+  const particleGeometry = new THREE.SphereGeometry(0.045, 8, 7);
+  for (let index = 0; index < 18; index += 1) {
+    const particle = new THREE.Mesh(
+      particleGeometry,
+      new THREE.MeshBasicMaterial({
+        color: index % 3 === 0 ? 0xc4e6ff : index % 2 === 0 ? 0x65b5ff : 0x1677ff,
+        transparent: true,
+        opacity: 0,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      }),
+    );
+    particle.visible = false;
+    world.add(particle);
+    mergeTrailParticles.push({ particle, delay: index * 0.034, phase: index * 0.7 });
+  }
+  world.add(mergePathGlow, mergePathLine, mergeFinalLine, mergeImpactRing, mergeOrphanNode);
 }
 
 function updateGraphGeometry(THREE) {
@@ -1034,8 +1095,29 @@ function updateThreeScene(progress) {
     mergeOrphanNode.material.opacity = mergeCreate * (1 - reportArrival * 0.88);
     mergeOrphanNode.material.color.setHex(mergeSettle > 0.5 ? 0x0b6edc : 0x1687ff);
     mergeOrphanHalo.material.opacity = mergeCreate * (0.2 + Math.sin(mergeSceneProgress * 30) * 0.06) * (1 - mergeSettle);
+    mergeOrbitRings.forEach((ring, index) => {
+      ring.material.opacity = mergeCreate * (1 - mergeSettle) * (index === 0 ? 0.72 : 0.42);
+      ring.rotation.z = mergeSceneProgress * (index === 0 ? 9 : -7) + index;
+      ring.scale.setScalar(1 + Math.sin(mergeSceneProgress * 24 + index) * 0.1);
+    });
     mergePathLine.material.opacity = mergeCreate * (1 - mergeSettle) * 0.56;
+    mergePathGlow.material.opacity = mergeCreate * (1 - mergeSettle) * (0.12 + Math.sin(mergeSceneProgress * 42) * 0.06);
     mergeFinalLine.material.opacity = mergeSettle * (0.68 - reportArrival * 0.64);
+    const impactOpacity = smoothstep((mergeSettle - 0.04) / 0.22)
+      * (1 - smoothstep((mergeSettle - 0.54) / 0.42));
+    mergeImpactRing.material.opacity = impactOpacity * 0.84;
+    mergeImpactRing.scale.setScalar(0.6 + mergeSettle * 5.2);
+    mergeImpactRing.rotation.z = mergeSceneProgress * 7;
+
+    mergeTrailParticles.forEach(({ particle, delay, phase }) => {
+      const trailProgress = clamp(mergeTravel - delay);
+      const active = mergeCreate > 0.01 && mergeTravel > delay && mergeSettle < 0.96;
+      particle.visible = active;
+      if (!active) return;
+      particle.position.copy(mergePathCurve.getPoint(trailProgress));
+      particle.material.opacity = (0.28 + Math.sin(mergeSceneProgress * 48 + phase) * 0.2) * (1 - mergeSettle);
+      particle.scale.setScalar(0.65 + Math.sin(mergeSceneProgress * 40 + phase) * 0.24);
+    });
   }
 
   injectionBeams.forEach((beam) => {
@@ -1218,7 +1300,7 @@ onMounted(() => {
         </div>
 
         <div class="journey-stream stream-function" :class="{ visible: activeScene >= 4 && mergeDemoOpacity < 0.05 }">
-          <span>FUNCTION TREE</span><strong>900 功能点</strong><i />
+          <span>SCENARIO FUNCTION</span><strong>900 场景功能</strong><i />
         </div>
         <div class="journey-stream stream-cases" :class="{ visible: activeScene >= 5 }">
           <span>TEST CASE ENGINE</span><strong>路径 × 动作</strong><i />
@@ -1338,18 +1420,20 @@ onMounted(() => {
 .journey-search-analysis dl div { display: flex; min-width: 0; align-items: center; justify-content: space-between; gap: 8px; border-top: 1px solid #e1ebf5; padding-top: 4px; }
 .journey-search-analysis dt { color: #8aa0b5; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 7px; }
 .journey-search-analysis dd { overflow: hidden; margin: 0; color: #365e83; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 7px; text-overflow: ellipsis; white-space: nowrap; }
-.journey-merge-demo { position: absolute; top: 17%; right: 5.5%; width: min(390px,35vw); padding: 14px; border: 1px solid rgba(139,184,226,.78); background: rgba(255,255,255,.94); box-shadow: 0 22px 52px rgba(45,99,151,.16); opacity: 0; visibility: hidden; transform: translateX(34px); transition: transform .45s ease,visibility .2s; }
+.journey-merge-demo { position: absolute; top: 17%; right: 5.5%; overflow: hidden; width: min(390px,35vw); padding: 14px; border: 1px solid rgba(139,184,226,.78); background: rgba(255,255,255,.94); box-shadow: 0 22px 52px rgba(45,99,151,.16); opacity: 0; visibility: hidden; transform: translateX(34px); transition: transform .45s ease,visibility .2s; }
+.journey-merge-demo::before { position: absolute; z-index: 0; top: -35%; bottom: -35%; left: -20%; width: 18%; background: linear-gradient(90deg,transparent,rgba(90,179,255,.2),transparent); content: ''; pointer-events: none; transform: skewX(-16deg); animation: merge-panel-scan 2.1s ease-in-out infinite; }
+.journey-merge-demo > * { position: relative; z-index: 1; }
 .journey-merge-demo.visible { visibility: visible; transform: translateX(0); }
 .journey-merge-demo.complete { border-color: #6baff2; box-shadow: 0 22px 52px rgba(22,119,255,.2),inset 0 0 0 1px rgba(22,119,255,.08); }
 .journey-merge-heading { display: flex; align-items: center; justify-content: space-between; color: #6584a1; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 8px; font-weight: 700; letter-spacing: .14em; }
 .journey-merge-heading strong { color: #1677ff; font-size: 9px; }
-.journey-merge-url { overflow: hidden; margin-top: 10px; padding: 9px 10px; border: 1px solid #c5dbef; background: #f5faff; color: #315d84; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
+.journey-merge-url { overflow: hidden; margin-top: 10px; padding: 9px 10px; border: 1px solid #c5dbef; background: #f5faff; color: #315d84; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; box-shadow: inset 3px 0 0 #1677ff; }
 .journey-merge-steps { position: relative; display: grid; gap: 3px; margin-top: 11px; padding-left: 23px; }
 .journey-merge-rail { position: absolute; top: 12px; bottom: 12px; left: 8px; width: 1px; background: #d5e5f3; }
 .journey-merge-rail i { position: absolute; top: 0; left: 0; width: 1px; background: #1677ff; box-shadow: 0 0 8px rgba(22,119,255,.5); transition: height .38s ease; }
 .journey-merge-step { position: relative; display: grid; min-height: 47px; grid-template-columns: 25px minmax(0,1fr) auto; align-items: center; gap: 8px; padding: 6px 7px; border: 1px solid transparent; opacity: .46; transition: opacity .25s ease,border-color .25s ease,background .25s ease; }
 .journey-merge-step::before { position: absolute; top: 50%; left: -19px; width: 7px; height: 7px; border: 1px solid #a8bfd5; background: #fff; content: ''; transform: translateY(-50%) rotate(45deg); }
-.journey-merge-step.active { border-color: #b5d3ed; background: #f5faff; opacity: 1; }
+.journey-merge-step.active { border-color: #9fc9ee; background: #f5faff; box-shadow: inset 0 0 18px rgba(22,119,255,.07),0 0 18px rgba(22,119,255,.06); opacity: 1; }
 .journey-merge-step.done { opacity: .82; }
 .journey-merge-step.active::before,.journey-merge-step.done::before { border-color: #1677ff; background: #1677ff; box-shadow: 0 0 10px rgba(22,119,255,.42); }
 .journey-merge-step > b { color: #9bb0c4; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 9px; }
@@ -1359,6 +1443,7 @@ onMounted(() => {
 .journey-merge-step > span small { overflow: hidden; color: #8299ae; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
 .journey-merge-step > em { color: #8ba1b5; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 7px; font-style: normal; font-weight: 700; letter-spacing: .06em; }
 .journey-merge-step.active > em,.journey-merge-step.done > em { color: #1677ff; }
+@keyframes merge-panel-scan { 0% { left: -22%; opacity: 0; } 18% { opacity: 1; } 68%,100% { left: 112%; opacity: 0; } }
 .journey-loading { position: absolute; top: 50%; left: 50%; display: grid; gap: 11px; place-items: center; transform: translate(-50%,-50%); }
 .journey-loading span { width: 34px; height: 34px; border: 1px solid #c5d9ec; border-top-color: #1677ff; border-radius: 50%; animation: journey-spin .8s linear infinite; }
 .journey-loading small { color: #6785a2; font-size: 9px; letter-spacing: .16em; }
@@ -1374,7 +1459,7 @@ onMounted(() => {
 .journey-number { position: absolute; z-index: -1; top: -100px; left: -28px; color: rgba(22,119,255,.08); font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 132px; font-weight: 800; line-height: 1; }
 .copy-right .journey-number { right: -12px; left: auto; }
 .journey-copy em { color: #1677ff; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 10px; font-style: normal; font-weight: 700; letter-spacing: .2em; }
-.section-function-tree .journey-copy em { color: #1677ff; }
+.section-scene-function .journey-copy em { color: #1677ff; }
 .section-prelude .journey-copy em { color: #0b63ce; }
 .section-node-merge .journey-copy em { color: #1687ff; }
 .section-test-case .journey-copy em { color: #4d91d7; }
@@ -1386,7 +1471,7 @@ onMounted(() => {
 .journey-metric { display: grid; width: max-content; gap: 3px; margin-top: 18px; padding-left: 15px; border-left: 2px solid #1677ff; }
 .journey-metric strong { color: #173a5e; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 24px; letter-spacing: .03em; }
 .journey-metric span { color: #65839f; font-size: 10px; }
-.section-function-tree .journey-metric { border-color: #1677ff; }
+.section-scene-function .journey-metric { border-color: #1677ff; }
 .section-prelude .journey-metric { border-color: #0b63ce; }
 .section-node-merge .journey-metric { border-color: #1687ff; }
 .section-test-case .journey-metric { border-color: #4d91d7; }
