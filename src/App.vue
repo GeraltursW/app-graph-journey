@@ -127,13 +127,13 @@ const scenes = [
   {
     id: 'scene-function',
     number: '04',
-    kicker: 'SCENARIO FUNCTION INJECTION',
-    title: '场景功能，从左侧注入',
-    text: '场景功能不再是一份孤立清单。900 个场景检查点经过索引、语义匹配与批量复核，沿着左侧光束进入页面节点，让“发现了什么”和“应该覆盖什么”第一次对齐。',
-    tags: ['场景目录', '语义匹配', '覆盖缺口'],
-    metric: '900',
-    metricLabel: '场景功能点可定位',
-    side: 'left',
+    kicker: 'SCENARIO FUNCTION MAPPING',
+    title: '场景功能，逐项指向对应页面',
+    text: '登录、注册、点赞与收藏不再以杂乱光束注入。每个场景功能都通过语义匹配连接到明确的页面节点，让功能清单、页面证据与覆盖状态形成直观的一对一映射。',
+    tags: ['功能清单', '页面定位', '覆盖映射'],
+    metric: '4 SCENES',
+    metricLabel: '四类典型场景功能已定位',
+    side: 'right',
   },
   {
     id: 'test-case',
@@ -168,6 +168,13 @@ const scenes = [
     metricLabel: '从图谱原型走向工程平台',
     side: 'right',
   },
+];
+
+const scenarioFunctions = [
+  { name: '登录', code: 'LOGIN', target: '账号登录页', color: '#0b63ce' },
+  { name: '注册', code: 'REGISTER', target: '账号注册页', color: '#1677ff' },
+  { name: '点赞', code: 'LIKE', target: '内容详情页', color: '#47a5ff' },
+  { name: '收藏', code: 'FAVORITE', target: '收藏列表页', color: '#78baff' },
 ];
 
 function clamp(value, min = 0, max = 1) {
@@ -933,29 +940,41 @@ function createRootPreview(THREE, root) {
 
 function createInjectionBeams(THREE, side, color) {
   const direction = side === 'left' ? -1 : 1;
-  const targetPool = treeNodes.filter((node) => node.userData.level >= 2);
+  const targetPool = treeNodes.filter((node) => node.userData.level === 4);
+  const targetIndexes = [1, 10, 20, 30];
+  const beamColors = [0x0b63ce, 0x1677ff, 0x47a5ff, 0x78baff];
 
-  for (let index = 0; index < 9; index += 1) {
-    const target = targetPool[(index * 11 + (side === 'left' ? 2 : 7)) % targetPool.length];
-    const start = new THREE.Vector3(direction * (11.5 + index * 0.16), -4.4 + index * 1.05, -1.5 + (index % 3));
-    const control = new THREE.Vector3(direction * (7.5 + (index % 3)), target.position.y + Math.sin(index) * 2.3, 3.2);
+  for (let index = 0; index < 4; index += 1) {
+    const target = targetPool[targetIndexes[index] % targetPool.length];
+    const beamColor = beamColors[index] || color;
+    const start = new THREE.Vector3(direction * 11.2, 2.55 - index * 1.55, 0.8 + index * 0.25);
+    const control = new THREE.Vector3(direction * 7.2, 2.1 - index * 0.85, 3.6);
     const curve = new THREE.QuadraticBezierCurve3(start, control, target.position.clone());
-    const geometry = new THREE.BufferGeometry().setFromPoints(curve.getPoints(42));
+    const points = curve.getPoints(48);
+    const geometry = new THREE.BufferGeometry().setFromPoints(points);
+    geometry.setDrawRange(0, 0);
     const material = new THREE.LineBasicMaterial({
-      color,
+      color: beamColor,
       transparent: true,
       opacity: 0,
-      blending: THREE.NormalBlending,
+      blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
     const line = new THREE.Line(geometry, material);
     const orb = new THREE.Mesh(
       new THREE.SphereGeometry(0.105, 8, 8),
-      new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0, blending: THREE.NormalBlending, depthWrite: false }),
+      new THREE.MeshBasicMaterial({ color: beamColor, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }),
     );
+    const arrow = new THREE.Mesh(
+      new THREE.ConeGeometry(0.13, 0.34, 10),
+      new THREE.MeshBasicMaterial({ color: beamColor, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }),
+    );
+    const tangent = curve.getTangent(1).normalize();
+    arrow.position.copy(target.position);
+    arrow.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), tangent);
     orb.position.copy(start);
-    world.add(line, orb);
-    injectionBeams.push({ side, curve, line, orb, target, phase: index * 0.055 });
+    world.add(line, orb, arrow);
+    injectionBeams.push({ side, curve, line, orb, arrow, target, phase: index * 0.1, pointCount: points.length });
   }
 }
 
@@ -1122,11 +1141,14 @@ function updateThreeScene(progress) {
 
   injectionBeams.forEach((beam) => {
     const base = functionArrival * functionDeparture;
-    const local = clamp((base - beam.phase) / 0.62);
-    beam.line.material.opacity = local > 0 ? 0.1 + local * 0.34 : 0;
-    beam.orb.material.opacity = local > 0 && local < 1 ? 1 : local === 1 ? 0.32 : 0;
+    const local = clamp((base - beam.phase) / 0.52);
+    beam.line.geometry.setDrawRange(0, Math.floor(beam.pointCount * local));
+    beam.line.material.opacity = local > 0 ? 0.18 + local * 0.48 : 0;
+    beam.orb.material.opacity = local > 0 && local < 0.94 ? 0.9 : 0;
     beam.orb.visible = local > 0;
     beam.orb.position.copy(beam.curve.getPoint(smoothstep(local)));
+    beam.arrow.material.opacity = smoothstep((local - 0.72) / 0.22) * 0.94;
+    beam.arrow.scale.setScalar(0.72 + local * 0.34);
   });
 
   movingSignals.forEach((item, index) => {
@@ -1299,8 +1321,69 @@ onMounted(() => {
           </div>
         </div>
 
-        <div class="journey-stream stream-function" :class="{ visible: activeScene >= 4 && mergeDemoOpacity < 0.05 }">
-          <span>SCENARIO FUNCTION</span><strong>900 场景功能</strong><i />
+        <svg
+          class="journey-scenario-arrows"
+          :class="{ visible: activeScene === 4 && mergeDemoOpacity < 0.05 }"
+          viewBox="0 0 1000 1000"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <defs>
+            <marker id="scenario-arrow-login" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#0b63ce" />
+            </marker>
+            <marker id="scenario-arrow-register" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#1677ff" />
+            </marker>
+            <marker id="scenario-arrow-like" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#47a5ff" />
+            </marker>
+            <marker id="scenario-arrow-favorite" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#78baff" />
+            </marker>
+          </defs>
+          <g class="scenario-arrow arrow-login">
+            <path d="M245 282 C310 282 355 382 445 418" marker-end="url(#scenario-arrow-login)" />
+            <circle cx="445" cy="418" r="8" />
+          </g>
+          <g class="scenario-arrow arrow-register">
+            <path d="M245 364 C325 364 342 498 392 554" marker-end="url(#scenario-arrow-register)" />
+            <circle cx="392" cy="554" r="8" />
+          </g>
+          <g class="scenario-arrow arrow-like">
+            <path d="M245 446 C322 446 370 616 452 652" marker-end="url(#scenario-arrow-like)" />
+            <circle cx="452" cy="652" r="8" />
+          </g>
+          <g class="scenario-arrow arrow-favorite">
+            <path d="M245 528 C338 528 418 718 505 788" marker-end="url(#scenario-arrow-favorite)" />
+            <circle cx="505" cy="788" r="8" />
+          </g>
+        </svg>
+
+        <div
+          class="journey-scenario-list"
+          :class="{ visible: activeScene === 4 && mergeDemoOpacity < 0.05 }"
+        >
+          <div class="journey-scenario-heading">
+            <span>SCENARIO FUNCTION LIST</span>
+            <strong>4 / 4 MATCHED</strong>
+          </div>
+          <div class="journey-scenario-items">
+            <div
+              v-for="(item, index) in scenarioFunctions"
+              :key="item.code"
+              class="journey-scenario-item"
+              :style="{ '--scenario-color': item.color, '--scenario-delay': `${index * 90}ms` }"
+            >
+              <i>{{ String(index + 1).padStart(2, '0') }}</i>
+              <span>
+                <strong>{{ item.name }}</strong>
+                <small>{{ item.code }} · {{ item.target }}</small>
+              </span>
+              <em>MATCHED</em>
+              <b aria-hidden="true">→</b>
+            </div>
+          </div>
         </div>
         <div class="journey-stream stream-cases" :class="{ visible: activeScene >= 5 }">
           <span>TEST CASE ENGINE</span><strong>路径 × 动作</strong><i />
@@ -1392,10 +1475,35 @@ onMounted(() => {
 .journey-stream.visible { opacity: .9; transform: translateX(0); }
 .stream-hdc { top: 22%; right: 5%; color: #0b63ce; text-align: right; transform: translateX(60px); }
 .stream-hdc i { margin-left: auto; background: linear-gradient(90deg,transparent,#1677ff); animation: hdc-scan 1.6s ease-in-out infinite; }
-.stream-function { top: 28%; left: 4%; color: #1677ff; transform: translateX(-60px); }
 .stream-cases { right: 4%; bottom: 31%; color: #4d91d7; text-align: right; transform: translateX(60px); }
 .stream-report { bottom: 9%; left: 50%; color: #0b63ce; text-align: center; transform: translate(-50%,30px); }
 .stream-report.visible { transform: translate(-50%,0); }
+.journey-scenario-list { position: absolute; top: 20%; left: 4%; width: min(264px,25vw); border-top: 2px solid #1677ff; background: rgba(248,252,255,.9); box-shadow: 0 18px 42px rgba(38,91,143,.13); opacity: 0; visibility: hidden; transform: translateX(-34px); transition: opacity .45s ease,transform .65s cubic-bezier(.2,.8,.2,1),visibility .2s; backdrop-filter: blur(14px); }
+.journey-scenario-list.visible { opacity: 1; visibility: visible; transform: translateX(0); }
+.journey-scenario-arrows { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; opacity: 0; visibility: hidden; transition: opacity .35s ease .2s,visibility .2s; }
+.journey-scenario-arrows.visible { opacity: .92; visibility: visible; }
+.scenario-arrow path { fill: none; stroke-width: 1.35; stroke-dasharray: 9 7; vector-effect: non-scaling-stroke; animation: scenario-flow 1.5s linear infinite; }
+.scenario-arrow circle { fill: rgba(255,255,255,.82); stroke-width: 1.4; vector-effect: non-scaling-stroke; transform-box: fill-box; transform-origin: center; animation: scenario-target 1.7s ease-in-out infinite; }
+.arrow-login path,.arrow-login circle { stroke: #0b63ce; }
+.arrow-register path,.arrow-register circle { stroke: #1677ff; }
+.arrow-like path,.arrow-like circle { stroke: #47a5ff; }
+.arrow-favorite path,.arrow-favorite circle { stroke: #78baff; }
+.journey-scenario-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 12px 9px; border-right: 1px solid #d4e4f3; border-bottom: 1px solid #d4e4f3; border-left: 1px solid #d4e4f3; color: #647f99; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 7px; font-weight: 700; letter-spacing: .13em; }
+.journey-scenario-heading strong { color: #1677ff; font-size: 7px; white-space: nowrap; }
+.journey-scenario-items { border-right: 1px solid #d4e4f3; border-left: 1px solid #d4e4f3; }
+.journey-scenario-item { position: relative; display: grid; min-height: 58px; grid-template-columns: 28px minmax(0,1fr) auto 14px; align-items: center; gap: 8px; padding: 7px 9px; border-bottom: 1px solid #dce9f5; background: rgba(255,255,255,.76); opacity: 0; transform: translateX(-16px); transition: opacity .38s ease var(--scenario-delay),transform .5s cubic-bezier(.2,.8,.2,1) var(--scenario-delay),background .25s ease; }
+.journey-scenario-list.visible .journey-scenario-item { opacity: 1; transform: translateX(0); }
+.journey-scenario-item::before { position: absolute; top: 0; bottom: 0; left: 0; width: 2px; background: var(--scenario-color); box-shadow: 0 0 12px var(--scenario-color); content: ''; }
+.journey-scenario-item:hover { background: #eef7ff; }
+.journey-scenario-item > i { display: grid; width: 25px; height: 25px; place-items: center; border: 1px solid color-mix(in srgb,var(--scenario-color) 50%,white); background: #fff; color: var(--scenario-color); font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 8px; font-style: normal; font-weight: 800; }
+.journey-scenario-item > span { display: grid; min-width: 0; gap: 3px; }
+.journey-scenario-item > span strong { color: #234c73; font-size: 12px; }
+.journey-scenario-item > span small { overflow: hidden; color: #7590a9; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 7px; text-overflow: ellipsis; white-space: nowrap; }
+.journey-scenario-item > em { color: var(--scenario-color); font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 6px; font-style: normal; font-weight: 800; letter-spacing: .08em; }
+.journey-scenario-item > b { color: var(--scenario-color); font-size: 15px; font-weight: 500; animation: scenario-arrow 1.4s ease-in-out infinite; }
+@keyframes scenario-arrow { 50% { opacity: .48; transform: translateX(4px); } }
+@keyframes scenario-flow { to { stroke-dashoffset: -32; } }
+@keyframes scenario-target { 50% { opacity: .42; transform: scale(1.65); } }
 .journey-search-demo { position: absolute; top: 17%; left: 5.5%; width: min(370px,34vw); opacity: 0; transition: visibility .2s; visibility: hidden; transform-origin: 100% 50%; }
 .journey-search-demo.visible { visibility: visible; }
 .journey-search-label { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; color: #537493; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 8px; font-weight: 700; letter-spacing: .16em; }
@@ -1499,7 +1607,7 @@ onMounted(() => {
   .search-result-active .section-exploration .journey-copy { opacity: 0 !important; visibility: hidden; }
   .journey-merge-demo { top: 14%; right: 4%; width: min(350px,44vw); }
   .merge-demo-active .section-node-merge .journey-copy { opacity: 0 !important; visibility: hidden; }
-  .stream-function { left: 3%; }
+  .journey-scenario-list { top: 17%; left: 3%; width: min(244px,30vw); }
   .stream-cases { right: 3%; }
 }
 @media (max-width: 640px) {
@@ -1517,6 +1625,13 @@ onMounted(() => {
   .journey-nav button { width: 27px; justify-content: center; }
   .journey-nav button span { display: none; }
   .journey-stream { display: none; }
+  .journey-scenario-arrows { display: none; }
+  .journey-scenario-list { top: 84px; right: 16px; left: 16px; width: auto; }
+  .journey-scenario-heading { padding: 8px 10px; }
+  .journey-scenario-item { min-height: 44px; grid-template-columns: 24px minmax(0,1fr) auto 12px; padding: 4px 8px; }
+  .journey-scenario-item > i { width: 21px; height: 21px; }
+  .journey-scenario-list.visible ~ .journey-loading { display: none; }
+  .section-scene-function .journey-copy { margin-top: 292px; }
   .journey-search-demo { top: 88px; right: 16px; left: 16px; width: auto; }
   .journey-merge-demo { top: 88px; right: 16px; left: 16px; width: auto; padding: 10px; }
   .journey-merge-step { min-height: 43px; grid-template-columns: 23px minmax(0,1fr) auto; padding: 4px 5px; }
@@ -1529,6 +1644,7 @@ onMounted(() => {
 @media (prefers-reduced-motion: reduce) {
   .journey-loading span,.journey-scroll-hint { animation: none; }
   .journey-scroll { scroll-behavior: auto; }
-  .journey-stream { transition: none; }
+  .journey-stream,.journey-scenario-list,.journey-scenario-item,.journey-scenario-arrows { transition: none; }
+  .journey-scenario-item > b,.scenario-arrow path,.scenario-arrow circle { animation: none; }
 }
 </style>
