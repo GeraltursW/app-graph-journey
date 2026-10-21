@@ -45,6 +45,7 @@ let treeEdges = null;
 let treeEdgeGlow = null;
 let treeBranches = null;
 let activeRouteBranches = null;
+let activeRouteLinks = [];
 let graphLinks = [];
 let activeRouteNodeOrders = new Set();
 let activeRouteEdgeIndexes = new Set();
@@ -54,6 +55,17 @@ let starField = null;
 let threeApi = null;
 
 const scenes = [
+  {
+    id: 'prelude',
+    number: '00',
+    kicker: 'RAW SIGNALS / HDC FITTING',
+    title: '散落的页面，第一次被组织起来',
+    text: '起初只有 HDC 捕获的 URL、截图和控件证据，它们彼此独立，尚未形成关系。设备连接、页面识别与跳转回放逐步补全上下文，散点开始寻找父子关系，最终拟合为一棵可持续生长的应用图谱树。',
+    tags: ['HDC 采集', '页面识别', '关系拟合'],
+    metric: 'SIGNAL → TREE',
+    metricLabel: '从离散证据到结构化图谱',
+    side: 'left',
+  },
   {
     id: 'origin',
     number: '01',
@@ -196,6 +208,7 @@ function destroyJourney() {
   graphLinks = [];
   activeRouteNodeOrders = new Set();
   activeRouteEdgeIndexes = new Set();
+  activeRouteLinks = [];
   movingSignals = [];
   injectionBeams = [];
   starField = null;
@@ -384,6 +397,13 @@ function createGraphTree(THREE) {
 
   function addNode(position, level, parent = null, channel = 0, scale = 1) {
     const order = treeNodes.length;
+    const scatterAngle = order * 2.399963 + (order % 5) * 0.19;
+    const scatterRadius = 2.6 + (order % 19) * 0.39;
+    const scatterPosition = new THREE.Vector3(
+      Math.cos(scatterAngle) * scatterRadius,
+      -5.2 + ((order * 37) % 101) / 100 * 10.4,
+      Math.sin(scatterAngle) * (1.2 + (order % 9) * 0.34) + ((order % 3) - 1) * 0.45,
+    );
     const material = new THREE.MeshBasicMaterial({
       color: level === 0 ? 0x0b63ce : 0x1677ff,
       transparent: true,
@@ -403,6 +423,8 @@ function createGraphTree(THREE) {
       parent,
       linkIndex: null,
       halo: null,
+      treePosition: position.clone(),
+      scatterPosition,
     };
 
     if (level <= 2) {
@@ -530,8 +552,8 @@ function createGraphTree(THREE) {
     depthWrite: false,
   });
   treeBranches = new THREE.InstancedMesh(branchGeometry, branchMaterial, graphLinks.length);
-  treeBranches.instanceMatrix.setUsage(THREE.StaticDrawUsage);
-  const routeLinks = graphLinks.filter((_, index) => activeRouteEdgeIndexes.has(index));
+  treeBranches.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+  activeRouteLinks = graphLinks.filter((_, index) => activeRouteEdgeIndexes.has(index));
   const routeBranchGeometry = new THREE.CylinderGeometry(0.036, 0.062, 1, 8, 1, true);
   const routeBranchMaterial = new THREE.MeshBasicMaterial({
     color: 0x075fc7,
@@ -540,8 +562,8 @@ function createGraphTree(THREE) {
     blending: THREE.NormalBlending,
     depthWrite: false,
   });
-  activeRouteBranches = new THREE.InstancedMesh(routeBranchGeometry, routeBranchMaterial, routeLinks.length);
-  activeRouteBranches.instanceMatrix.setUsage(THREE.StaticDrawUsage);
+  activeRouteBranches = new THREE.InstancedMesh(routeBranchGeometry, routeBranchMaterial, activeRouteLinks.length);
+  activeRouteBranches.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
   const up = new THREE.Vector3(0, 1, 0);
   const midpoint = new THREE.Vector3();
   const direction = new THREE.Vector3();
@@ -558,7 +580,7 @@ function createGraphTree(THREE) {
     matrix.compose(midpoint, quaternion, scale);
     treeBranches.setMatrixAt(index, matrix);
   });
-  routeLinks.forEach((link, index) => {
+  activeRouteLinks.forEach((link, index) => {
     midpoint.copy(link.from).add(link.to).multiplyScalar(0.5);
     direction.copy(link.to).sub(link.from);
     const length = direction.length();
@@ -569,6 +591,46 @@ function createGraphTree(THREE) {
   });
   treeBranches.count = 0;
   world.add(treeEdgeGlow, treeBranches, treeEdges, activeRouteBranches);
+}
+
+function updateGraphGeometry(THREE) {
+  if (!treeEdges || !treeBranches) return;
+  const positions = treeEdges.geometry.attributes.position;
+  const up = new THREE.Vector3(0, 1, 0);
+  const midpoint = new THREE.Vector3();
+  const direction = new THREE.Vector3();
+  const quaternion = new THREE.Quaternion();
+  const scale = new THREE.Vector3();
+  const matrix = new THREE.Matrix4();
+
+  graphLinks.forEach((link, index) => {
+    link.from.copy(link.parent.position);
+    link.to.copy(link.target.position);
+    positions.setXYZ(index * 2, link.from.x, link.from.y, link.from.z);
+    positions.setXYZ(index * 2 + 1, link.to.x, link.to.y, link.to.z);
+    midpoint.copy(link.from).add(link.to).multiplyScalar(0.5);
+    direction.copy(link.to).sub(link.from);
+    const length = Math.max(direction.length(), 0.001);
+    quaternion.setFromUnitVectors(up, direction.normalize());
+    const width = index === 0 ? 2.8 : link.from.y < -2 ? 1.8 : 1;
+    scale.set(width, length, width);
+    matrix.compose(midpoint, quaternion, scale);
+    treeBranches.setMatrixAt(index, matrix);
+  });
+  positions.needsUpdate = true;
+  treeBranches.instanceMatrix.needsUpdate = true;
+  treeEdges.geometry.computeBoundingSphere();
+
+  activeRouteLinks.forEach((link, index) => {
+    midpoint.copy(link.from).add(link.to).multiplyScalar(0.5);
+    direction.copy(link.to).sub(link.from);
+    const length = Math.max(direction.length(), 0.001);
+    quaternion.setFromUnitVectors(up, direction.normalize());
+    scale.set(1, length, 1);
+    matrix.compose(midpoint, quaternion, scale);
+    activeRouteBranches.setMatrixAt(index, matrix);
+  });
+  if (activeRouteBranches) activeRouteBranches.instanceMatrix.needsUpdate = true;
 }
 
 function createRootLabelTexture(THREE) {
@@ -644,7 +706,19 @@ function createRootPreview(THREE, root) {
   screenshot.renderOrder = 42;
   label.renderOrder = 43;
   world.add(glow, frame, screenshot, label);
-  rootPreview = { root, glow, frame, screenshot, label };
+  rootPreview = {
+    root,
+    glow,
+    frame,
+    screenshot,
+    label,
+    offsets: {
+      glow: new THREE.Vector3(0, 0.22, -0.06),
+      frame: new THREE.Vector3(0, 0.22, -0.04),
+      screenshot: new THREE.Vector3(0, 0.22, 0),
+      label: new THREE.Vector3(0, 0.98, 0.03),
+    },
+  };
 }
 
 function createInjectionBeams(THREE, side, color) {
@@ -697,27 +771,40 @@ function createMovingSignals(THREE) {
 function updateThreeScene(progress) {
   if (!threeApi || !world || !camera) return;
   const THREE = threeApi;
-  const growth = smoothstep(progress / 0.31);
-  const revealedNodes = Math.max(1, Math.floor(treeNodes.length * (0.06 + growth * 0.94)));
-  const revealedEdges = Math.max(0, revealedNodes - 1);
+  const preludeEnd = 1 / scenes.length;
+  const formation = smoothstep(progress / preludeEnd);
+  const storyProgress = clamp((progress - preludeEnd) / (1 - preludeEnd));
+  const growth = smoothstep(storyProgress / 0.31);
+  const edgeFormation = smoothstep((formation - 0.34) / 0.66);
+  const revealedNodes = treeNodes.length;
+  const revealedEdges = progress < preludeEnd
+    ? Math.floor(graphLinks.length * edgeFormation)
+    : graphLinks.length;
+
+  treeNodes.forEach((node) => {
+    node.position.lerpVectors(node.userData.scatterPosition, node.userData.treePosition, formation);
+  });
+  updateGraphGeometry(THREE);
 
   treeEdges?.geometry.setDrawRange(0, revealedEdges * 2);
   treeEdgeGlow?.geometry.setDrawRange(0, revealedEdges * 2);
   if (treeBranches) treeBranches.count = Math.min(revealedEdges, graphLinks.length);
 
-  const functionArrival = smoothstep((progress - 0.32) / 0.17);
-  const reportArrival = smoothstep((progress - 0.68) / 0.18);
-  const functionDeparture = 1 - smoothstep((progress - 0.56) / 0.1);
+  const functionArrival = smoothstep((storyProgress - 0.32) / 0.17);
+  const reportArrival = smoothstep((storyProgress - 0.68) / 0.18);
+  const functionDeparture = 1 - smoothstep((storyProgress - 0.56) / 0.1);
 
-  if (treeEdges) treeEdges.material.opacity = 0.58 - reportArrival * 0.576;
-  if (treeEdgeGlow) treeEdgeGlow.material.opacity = 0.12 - reportArrival * 0.118;
-  if (treeBranches) treeBranches.material.opacity = 0.34 - reportArrival * 0.336;
+  if (treeEdges) treeEdges.material.opacity = edgeFormation * (0.58 - reportArrival * 0.576);
+  if (treeEdgeGlow) treeEdgeGlow.material.opacity = edgeFormation * (0.12 - reportArrival * 0.118);
+  if (treeBranches) treeBranches.material.opacity = edgeFormation * (0.34 - reportArrival * 0.336);
   if (activeRouteBranches) activeRouteBranches.material.opacity = reportArrival * 0.96;
 
   treeNodes.forEach((node, index) => {
     node.visible = index < revealedNodes;
     if (!node.visible) return;
-    const introduction = clamp((revealedNodes - index) / 10);
+    const introduction = progress < preludeEnd
+      ? 0.58 + formation * 0.42
+      : 1;
     const routeActive = activeRouteNodeOrders.has(node.userData.order);
     const pulse = 1 + reportArrival * (routeActive
       ? 0.14 + Math.sin(progress * 42 + node.userData.phase) * 0.1
@@ -744,8 +831,12 @@ function updateThreeScene(progress) {
   });
 
   if (rootPreview) {
-    const introduction = clamp(revealedNodes / 4);
+    const introduction = smoothstep((formation - 0.7) / 0.3);
     const pulse = 1 + reportArrival * (0.035 + Math.sin(progress * 42) * 0.018);
+    rootPreview.glow.position.copy(rootPreview.root.position).add(rootPreview.offsets.glow);
+    rootPreview.frame.position.copy(rootPreview.root.position).add(rootPreview.offsets.frame);
+    rootPreview.screenshot.position.copy(rootPreview.root.position).add(rootPreview.offsets.screenshot);
+    rootPreview.label.position.copy(rootPreview.root.position).add(rootPreview.offsets.label);
     rootPreview.glow.visible = introduction > 0;
     rootPreview.frame.visible = introduction > 0;
     rootPreview.screenshot.visible = introduction > 0;
@@ -774,10 +865,10 @@ function updateThreeScene(progress) {
     item.signal.material.opacity = 0.56 + Math.sin(progress * 90 + index) * 0.38;
   });
 
-  baseWorldRotationY = progress * Math.PI * 2.25;
-  baseWorldRotationX = -0.12 + Math.sin(progress * Math.PI * 2) * 0.12;
+  baseWorldRotationY = formation * 0.16 + storyProgress * Math.PI * 2.25;
+  baseWorldRotationX = -0.12 + Math.sin(storyProgress * Math.PI * 2) * 0.12;
   world.position.y = -0.2 + Math.sin(progress * Math.PI) * -0.3;
-  camera.position.z = cameraBaseZ - growth * 0.6 + reportArrival * 0.8;
+  camera.position.z = cameraBaseZ + (1 - formation) * 1.8 - growth * 0.6 + reportArrival * 0.8;
   camera.position.y = 0.5 + Math.sin(progress * Math.PI * 3) * 0.55;
   camera.lookAt(new THREE.Vector3(0, 0.1, 0));
 }
@@ -859,7 +950,7 @@ onMounted(() => {
           <span class="journey-brand-mark" aria-hidden="true">◎</span>
           <div><strong>APP GRAPH</strong><small>EVOLUTION STORY / 3D</small></div>
         </div>
-        <span class="journey-counter">{{ scenes[activeScene].number }} / {{ String(scenes.length).padStart(2, '0') }}</span>
+        <span class="journey-counter">{{ scenes[activeScene].number }} / {{ scenes[scenes.length - 1].number }}</span>
         <div class="journey-actions">
           <button class="journey-icon-button" type="button" aria-label="重置三维树视角" title="重置视角" @click="resetTreeView">↻</button>
         </div>
@@ -871,13 +962,17 @@ onMounted(() => {
         <div class="journey-axis axis-x" />
         <div class="journey-axis axis-y" />
 
-        <div class="journey-stream stream-function" :class="{ visible: activeScene >= 2 }">
+        <div class="journey-stream stream-hdc" :class="{ visible: activeScene === 0 }">
+          <span>HDC DEVICE LINK</span><strong>散点采集 → 关系拟合</strong><i /><b>URL · SCREENSHOT · WIDGET</b>
+        </div>
+
+        <div class="journey-stream stream-function" :class="{ visible: activeScene >= 3 }">
           <span>FUNCTION TREE</span><strong>900 功能点</strong><i />
         </div>
-        <div class="journey-stream stream-cases" :class="{ visible: activeScene >= 3 }">
+        <div class="journey-stream stream-cases" :class="{ visible: activeScene >= 4 }">
           <span>TEST CASE ENGINE</span><strong>路径 × 动作</strong><i />
         </div>
-        <div class="journey-stream stream-report" :class="{ visible: activeScene >= 4 }">
+        <div class="journey-stream stream-report" :class="{ visible: activeScene >= 5 }">
           <span>LIVE SIGNAL</span><strong>性能数据回流</strong><i />
         </div>
 
@@ -959,8 +1054,11 @@ onMounted(() => {
 .journey-stream { position: absolute; display: grid; min-width: 146px; gap: 4px; opacity: 0; transition: opacity .5s ease,transform .7s ease; }
 .journey-stream span { font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 9px; letter-spacing: .16em; }
 .journey-stream strong { color: #173a5e; font-size: 12px; font-weight: 650; }
+.journey-stream b { color: #6b89a5; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 8px; font-weight: 600; letter-spacing: .12em; }
 .journey-stream i { width: 100%; height: 1px; box-shadow: 0 0 12px currentColor; }
 .journey-stream.visible { opacity: .9; transform: translateX(0); }
+.stream-hdc { top: 22%; right: 5%; color: #0b63ce; text-align: right; transform: translateX(60px); }
+.stream-hdc i { margin-left: auto; background: linear-gradient(90deg,transparent,#1677ff); animation: hdc-scan 1.6s ease-in-out infinite; }
 .stream-function { top: 28%; left: 4%; color: #1677ff; transform: translateX(-60px); }
 .stream-cases { right: 4%; bottom: 31%; color: #4d91d7; text-align: right; transform: translateX(60px); }
 .stream-report { bottom: 9%; left: 50%; color: #0b63ce; text-align: center; transform: translate(-50%,30px); }
@@ -969,6 +1067,7 @@ onMounted(() => {
 .journey-loading span { width: 34px; height: 34px; border: 1px solid #c5d9ec; border-top-color: #1677ff; border-radius: 50%; animation: journey-spin .8s linear infinite; }
 .journey-loading small { color: #6785a2; font-size: 9px; letter-spacing: .16em; }
 @keyframes journey-spin { to { transform: rotate(360deg); } }
+@keyframes hdc-scan { 0%,100% { width: 38%; opacity: .35; } 50% { width: 100%; opacity: 1; } }
 .journey-scroll { position: absolute; z-index: 4; inset: 0; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
 .journey-scroll::-webkit-scrollbar { display: none; }
 .journey-story { position: relative; }
@@ -979,6 +1078,7 @@ onMounted(() => {
 .copy-right .journey-number { right: -12px; left: auto; }
 .journey-copy em { color: #1677ff; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 10px; font-style: normal; font-weight: 700; letter-spacing: .2em; }
 .section-function-tree .journey-copy em { color: #1677ff; }
+.section-prelude .journey-copy em { color: #0b63ce; }
 .section-test-case .journey-copy em { color: #4d91d7; }
 .section-observability .journey-copy em { color: #0b63ce; }
 .journey-copy h2 { max-width: 540px; margin: 0; color: #12385f; font-size: clamp(34px,4vw,58px); font-weight: 670; line-height: 1.12; letter-spacing: 0; text-wrap: balance; }
@@ -989,6 +1089,7 @@ onMounted(() => {
 .journey-metric strong { color: #173a5e; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 24px; letter-spacing: .03em; }
 .journey-metric span { color: #65839f; font-size: 10px; }
 .section-function-tree .journey-metric { border-color: #1677ff; }
+.section-prelude .journey-metric { border-color: #0b63ce; }
 .section-test-case .journey-metric { border-color: #4d91d7; }
 .section-observability .journey-metric { border-color: #0b63ce; }
 .journey-nav { position: absolute; z-index: 12; top: 50%; left: 24px; display: grid; gap: 0; transform: translateY(-50%); }
