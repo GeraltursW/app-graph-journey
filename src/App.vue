@@ -2,7 +2,7 @@
 import douyinHomeScreenshot from './assets/douyin-home-root.jpg';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
+import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,6 +14,16 @@ const overlayRef = ref(null);
 const scrollRef = ref(null);
 const canvasRef = ref(null);
 const progressRef = ref(null);
+const searchQuery = ref('');
+const searchResultVisible = ref(false);
+const searchDemoOpacity = ref(0);
+const searchExitProgress = ref(0);
+
+const searchTargetUrl = 'aweme://search/result?keyword=性能监控';
+const searchPanelStyle = computed(() => ({
+  opacity: searchDemoOpacity.value,
+  transform: `translate3d(${searchExitProgress.value * 96}px, ${searchExitProgress.value * 22}px, 0) scale(${1 - searchExitProgress.value * 0.18})`,
+}));
 
 let previousBodyOverflow = '';
 let animationContext = null;
@@ -47,6 +57,8 @@ let treeBranches = null;
 let activeRouteBranches = null;
 let activeRouteLinks = [];
 let graphLinks = [];
+let searchTargetNode = null;
+let searchSceneProgress = 0;
 let activeRouteNodeOrders = new Set();
 let activeRouteEdgeIndexes = new Set();
 let movingSignals = [];
@@ -80,12 +92,12 @@ const scenes = [
   {
     id: 'exploration',
     number: '02',
-    kicker: 'DEVICE EXPLORATION',
-    title: '脚本向前走，图谱向外生长',
-    text: 'HDC 脚本在真实设备点击、滑动与长按。AI 读取截图、URL 和页面结构，去重动态内容，并把每一次新发现接回已有分支。滚动此刻，树冠正在展开。',
-    tags: ['HDC Script', 'AI Vision', '增量遍历'],
-    metric: '4 ACTIONS',
-    metricLabel: '弹层 · 状态 · 外部 · 跳转',
+    kicker: 'URL SEARCH / AI LOCATE',
+    title: '输入一个 URL，图谱定位它所代表的页面',
+    text: '监控返回的高危 URL 被输入图谱。系统先完成精确与归一化匹配，再由大模型结合截图、页面文本和动作结构解释命中结果，让一个抽象地址重新变成可以查看、验证与执行的真实页面。',
+    tags: ['URL 定位', '节点高亮', '多模态分析'],
+    metric: 'URL → PAGE',
+    metricLabel: '从风险地址定位到页面证据',
     side: 'right',
   },
   {
@@ -152,6 +164,11 @@ async function openJourney() {
   manualRotationY = 0;
   rotationVelocityX = 0;
   rotationVelocityY = 0;
+  searchSceneProgress = 0;
+  searchQuery.value = '';
+  searchResultVisible.value = false;
+  searchDemoOpacity.value = 0;
+  searchExitProgress.value = 0;
   previousBodyOverflow = document.body.style.overflow;
   document.body.style.overflow = 'hidden';
   await nextTick();
@@ -209,6 +226,8 @@ function destroyJourney() {
   activeRouteNodeOrders = new Set();
   activeRouteEdgeIndexes = new Set();
   activeRouteLinks = [];
+  searchTargetNode = null;
+  searchSceneProgress = 0;
   movingSignals = [];
   injectionBeams = [];
   starField = null;
@@ -248,6 +267,9 @@ function setupScrollStory() {
           scrub: 0.8,
           onEnter: () => { activeScene.value = index; },
           onEnterBack: () => { activeScene.value = index; },
+          onUpdate: (self) => {
+            if (scenes[index].id === 'exploration') updateSearchDemo(self.progress);
+          },
         },
       })
         .fromTo(copy, { x: direction * 110, opacity: 0.08 }, { x: 0, opacity: 1, duration: 0.35, ease: 'none' })
@@ -258,6 +280,21 @@ function setupScrollStory() {
 
     ScrollTrigger.refresh();
   }, overlayRef.value);
+}
+
+function updateSearchDemo(progress) {
+  searchSceneProgress = clamp(progress);
+  const typingProgress = clamp((progress - 0.12) / 0.34);
+  const characterCount = Math.floor(searchTargetUrl.length * typingProgress);
+  searchQuery.value = searchTargetUrl.slice(0, characterCount);
+  searchResultVisible.value = progress >= 0.48;
+  searchDemoOpacity.value = progress < 0.08
+    ? progress / 0.08
+    : progress > 0.8
+      ? 1 - clamp((progress - 0.8) / 0.18)
+      : 1;
+  searchExitProgress.value = clamp((progress - 0.78) / 0.2);
+  updateThreeScene(currentProgress);
 }
 
 function scrollToScene(index) {
@@ -523,6 +560,20 @@ function createGraphTree(THREE) {
     }
     routeNode = routeNode.userData.parent;
   }
+
+  searchTargetNode = pages[2]?.node || sections[1]?.node || treeNodes[20];
+  const searchHalo = new THREE.Mesh(
+    new THREE.SphereGeometry(0.3, 14, 12),
+    new THREE.MeshBasicMaterial({
+      color: 0x1677ff,
+      transparent: true,
+      opacity: 0,
+      blending: THREE.NormalBlending,
+      depthWrite: false,
+    }),
+  );
+  searchTargetNode.add(searchHalo);
+  searchTargetNode.userData.searchHalo = searchHalo;
 
   const edgeGeometry = new THREE.BufferGeometry();
   edgeGeometry.setAttribute('position', new THREE.Float32BufferAttribute(edgePositions, 3));
@@ -793,10 +844,12 @@ function updateThreeScene(progress) {
   const functionArrival = smoothstep((storyProgress - 0.32) / 0.17);
   const reportArrival = smoothstep((storyProgress - 0.68) / 0.18);
   const functionDeparture = 1 - smoothstep((storyProgress - 0.56) / 0.1);
+  const searchHighlight = smoothstep((searchSceneProgress - 0.43) / 0.13)
+    * (1 - smoothstep((searchSceneProgress - 0.8) / 0.18));
 
-  if (treeEdges) treeEdges.material.opacity = edgeFormation * (0.58 - reportArrival * 0.576);
-  if (treeEdgeGlow) treeEdgeGlow.material.opacity = edgeFormation * (0.12 - reportArrival * 0.118);
-  if (treeBranches) treeBranches.material.opacity = edgeFormation * (0.34 - reportArrival * 0.336);
+  if (treeEdges) treeEdges.material.opacity = edgeFormation * (0.58 - reportArrival * 0.576) * (1 - searchHighlight * 0.72);
+  if (treeEdgeGlow) treeEdgeGlow.material.opacity = edgeFormation * (0.12 - reportArrival * 0.118) * (1 - searchHighlight * 0.72);
+  if (treeBranches) treeBranches.material.opacity = edgeFormation * (0.34 - reportArrival * 0.336) * (1 - searchHighlight * 0.72);
   if (activeRouteBranches) activeRouteBranches.material.opacity = reportArrival * 0.96;
 
   treeNodes.forEach((node, index) => {
@@ -806,8 +859,11 @@ function updateThreeScene(progress) {
       ? 0.58 + formation * 0.42
       : 1;
     const routeActive = activeRouteNodeOrders.has(node.userData.order);
+    const isSearchTarget = node === searchTargetNode;
     const pulse = 1 + reportArrival * (routeActive
       ? 0.14 + Math.sin(progress * 42 + node.userData.phase) * 0.1
+      : 0) + searchHighlight * (isSearchTarget
+      ? 0.95 + Math.sin(searchSceneProgress * 36) * 0.12
       : 0);
     node.scale.setScalar(node.userData.baseScale * introduction * pulse);
 
@@ -817,16 +873,21 @@ function updateThreeScene(progress) {
     if (reportArrival > 0.01) color = routeActive
       ? (node.userData.level === 0 ? 0x084f9f : 0x0b6edc)
       : 0x9bb2c9;
+    if (searchHighlight > 0.01) color = isSearchTarget ? 0x006cff : 0x9db4ca;
     node.material.color.setHex(color);
     node.material.opacity = node.userData.level === 0
       ? 0
-      : routeActive ? 0.98 : 0.98 - reportArrival * 0.91;
+      : routeActive ? 0.98 : (0.98 - reportArrival * 0.91) * (isSearchTarget ? 1 : 1 - searchHighlight * 0.82);
     if (node.userData.halo) {
       node.userData.halo.material.color.setHex(color);
       const haloOpacity = node.userData.level === 0 ? 0.24 : 0.13;
       node.userData.halo.material.opacity = node.userData.level === 0
         ? 0
         : haloOpacity * (routeActive ? 1 : 1 - reportArrival * 0.95);
+    }
+    if (node.userData.searchHalo) {
+      node.userData.searchHalo.material.opacity = searchHighlight * (0.2 + Math.sin(searchSceneProgress * 28) * 0.08);
+      node.userData.searchHalo.scale.setScalar(1 + searchHighlight * 0.65);
     }
   });
 
@@ -846,6 +907,10 @@ function updateThreeScene(progress) {
     rootPreview.screenshot.scale.set(1.24 * introduction * pulse, 2.62 * introduction * pulse, 1);
     rootPreview.label.scale.set(1.08 * introduction, 0.3 * introduction, 1);
     rootPreview.glow.material.opacity = 0.18 + reportArrival * 0.14;
+    rootPreview.screenshot.material.opacity = 1 - searchHighlight * 0.76;
+    rootPreview.label.material.opacity = 1 - searchHighlight * 0.76;
+    rootPreview.frame.material.opacity = 0.96 - searchHighlight * 0.76;
+    rootPreview.glow.material.opacity *= 1 - searchHighlight * 0.72;
     rootPreview.frame.material.color.setHex(reportArrival > 0.01 ? 0x075fc7 : 0x0b63ce);
   }
 
@@ -932,7 +997,7 @@ onMounted(() => {
       v-if="open"
       ref="overlayRef"
       class="journey-overlay"
-      :class="{ 'is-dragging': dragging }"
+      :class="{ 'is-dragging': dragging, 'search-result-active': searchResultVisible && searchDemoOpacity > 0.05 }"
       role="dialog"
       aria-modal="true"
       aria-label="App Graph 三维项目旅程"
@@ -964,6 +1029,38 @@ onMounted(() => {
 
         <div class="journey-stream stream-hdc" :class="{ visible: activeScene === 0 }">
           <span>HDC DEVICE LINK</span><strong>散点采集 → 关系拟合</strong><i /><b>URL · SCREENSHOT · WIDGET</b>
+        </div>
+
+        <div
+          class="journey-search-demo"
+          :class="{ visible: searchDemoOpacity > 0.01, 'result-visible': searchResultVisible }"
+          :style="searchPanelStyle"
+        >
+          <div class="journey-search-label"><span /> URL INTELLIGENCE SEARCH</div>
+          <div class="journey-search-input">
+            <i aria-hidden="true" />
+            <span>{{ searchQuery }}</span><b v-if="searchQuery.length < searchTargetUrl.length" />
+          </div>
+          <div class="journey-search-status">
+            <span>{{ searchResultVisible ? 'MATCHED' : 'NORMALIZING URL' }}</span>
+            <strong>{{ searchResultVisible ? '96.8%' : '...' }}</strong>
+          </div>
+          <div class="journey-search-result">
+            <div class="journey-search-shot">
+              <img :src="douyinHomeScreenshot" alt="搜索结果页面截图" />
+              <span>AI</span>
+            </div>
+            <div class="journey-search-analysis">
+              <em>命中节点 / 搜索结果页</em>
+              <h3>性能关键词搜索结果</h3>
+              <p>大模型判断该页面属于搜索功能域。页面包含搜索框、结果列表与筛选入口，可从首页搜索控件抵达。</p>
+              <dl>
+                <div><dt>PAGE URL</dt><dd>aweme://search/result</dd></div>
+                <div><dt>IMAGE</dt><dd>1080 × 2400 · JPEG</dd></div>
+                <div><dt>ACTION</dt><dd>pageNaviAction</dd></div>
+              </dl>
+            </div>
+          </div>
         </div>
 
         <div class="journey-stream stream-function" :class="{ visible: activeScene >= 3 }">
@@ -1063,11 +1160,36 @@ onMounted(() => {
 .stream-cases { right: 4%; bottom: 31%; color: #4d91d7; text-align: right; transform: translateX(60px); }
 .stream-report { bottom: 9%; left: 50%; color: #0b63ce; text-align: center; transform: translate(-50%,30px); }
 .stream-report.visible { transform: translate(-50%,0); }
+.journey-search-demo { position: absolute; top: 17%; left: 5.5%; width: min(370px,34vw); opacity: 0; transition: visibility .2s; visibility: hidden; transform-origin: 100% 50%; }
+.journey-search-demo.visible { visibility: visible; }
+.journey-search-label { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; color: #537493; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 8px; font-weight: 700; letter-spacing: .16em; }
+.journey-search-label span { width: 6px; height: 6px; border: 1px solid #1677ff; background: #eaf4ff; box-shadow: 0 0 10px rgba(22,119,255,.42); transform: rotate(45deg); }
+.journey-search-input { display: flex; height: 42px; align-items: center; gap: 11px; padding: 0 13px; border: 1px solid #9bc8f5; background: rgba(255,255,255,.94); box-shadow: 0 10px 28px rgba(50,103,154,.12),inset 0 0 0 1px rgba(255,255,255,.9); }
+.journey-search-input i { position: relative; width: 13px; height: 13px; flex: 0 0 13px; border: 1.5px solid #1677ff; border-radius: 50%; }
+.journey-search-input i::after { position: absolute; right: -5px; bottom: -3px; width: 6px; height: 1.5px; background: #1677ff; content: ''; transform: rotate(45deg); transform-origin: left center; }
+.journey-search-input span { overflow: hidden; color: #234a70; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+.journey-search-input b { width: 1px; height: 16px; flex: 0 0 1px; background: #1677ff; animation: search-caret .72s steps(1) infinite; }
+.journey-search-status { display: flex; align-items: center; justify-content: space-between; padding: 7px 2px 12px; color: #7993ac; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 8px; letter-spacing: .12em; }
+.journey-search-status strong { color: #1677ff; font-size: 9px; }
+.journey-search-result { display: grid; grid-template-columns: 96px 1fr; gap: 14px; padding: 12px; border: 1px solid rgba(139,184,226,.72); background: rgba(255,255,255,.94); box-shadow: 0 20px 46px rgba(52,105,157,.16); opacity: 0; transform: translateY(22px) scale(.94); transition: opacity .42s ease,transform .55s cubic-bezier(.2,.8,.2,1); }
+.result-visible .journey-search-result { opacity: 1; transform: translateY(0) scale(1); }
+.journey-search-shot { position: relative; overflow: hidden; aspect-ratio: 9/18.5; border: 2px solid #d4e4f3; background: #dfeaf5; box-shadow: 0 8px 20px rgba(39,91,141,.14); }
+.journey-search-shot img { width: 100%; height: 100%; object-fit: cover; }
+.journey-search-shot span { position: absolute; top: 5px; right: 5px; display: grid; width: 22px; height: 16px; place-items: center; background: #1677ff; color: #fff; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 7px; font-weight: 800; }
+.journey-search-analysis { display: flex; min-width: 0; flex-direction: column; gap: 7px; }
+.journey-search-analysis em { color: #1677ff; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 8px; font-style: normal; font-weight: 700; letter-spacing: .1em; }
+.journey-search-analysis h3 { margin: 0; color: #173f65; font-size: 15px; letter-spacing: 0; }
+.journey-search-analysis p { margin: 0; color: #567590; font-size: 10px; line-height: 1.65; }
+.journey-search-analysis dl { display: grid; gap: 5px; margin: auto 0 0; }
+.journey-search-analysis dl div { display: flex; min-width: 0; align-items: center; justify-content: space-between; gap: 8px; border-top: 1px solid #e1ebf5; padding-top: 4px; }
+.journey-search-analysis dt { color: #8aa0b5; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 7px; }
+.journey-search-analysis dd { overflow: hidden; margin: 0; color: #365e83; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 7px; text-overflow: ellipsis; white-space: nowrap; }
 .journey-loading { position: absolute; top: 50%; left: 50%; display: grid; gap: 11px; place-items: center; transform: translate(-50%,-50%); }
 .journey-loading span { width: 34px; height: 34px; border: 1px solid #c5d9ec; border-top-color: #1677ff; border-radius: 50%; animation: journey-spin .8s linear infinite; }
 .journey-loading small { color: #6785a2; font-size: 9px; letter-spacing: .16em; }
 @keyframes journey-spin { to { transform: rotate(360deg); } }
 @keyframes hdc-scan { 0%,100% { width: 38%; opacity: .35; } 50% { width: 100%; opacity: 1; } }
+@keyframes search-caret { 50% { opacity: 0; } }
 .journey-scroll { position: absolute; z-index: 4; inset: 0; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
 .journey-scroll::-webkit-scrollbar { display: none; }
 .journey-story { position: relative; }
@@ -1111,6 +1233,8 @@ onMounted(() => {
   .journey-copy { width: min(500px,56vw); }
   .journey-copy h2 { font-size: clamp(31px,5.5vw,48px); }
   .journey-nav { left: 10px; }
+  .journey-search-demo { top: 14%; left: 4%; width: min(330px,42vw); }
+  .search-result-active .section-exploration .journey-copy { opacity: 0 !important; visibility: hidden; }
   .stream-function { left: 3%; }
   .stream-cases { right: 3%; }
 }
@@ -1129,6 +1253,10 @@ onMounted(() => {
   .journey-nav button { width: 27px; justify-content: center; }
   .journey-nav button span { display: none; }
   .journey-stream { display: none; }
+  .journey-search-demo { top: 88px; right: 16px; left: 16px; width: auto; }
+  .journey-search-result { grid-template-columns: 70px 1fr; gap: 10px; padding: 9px; }
+  .journey-search-analysis p { display: none; }
+  .journey-search-analysis h3 { font-size: 13px; }
   .journey-scroll-hint { bottom: 24px; left: 22px; transform: none; }
   @keyframes journey-hint { 50% { transform: translateY(8px); } }
 }
