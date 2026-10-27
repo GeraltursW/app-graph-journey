@@ -13,6 +13,11 @@ App Graph Journey 是从 App Graph 主项目中独立出来的三维演进展示
 - 鼠标拖拽旋转、惯性反馈和视角重置
 - 桌面端与移动端响应式布局
 - `prefers-reduced-motion` 降低动画支持
+- 机械臂用例复现演示：四张页面逐页点击、点击后切换页面并返回验证结果
+
+## 机械臂演示
+
+- [`videos/robot-four-clicks-v07-page-switch.mp4`](videos/robot-four-clicks-v07-page-switch.mp4)
 
 ## 本地运行
 
