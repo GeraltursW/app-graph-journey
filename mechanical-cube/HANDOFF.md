@@ -10,7 +10,7 @@
 - AI 图像回传、控件识别、坐标转换、机械点击和二次验证闭环。
 - 1 秒平滑转场、延长后的 AI 步骤和中文配音。
 
-当前验收成片为 `releases/latest/mechanical-cube-ai-control-voiceover.mp4`，时长约 25.917 秒，1280×720，24 fps，H.264 + AAC。
+当前验收成片为 `releases/latest/mechanical-cube-main-ai-integrated-voiceover.mp4`，时长 27.25 秒，1280×720，24 fps，H.264 + AAC。它保留原主片前 14 秒的机械结构介绍，并以 0.75 秒柔和过黑转场接入新的 AI 操作分镜。
 
 ## 已验证环境
 
@@ -30,10 +30,12 @@ Blender 使用 Workbench 渲染 PNG 帧。这个选择是有意的：测试中 E
 1. 安装 Git、Python、FFmpeg 和 Blender。
 2. 克隆仓库并进入 `mechanical-cube`。
 3. 运行 `tools/setup.ps1`，确认所有命令可用并创建 `.venv`。
-4. 先播放 `releases/latest/` 内的两份视频，确认目标效果。
+4. 先播放 `releases/latest/mechanical-cube-main-ai-integrated-voiceover.mp4`，确认目标效果。
 5. 打开 `blender/mechanical_cube_xray_intro.blend` 和 `blender/mechanical_cube_ai_control_loop.blend`，检查字体、材质和相机视图。
 6. 使用 `tools/render-latest.ps1` 完整重建，或加 `-SkipBlender` 只重做编码、转场和配音。
 7. 对照 `SHA256SUMS.txt` 验证交付文件没有损坏。
+
+若只需重新融合现有 AI 分镜，运行 `tools/integrate-ai-storyboard.ps1`。旁白时间轴位于 `config/mechanical_cube_integrated_voiceover.json`。
 
 ## 完整重建流程
 

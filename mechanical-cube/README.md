@@ -6,8 +6,10 @@
 
 ## 当前交付
 
-- 最新配音成片：[`releases/latest/mechanical-cube-ai-control-voiceover.mp4`](releases/latest/mechanical-cube-ai-control-voiceover.mp4)
-- 无声成片：[`releases/latest/mechanical-cube-ai-control-clean.mp4`](releases/latest/mechanical-cube-ai-control-clean.mp4)
+- 最新融合配音成片：[`releases/latest/mechanical-cube-main-ai-integrated-voiceover.mp4`](releases/latest/mechanical-cube-main-ai-integrated-voiceover.mp4)
+- 最新融合无声成片：[`releases/latest/mechanical-cube-main-ai-integrated-clean.mp4`](releases/latest/mechanical-cube-main-ai-integrated-clean.mp4)
+- AI 操作分镜源片：[`releases/latest/c159cc4d19a03485a4677970789f6f1a.mp4`](releases/latest/c159cc4d19a03485a4677970789f6f1a.mp4)
+- 上一版配音成片：[`releases/latest/mechanical-cube-ai-control-voiceover.mp4`](releases/latest/mechanical-cube-ai-control-voiceover.mp4)
 - 当前基础模型：[`blender/robot_base_stage01_professional.blend`](blender/robot_base_stage01_professional.blend)
 - 透视介绍镜头：[`blender/mechanical_cube_xray_intro.blend`](blender/mechanical_cube_xray_intro.blend)
 - AI 控制闭环镜头：[`blender/mechanical_cube_ai_control_loop.blend`](blender/mechanical_cube_ai_control_loop.blend)
@@ -38,6 +40,14 @@ powershell -ExecutionPolicy Bypass -File .\tools\render-latest.ps1 `
 ```
 
 首次运行会生成 `output/`。该目录是可再生缓存，不提交到 Git。完整接手步骤、已知限制和验收方法见 [HANDOFF.md](HANDOFF.md)。
+
+将新的 AI 操作分镜重新融合进主片：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\tools\integrate-ai-storyboard.ps1
+```
+
+该脚本保留主片前 14 秒结构介绍，以 0.75 秒柔和过黑转场接入 AI 分镜，并根据 `config/mechanical_cube_integrated_voiceover.json` 重新生成同步旁白。
 
 ## 目录说明
 

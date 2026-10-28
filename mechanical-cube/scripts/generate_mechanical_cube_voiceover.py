@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import subprocess
@@ -76,15 +77,37 @@ def synthesize(text: str, target: Path, config: dict[str, object]) -> None:
         )
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--config", type=Path, default=CONFIG)
+    parser.add_argument("--source-video", type=Path, default=SOURCE_VIDEO)
+    parser.add_argument("--output-video", type=Path, default=OUTPUT_VIDEO)
+    parser.add_argument("--voice-track", type=Path, default=VOICE_TRACK)
+    parser.add_argument("--report", type=Path, default=REPORT)
+    parser.add_argument("--parts", type=Path, default=PARTS)
+    return parser.parse_args()
+
+
 def main() -> None:
-    config = json.loads(CONFIG.read_text(encoding="utf-8"))
+    args = parse_args()
+    config_path = args.config.resolve()
+    source_video = args.source_video.resolve()
+    output_video = args.output_video.resolve()
+    voice_track = args.voice_track.resolve()
+    report_path = args.report.resolve()
+    parts_path = args.parts.resolve()
+
+    config = json.loads(config_path.read_text(encoding="utf-8"))
     total = float(config["total_duration"])
-    PARTS.mkdir(parents=True, exist_ok=True)
+    parts_path.mkdir(parents=True, exist_ok=True)
+    voice_track.parent.mkdir(parents=True, exist_ok=True)
+    output_video.parent.mkdir(parents=True, exist_ok=True)
+    report_path.parent.mkdir(parents=True, exist_ok=True)
 
     previous: dict[str, str] = {}
-    if REPORT.exists():
+    if report_path.exists():
         try:
-            old = json.loads(REPORT.read_text(encoding="utf-8"))
+            old = json.loads(report_path.read_text(encoding="utf-8"))
             previous = {item["id"]: item["text"] for item in old["segments"]}
         except (json.JSONDecodeError, KeyError, TypeError):
             previous = {}
@@ -92,8 +115,8 @@ def main() -> None:
     rendered: list[dict[str, object]] = []
     for segment in config["segments"]:
         segment_id = segment["id"]
-        raw = PARTS / f"{segment_id}_raw.mp3"
-        fitted = PARTS / f"{segment_id}.wav"
+        raw = parts_path / f"{segment_id}_raw.mp3"
+        fitted = parts_path / f"{segment_id}.wav"
         if not raw.exists() or previous.get(segment_id) != segment["text"]:
             print(f"Synthesize {segment_id}: {segment['text']}", flush=True)
             synthesize(segment["text"], raw, config)
@@ -144,19 +167,19 @@ def main() -> None:
     run([
         "ffmpeg", "-y", *inputs,
         "-filter_complex", ";".join(filters),
-        "-map", "[out]", "-c:a", "pcm_s16le", str(VOICE_TRACK),
+        "-map", "[out]", "-c:a", "pcm_s16le", str(voice_track),
     ])
     run([
-        "ffmpeg", "-y", "-i", str(SOURCE_VIDEO), "-i", str(VOICE_TRACK),
+        "ffmpeg", "-y", "-i", str(source_video), "-i", str(voice_track),
         "-map", "0:v:0", "-map", "1:a:0",
         "-c:v", "copy", "-c:a", "aac", "-b:a", "192k",
-        "-movflags", "+faststart", "-t", str(total), str(OUTPUT_VIDEO),
+        "-movflags", "+faststart", "-t", str(total), str(output_video),
     ])
 
     report = {
         "voice": config["voice"],
-        "audio": str(VOICE_TRACK),
-        "video": str(OUTPUT_VIDEO),
+        "audio": str(voice_track),
+        "video": str(output_video),
         "segments": [
             {
                 "id": item["id"],
@@ -169,7 +192,7 @@ def main() -> None:
             for item in rendered
         ],
     }
-    REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+    report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(report, ensure_ascii=False, indent=2), flush=True)
 
 

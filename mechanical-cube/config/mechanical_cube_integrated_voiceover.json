@@ -1,0 +1,64 @@
+{
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+8%",
+  "volume": "+0%",
+  "pitch": "-3Hz",
+  "total_duration": 27.25,
+  "segments": [
+    {
+      "id": "overview",
+      "start": 0.40,
+      "max_duration": 3.55,
+      "text": "这是一套用于手机自动化测试的机械 CUBE。"
+    },
+    {
+      "id": "mechanism",
+      "start": 4.10,
+      "max_duration": 4.05,
+      "text": "龙门架沿 X、Y 轴移动，移动头控制触笔垂直升降。"
+    },
+    {
+      "id": "camera_holder",
+      "start": 8.30,
+      "max_duration": 3.45,
+      "text": "下视摄像头随移动头定位，固定器保证手机坐标稳定。"
+    },
+    {
+      "id": "coordination",
+      "start": 11.85,
+      "max_duration": 1.25,
+      "text": "三轴机构完成初始化。"
+    },
+    {
+      "id": "capture",
+      "start": 13.95,
+      "max_duration": 1.75,
+      "text": "摄像头采集手机当前页面。"
+    },
+    {
+      "id": "feedback",
+      "start": 16.05,
+      "max_duration": 2.55,
+      "text": "图像数据通过 USB，回传 PLC 内的人工智能。"
+    },
+    {
+      "id": "recognition",
+      "start": 19.05,
+      "max_duration": 2.35,
+      "text": "人工智能识别目标控件，并计算点击位置。"
+    },
+    {
+      "id": "coordinate",
+      "start": 21.65,
+      "max_duration": 2.35,
+      "text": "目标坐标回传机械移动器。"
+    },
+    {
+      "id": "execute",
+      "start": 24.35,
+      "max_duration": 2.60,
+      "text": "移动头完成 X、Y 定位，触笔沿 Z 轴执行点击。"
+    }
+  ]
+}
+
