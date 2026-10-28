@@ -1,0 +1,14 @@
+{
+  "method": "aligned clean-reference subtraction",
+  "excerpt_seconds": 30,
+  "sample_rate": 48000,
+  "reference_correlation": 0.662014699109624,
+  "reference_gain": [
+    0.9918103895747782,
+    0.9911953477889921
+  ],
+  "residual_reference_correlation": [
+    -3.626914569360162e-07,
+    -3.9023440484941714e-07
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "duration": 88.8,
+  "opening_hold_seconds": 1.0,
+  "music_excerpt_seconds": 30.0,
+  "music_crossfade_seconds": 0.6,
+  "music_gain": 0.7,
+  "music_fade_in_seconds": 0.12,
+  "music_fade_out_seconds": 1.5,
+  "music_source": "assets/audio/music-first-30s.flac",
+  "narration_source": "assets/audio/main-narration-first-62s.flac",
+  "opening_frame": "assets/long-film-opening.png"
+}

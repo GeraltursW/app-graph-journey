@@ -7,6 +7,7 @@
 ## 当前交付
 
 - 约 89 秒完整主片：[`../videos/application-knowledge-graph-with-mechanical-replay.mp4`](../videos/application-knowledge-graph-with-mechanical-replay.mp4)
+- 当前主片第一帧直接显示“应用知识图谱”；原片前 30 秒背景音乐循环铺满全片，独立旁白保留。
 - 最新融合配音成片：[`releases/latest/mechanical-cube-main-ai-integrated-voiceover.mp4`](releases/latest/mechanical-cube-main-ai-integrated-voiceover.mp4)
 - 最新融合无声成片：[`releases/latest/mechanical-cube-main-ai-integrated-clean.mp4`](releases/latest/mechanical-cube-main-ai-integrated-clean.mp4)
 - AI 操作分镜源片：[`releases/latest/c159cc4d19a03485a4677970789f6f1a.mp4`](releases/latest/c159cc4d19a03485a4677970789f6f1a.mp4)
@@ -67,6 +68,16 @@ pwsh -File .\mechanical-cube\tools\build-analytics-outro.ps1 -BlenderExe "D:\too
 ```
 
 生成文件位于 `mechanical-cube/output/final-analytics-v3/`。检查后将 `analytics-outro-voiceover.mp4` 复制到 `releases/latest/`，再运行长片合成脚本。初次需要执行 `tools/setup.ps1` 安装 Pillow 和 edge-tts。图表数值为演示数据。
+
+最后处理片头和循环背景音乐（不需要重新渲染 Blender，也不需要联网）：
+
+```powershell
+python .\mechanical-cube\scripts\finalize_long_film.py
+```
+
+输出为 `mechanical-cube/output/application-knowledge-graph-final-music.mp4`，检查后可替换发布主片。脚本用完整标题画面覆盖首秒，保持 88.8 秒时长和配音同步。音乐源为 `assets/audio/music-first-30s.flac`，重复三次，在 29.4 秒及 58.8 秒开始 0.6 秒交叉淡化，末尾柔和淡出。参数位于 `config/long_film_audio.json`。
+
+原片音乐与配音已混在同一音轨，音乐素材使用匹配的干净旁白参考进行相减提取；无损 FLAC 已随工程保存。需要重新提取时，安装 NumPy 并运行 `scripts/extract_background_music.py`。普通合成仅依赖 Python 标准库和 FFmpeg。
 
 ## 目录说明
 
