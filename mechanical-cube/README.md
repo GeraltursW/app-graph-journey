@@ -6,12 +6,12 @@
 
 ## 当前交付
 
-- 80 秒完整主片：[`../videos/application-knowledge-graph-with-mechanical-replay.mp4`](../videos/application-knowledge-graph-with-mechanical-replay.mp4)
+- 约 89 秒完整主片：[`../videos/application-knowledge-graph-with-mechanical-replay.mp4`](../videos/application-knowledge-graph-with-mechanical-replay.mp4)
 - 最新融合配音成片：[`releases/latest/mechanical-cube-main-ai-integrated-voiceover.mp4`](releases/latest/mechanical-cube-main-ai-integrated-voiceover.mp4)
 - 最新融合无声成片：[`releases/latest/mechanical-cube-main-ai-integrated-clean.mp4`](releases/latest/mechanical-cube-main-ai-integrated-clean.mp4)
 - AI 操作分镜源片：[`releases/latest/c159cc4d19a03485a4677970789f6f1a.mp4`](releases/latest/c159cc4d19a03485a4677970789f6f1a.mp4)
-- 最新分析镜头：[`releases/latest/final-analytics-v2-voiceover.mp4`](releases/latest/final-analytics-v2-voiceover.mp4)
-- 最新分析镜头 Blender 源文件：[`blender/final_analytics_v2.blend`](blender/final_analytics_v2.blend)
+- 最新结尾（测试完成 → 数据汇聚 → 报表，含旁白）：[`releases/latest/analytics-outro-voiceover.mp4`](releases/latest/analytics-outro-voiceover.mp4)
+- 最新分析镜头 Blender 源文件：[`blender/final_analytics_v3.blend`](blender/final_analytics_v3.blend)
 - 上一版配音成片：[`releases/latest/mechanical-cube-ai-control-voiceover.mp4`](releases/latest/mechanical-cube-ai-control-voiceover.mp4)
 - 当前基础模型：[`blender/robot_base_stage01_professional.blend`](blender/robot_base_stage01_professional.blend)
 - 透视介绍镜头：[`blender/mechanical_cube_xray_intro.blend`](blender/mechanical_cube_xray_intro.blend)
@@ -58,7 +58,15 @@ powershell -ExecutionPolicy Bypass -File .\tools\integrate-ai-storyboard.ps1
 pwsh -File .\mechanical-cube\tools\insert-into-long-film-after-shot09.ps1
 ```
 
-插入后顺序为“09 实验室手机复现 → 4 秒章节过渡 → 机械手 AI 复现方案 → 10 数据分析”，成片时长约 83.94 秒。过渡卡明确提示“接下来演示 AI 控制机械手完成用例复现”。最后一幕采用黑白线框与斜纹背景，配合 ECharts 式性能、功耗和热数据图表。
+插入后顺序为“09 实验室手机复现 → 4 秒章节过渡 → 机械手 AI 复现方案 → 测试完成与数据汇聚 → 10 数据分析”，成片时长约 88.8 秒。机械手最后一帧连续缩放为设备卡片，性能、功耗、热三路数据流向报表，以 1 秒叠化进入黑白斜纹背景的图表。旁白为“测试完成后，性能、功耗、热等数据同步汇聚，数据报表一目了然”。
+
+从源文件重建这一段：
+
+```powershell
+pwsh -File .\mechanical-cube\tools\build-analytics-outro.ps1 -BlenderExe "D:\tools\blender-5.4.0\blender.exe"
+```
+
+生成文件位于 `mechanical-cube/output/final-analytics-v3/`。检查后将 `analytics-outro-voiceover.mp4` 复制到 `releases/latest/`，再运行长片合成脚本。初次需要执行 `tools/setup.ps1` 安装 Pillow 和 edge-tts。图表数值为演示数据。
 
 ## 目录说明
 

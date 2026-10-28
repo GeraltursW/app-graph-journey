@@ -160,7 +160,7 @@ def main() -> None:
     filters.append(
         "".join(labels)
         + f"amix=inputs={len(labels)}:duration=longest:normalize=0,"
-        + "loudnorm=I=-16:LRA=6:TP=-1.5,"
+        + "loudnorm=I=-16:LRA=6:TP=-1.5,aresample=48000,"
         + f"apad=whole_dur={total},atrim=end={total},"
         + "aformat=sample_fmts=s16:sample_rates=48000:channel_layouts=stereo[out]"
     )
@@ -173,6 +173,7 @@ def main() -> None:
         "ffmpeg", "-y", "-i", str(source_video), "-i", str(voice_track),
         "-map", "0:v:0", "-map", "1:a:0",
         "-c:v", "copy", "-c:a", "aac", "-b:a", "192k",
+        "-af", f"apad=whole_dur={total},atrim=end={total}",
         "-movflags", "+faststart", "-t", str(total), str(output_video),
     ])
 

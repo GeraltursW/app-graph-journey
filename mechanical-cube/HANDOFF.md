@@ -62,6 +62,11 @@ Blender 使用 Workbench 渲染 PNG 帧。这个选择是有意的：测试中 E
 
 ## 主要入口
 
+- 结尾连续转场重建：`tools/build-analytics-outro.ps1`（Blender + Pillow + FFmpeg + edge-tts）
+- 结尾运动与文字：`scripts/render_analytics_bridge.py`，配音：`config/analytics_outro_voiceover.json`
+- 分析镜头修正：`scripts/render_final_analytics_v3.py`，从保留的 v2 Blender 工程重建 v3。
+- 结尾时序：设备画面 0–1.65 秒缩放，三路数据 1.65–4 秒汇聚，4–5 秒叠化，4–10 秒展开报表。
+- 全片将结尾接在 78.8 秒之后；各音轨补齐到实际画面时长，不截断最后一次点击。
 - 当前结构建模：`scripts/build_robot_base_stage01.py`
 - X-ray 介绍：`scripts/render_robot_cube_xray_intro.py`
 - AI 闭环：`scripts/render_robot_cube_ai_control_loop.py`

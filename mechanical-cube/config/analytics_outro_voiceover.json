@@ -1,0 +1,12 @@
+{
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+5%",
+  "volume": "+0%",
+  "pitch": "-3Hz",
+  "total_duration": 10.0,
+  "segments": [
+    {"id": "complete", "start": 0.8, "max_duration": 1.6, "text": "测试完成后，"},
+    {"id": "converge", "start": 2.5, "max_duration": 3.8, "text": "性能、功耗、热等数据同步汇聚，"},
+    {"id": "report", "start": 6.9, "max_duration": 2.5, "text": "数据报表一目了然。"}
+  ]
+}
