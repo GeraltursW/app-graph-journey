@@ -1,0 +1,19 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1280
+PlayResY: 720
+WrapStyle: 2
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: HUD,Microsoft YaHei,27,&H00FFFFFF,&H00FFFFFF,&H90000000,&H78070B10,-1,0,0,0,100,100,0,0,3,1,0,7,54,40,44,1
+Style: Done,Microsoft YaHei,30,&H0038FF9A,&H0038FF9A,&H90000000,&H78070B10,-1,0,0,0,100,100,0,0,3,1,0,7,54,40,44,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:01.30,HUD,,0,0,0,,01  摄像头采集页面\N下视相机拍照并回传 AI
+Dialogue: 0,0:00:01.30,0:00:02.55,HUD,,0,0,0,,02  AI 识别与坐标转换\N屏幕像素 (u, v) → 机械坐标 (X, Y)
+Dialogue: 0,0:00:02.55,0:00:04.55,HUD,,0,0,0,,03  XY 轴定位\N龙门架移动到目标坐标
+Dialogue: 0,0:00:04.55,0:00:05.85,HUD,,0,0,0,,04  Z 轴执行点击\N安全高度 → 触碰 → 抬起
+Dialogue: 0,0:00:05.85,0:00:07.10,HUD,,0,0,0,,05  摄像头二次拍照\N页面变化回传 AI 进行验证
+Dialogue: 0,0:00:07.10,0:00:08.00,Done,,0,0,0,,AI 控制闭环完成\N感知 → 推理 → 执行 → 复核

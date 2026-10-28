@@ -1,0 +1,57 @@
+{
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+8%",
+  "volume": "+0%",
+  "pitch": "-3Hz",
+  "total_duration": 25.916667,
+  "segments": [
+    {
+      "id": "overview",
+      "start": 0.40,
+      "max_duration": 3.55,
+      "text": "这是一套用于手机自动化测试的机械 CUBE。"
+    },
+    {
+      "id": "mechanism",
+      "start": 4.10,
+      "max_duration": 4.05,
+      "text": "龙门架沿 X、Y 轴移动，移动头控制触笔垂直升降。"
+    },
+    {
+      "id": "camera_holder",
+      "start": 8.30,
+      "max_duration": 3.90,
+      "text": "下视摄像头随移动头定位，固定器保证手机坐标稳定。"
+    },
+    {
+      "id": "coordination",
+      "start": 12.40,
+      "max_duration": 2.05,
+      "text": "三轴协同，完成精准定位。"
+    },
+    {
+      "id": "capture",
+      "start": 14.55,
+      "max_duration": 3.35,
+      "text": "摄像头拍摄页面，并把图像回传人工智能。"
+    },
+    {
+      "id": "recognition",
+      "start": 18.00,
+      "max_duration": 3.45,
+      "text": "人工智能识别目标控件，将像素转换为机械坐标。"
+    },
+    {
+      "id": "execute",
+      "start": 21.55,
+      "max_duration": 2.15,
+      "text": "机械结构完成定位与点击。"
+    },
+    {
+      "id": "verification",
+      "start": 23.78,
+      "max_duration": 1.98,
+      "text": "二次拍照验证，控制闭环完成。"
+    }
+  ]
+}
