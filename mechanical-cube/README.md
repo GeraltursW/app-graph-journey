@@ -10,6 +10,8 @@
 - 最新融合配音成片：[`releases/latest/mechanical-cube-main-ai-integrated-voiceover.mp4`](releases/latest/mechanical-cube-main-ai-integrated-voiceover.mp4)
 - 最新融合无声成片：[`releases/latest/mechanical-cube-main-ai-integrated-clean.mp4`](releases/latest/mechanical-cube-main-ai-integrated-clean.mp4)
 - AI 操作分镜源片：[`releases/latest/c159cc4d19a03485a4677970789f6f1a.mp4`](releases/latest/c159cc4d19a03485a4677970789f6f1a.mp4)
+- 最新分析镜头：[`releases/latest/final-analytics-v2-voiceover.mp4`](releases/latest/final-analytics-v2-voiceover.mp4)
+- 最新分析镜头 Blender 源文件：[`blender/final_analytics_v2.blend`](blender/final_analytics_v2.blend)
 - 上一版配音成片：[`releases/latest/mechanical-cube-ai-control-voiceover.mp4`](releases/latest/mechanical-cube-ai-control-voiceover.mp4)
 - 当前基础模型：[`blender/robot_base_stage01_professional.blend`](blender/robot_base_stage01_professional.blend)
 - 透视介绍镜头：[`blender/mechanical_cube_xray_intro.blend`](blender/mechanical_cube_xray_intro.blend)
@@ -56,7 +58,7 @@ powershell -ExecutionPolicy Bypass -File .\tools\integrate-ai-storyboard.ps1
 pwsh -File .\mechanical-cube\tools\insert-into-long-film-after-shot09.ps1
 ```
 
-插入后顺序为“09 实验室手机复现 → 4 秒章节过渡 → 机械手 AI 复现方案 → 10 数据分析”，成片时长约 83.78 秒。过渡卡明确提示“接下来演示 AI 控制机械手完成用例复现”。
+插入后顺序为“09 实验室手机复现 → 4 秒章节过渡 → 机械手 AI 复现方案 → 10 数据分析”，成片时长约 83.94 秒。过渡卡明确提示“接下来演示 AI 控制机械手完成用例复现”。最后一幕采用黑白线框与斜纹背景，配合 ECharts 式性能、功耗和热数据图表。
 
 ## 目录说明
 
