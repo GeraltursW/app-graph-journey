@@ -1,0 +1,15 @@
+{
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+7%",
+  "volume": "+0%",
+  "pitch": "-3Hz",
+  "total_duration": 4.0,
+  "segments": [
+    {
+      "id": "transition",
+      "start": 0.28,
+      "max_duration": 3.45,
+      "text": "接下来，演示人工智能控制机械手，完成测试用例复现。"
+    }
+  ]
+}

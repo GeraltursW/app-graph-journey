@@ -56,7 +56,7 @@ powershell -ExecutionPolicy Bypass -File .\tools\integrate-ai-storyboard.ps1
 pwsh -File .\mechanical-cube\tools\insert-into-long-film-after-shot09.ps1
 ```
 
-插入后顺序为“09 实验室手机复现 → 机械手 AI 复现方案 → 10 数据分析”，成片时长约 80.23 秒。
+插入后顺序为“09 实验室手机复现 → 4 秒章节过渡 → 机械手 AI 复现方案 → 10 数据分析”，成片时长约 83.78 秒。过渡卡明确提示“接下来演示 AI 控制机械手完成用例复现”。
 
 ## 目录说明
 
