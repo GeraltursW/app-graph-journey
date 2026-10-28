@@ -6,6 +6,7 @@
 
 ## 当前交付
 
+- 80 秒完整主片：[`../videos/application-knowledge-graph-with-mechanical-replay.mp4`](../videos/application-knowledge-graph-with-mechanical-replay.mp4)
 - 最新融合配音成片：[`releases/latest/mechanical-cube-main-ai-integrated-voiceover.mp4`](releases/latest/mechanical-cube-main-ai-integrated-voiceover.mp4)
 - 最新融合无声成片：[`releases/latest/mechanical-cube-main-ai-integrated-clean.mp4`](releases/latest/mechanical-cube-main-ai-integrated-clean.mp4)
 - AI 操作分镜源片：[`releases/latest/c159cc4d19a03485a4677970789f6f1a.mp4`](releases/latest/c159cc4d19a03485a4677970789f6f1a.mp4)
@@ -48,6 +49,14 @@ powershell -ExecutionPolicy Bypass -File .\tools\integrate-ai-storyboard.ps1
 ```
 
 该脚本保留主片前 14 秒结构介绍，以 0.75 秒柔和过黑转场接入 AI 分镜，并根据 `config/mechanical_cube_integrated_voiceover.json` 重新生成同步旁白。
+
+要把机械手复现方案插入 10 月 27 日长片的 09 镜头之后：
+
+```powershell
+pwsh -File .\mechanical-cube\tools\insert-into-long-film-after-shot09.ps1
+```
+
+插入后顺序为“09 实验室手机复现 → 机械手 AI 复现方案 → 10 数据分析”，成片时长约 80.23 秒。
 
 ## 目录说明
 
