@@ -7,6 +7,7 @@
 ## 当前交付
 
 - 约 89 秒完整主片：[`../videos/application-knowledge-graph-with-mechanical-replay.mp4`](../videos/application-knowledge-graph-with-mechanical-replay.mp4)
+- 71.4 秒独立主片也已同步第五幕修改，保留其连续配乐：[`../videos/application-knowledge-graph-and-data.mp4`](../videos/application-knowledge-graph-and-data.mp4)。
 - 当前主片第一帧直接显示“应用知识图谱”；原片前 30 秒背景音乐循环铺满全片，独立旁白保留。
 - 第五幕已改为“疑似问题场景”：ROOT 逐层探索、两层横向查找、AI 补全原本缺失的关联，再将用户实际场景固化为用例。
 - 第五幕带配音和音乐的衔接预览：[`releases/latest/scenario-path-preview.mp4`](releases/latest/scenario-path-preview.mp4)。
@@ -88,6 +89,8 @@ pwsh -File .\mechanical-cube\tools\build-scenario-path.ps1
 ```
 
 该命令生成 21 秒新分镜及配音，再合成至 88.8 秒主片。现有音乐和片头逻辑继续使用 `finalize_long_film.py`。输出到 `mechanical-cube/output/scenario-path-v1/`，检查后再替换发布主片。
+
+同一命令也输出 71.4 秒独立主片，使用 `integrate_scenario_path.py --preserve-source-music`。底片为 `releases/iterations/12-app-graph-data-continuous-music-v1.6.mp4`；仅在 26–45 秒用匹配的干净配音参考消除旧旁白并加入新旁白，保留原来的连续配乐。
 
 - 动画：`scripts/render_scenario_path.py`（Pillow + FFmpeg，720p / 60 fps）。
 - 文案：`config/scenario_path_voiceover.json`；已合成旁白保存在 `assets/audio/scenario-path-voiceover.wav`。

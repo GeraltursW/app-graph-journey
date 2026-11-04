@@ -21,3 +21,7 @@ Copy-Item -LiteralPath (Join-Path $OutputDirectory 'scenario-path-clean.mp4') -D
 Copy-Item -LiteralPath (Join-Path $OutputDirectory 'scenario-path-voiceover.wav') -Destination (Join-Path $ProjectRoot 'assets\audio\scenario-path-voiceover.wav') -Force
 & $Python (Join-Path $ProjectRoot 'scripts\integrate_scenario_path.py') --output (Join-Path $OutputDirectory 'application-knowledge-graph-scenario.mp4')
 Check-Exit 'Full-film assembly'
+& $Python (Join-Path $ProjectRoot 'scripts\integrate_scenario_path.py') `
+    --source (Join-Path $ProjectRoot 'releases\iterations\12-app-graph-data-continuous-music-v1.6.mp4') `
+    --preserve-source-music --output (Join-Path $OutputDirectory 'application-knowledge-graph-and-data-scenario.mp4')
+Check-Exit 'Standalone main film assembly'

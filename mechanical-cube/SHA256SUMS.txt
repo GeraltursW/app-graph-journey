@@ -21,5 +21,7 @@ ff755145ab0949fc41c45bfdf9d3cc8e63027ced0fabbe814c95f213d6acde21  assets/audio/m
 5ebeef6596c0e5c465022b9d71d4dfcdea5916bbd9e991135b355cbfacfcfd33  assets/long-film-opening.png
 817c7ba458e9b6fa11b789e8b4ed1f8d72cfc9adf44bb490db663cbbdf882216  releases/iterations/11-long-film-looped-music-v1.6.mp4
 1c4875b52b7036e302418112117216b85924d47d4555d3216ecf0190e6adcffb  releases/latest/scenario-path-clean.mp4
-51269bb6efb9d9cd5afba14049b80ace85749d9936bc04235043d2f3fb445ee2  releases/latest/scenario-path-preview.mp4
+212e0697aa0808573e23534b6b7d101cf2b0468f1f5b663eb861cbccc908209a  releases/latest/scenario-path-preview.mp4
 ccb5395c0d12c9f109085f82be360fab780e0d65508bf1c9c7e3d04e1001d9d1  assets/audio/scenario-path-voiceover.wav
+90f2e4ba5fb4e98b845d1c2f0777c1a3fed6e8689fab3a58fb5947636f869f45  ../videos/application-knowledge-graph-and-data.mp4
+6bb93e2ad4416c1904a14cb195bec1532b07ab9b166ecdc119b50c49a4a8d009  releases/iterations/12-app-graph-data-continuous-music-v1.6.mp4
