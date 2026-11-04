@@ -25,3 +25,13 @@ Check-Exit 'Full-film assembly'
     --source (Join-Path $ProjectRoot 'releases\iterations\12-app-graph-data-continuous-music-v1.6.mp4') `
     --preserve-source-music --output (Join-Path $OutputDirectory 'application-knowledge-graph-and-data-scenario.mp4')
 Check-Exit 'Standalone main film assembly'
+& $Python (Join-Path $ProjectRoot 'scripts\smooth_scenario_transitions.py') `
+    --source (Join-Path $OutputDirectory 'application-knowledge-graph-and-data-scenario.mp4') `
+    --out (Join-Path $OutputDirectory 'smooth-transitions') `
+    --output (Join-Path $OutputDirectory 'application-knowledge-graph-and-data-smooth.mp4')
+Check-Exit 'Main-film smooth transitions'
+& $Python (Join-Path $ProjectRoot 'scripts\smooth_scenario_transitions.py') `
+    --source (Join-Path $OutputDirectory 'application-knowledge-graph-scenario.mp4') `
+    --out (Join-Path $OutputDirectory 'smooth-transitions') --reuse-transitions `
+    --output (Join-Path $OutputDirectory 'application-knowledge-graph-mechanical-smooth.mp4')
+Check-Exit 'Integrated-film smooth transitions'

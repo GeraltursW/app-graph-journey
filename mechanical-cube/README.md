@@ -8,6 +8,7 @@
 
 - 约 89 秒完整主片：[`../videos/application-knowledge-graph-with-mechanical-replay.mp4`](../videos/application-knowledge-graph-with-mechanical-replay.mp4)
 - 71.4 秒独立主片也已同步第五幕修改，保留其连续配乐：[`../videos/application-knowledge-graph-and-data.mp4`](../videos/application-knowledge-graph-and-data.mp4)。
+- 第五幕已完整合入主片：1.2 秒柔和推进进入，1.4 秒保持节点位置接入用例卡片，文字错开淡入淡出。
 - 当前主片第一帧直接显示“应用知识图谱”；原片前 30 秒背景音乐循环铺满全片，独立旁白保留。
 - 第五幕已改为“疑似问题场景”：ROOT 逐层探索、两层横向查找、AI 补全原本缺失的关联，再将用户实际场景固化为用例。
 - 第五幕带配音和音乐的衔接预览：[`releases/latest/scenario-path-preview.mp4`](releases/latest/scenario-path-preview.mp4)。
@@ -94,11 +95,13 @@ pwsh -File .\mechanical-cube\tools\build-scenario-path.ps1
 
 - 动画：`scripts/render_scenario_path.py`（Pillow + FFmpeg，720p / 60 fps）。
 - 文案：`config/scenario_path_voiceover.json`；已合成旁白保存在 `assets/audio/scenario-path-voiceover.wav`。
-- 合成：`scripts/integrate_scenario_path.py`；新画面位于主片 26–47 秒，末帧延长并在 48–48.4 秒叠化回用例固化。
+- 基础合成：`scripts/integrate_scenario_path.py`；新分镜主体位于主片 26–47 秒，随后由下述最终转场步骤接入用例固化。
 - 合成底片固定为 `releases/iterations/11-long-film-looped-music-v1.6.mp4`，重复执行不会累积叠化效果。
 - 配音替换范围为 26–45 秒；45 秒后的用例固化旁白保持连续。
 - 相似页面召回保留为约 2.7 秒独立画面。第 2、3 层横向搜索仅用扫描提示，不预先创建边。
 - “我的页面 → 我的喜欢”初始没有连线；13.4 秒开始由 AI 补出紫色连接，保留关联标记，随后亮起整条实际场景路径。
+
+最终转场由 `scripts/smooth_scenario_transitions.py` 完成，已纳入 `build-scenario-path.ps1`：25.2–26.4 秒进入新场景；47–48.4 秒从水平路径接入就位后的用例卡片。文字区域采用边缘柔化与错峰淡化，避免同时显示两套字幕。该步骤直接复制主片音轨，配音和音乐不重新混合。重建后的最终文件名分别以 `and-data-smooth.mp4` 和 `mechanical-smooth.mp4` 结尾。
 
 ## 目录说明
 
