@@ -6,6 +6,8 @@
 
 ## 当前交付
 
+- 第二幕（00:06–00:14）的画面文案和配音统一为“人工智能持续探索页面，理解页面层级。”，已同步两版完整主片。
+- 第二幕含配乐预览：[`releases/latest/page-exploration-preview.mp4`](releases/latest/page-exploration-preview.mp4)；独立可编辑工程：[`blender/page-exploration.blend`](blender/page-exploration.blend)。
 - 约 89 秒完整主片：[`../videos/application-knowledge-graph-with-mechanical-replay.mp4`](../videos/application-knowledge-graph-with-mechanical-replay.mp4)
 - 71.4 秒独立主片也已同步第五幕修改，保留其连续配乐：[`../videos/application-knowledge-graph-and-data.mp4`](../videos/application-knowledge-graph-and-data.mp4)。
 - 第五幕已完整合入主片：1.2 秒柔和推进进入，1.4 秒保持节点位置接入用例卡片，文字错开淡入淡出。
@@ -101,7 +103,9 @@ pwsh -File .\mechanical-cube\tools\build-scenario-path.ps1
 - 相似页面召回保留为约 2.7 秒独立画面。第 2、3 层横向搜索仅用扫描提示，不预先创建边。
 - “我的页面 → 我的喜欢”初始没有连线；13.4 秒开始由 AI 补出紫色连接，保留关联标记，随后亮起整条实际场景路径。
 
-最终转场由 `scripts/smooth_scenario_transitions.py` 完成，已纳入 `build-scenario-path.ps1`：25.2–26.4 秒进入新场景；47–48.4 秒从水平路径接入就位后的用例卡片。文字区域采用边缘柔化与错峰淡化，避免同时显示两套字幕。该步骤直接复制主片音轨，配音和音乐不重新混合。重建后的最终文件名分别以 `and-data-smooth.mp4` 和 `mechanical-smooth.mp4` 结尾。
+第五幕转场由 `scripts/smooth_scenario_transitions.py` 完成，已纳入 `build-scenario-path.ps1`：25.2–26.4 秒进入新场景；47–48.4 秒从水平路径接入就位后的用例卡片。文字区域采用边缘柔化与错峰淡化，避免同时显示两套字幕。该步骤直接复制主片音轨。随后 `integrate_page_exploration.py` 合入第二幕的新画面与配音，最终文件名分别以 `and-data-final.mp4` 和 `mechanical-final.mp4` 结尾。
+
+第二幕需要重新修改时，先更新 `config/page_exploration.json` 和 `config/page_exploration_voiceover.json`，执行 `tools/build-page-exploration.ps1 -BlenderExe "你的 Blender 路径"`，再执行上面的完整合成命令。已有可复用的第二幕素材随仓库交付，普通重建无需再次运行 Blender。
 
 ## 目录说明
 

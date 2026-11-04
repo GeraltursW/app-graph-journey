@@ -2,6 +2,17 @@
 
 ## 交付状态
 
+2026-11-05 v1.7.2：第二幕（6–14 秒）画面和配音改为“人工智能持续探索页面，理解页面层级。”。两版完整主片均已同步，分别为 71.4 秒与 88.8 秒。第二幕以原生 30 fps 重渲染，主片保持 1280×720 / 60 fps 输出。
+
+第二幕独立工程为 `blender/page-exploration.blend`（Eevee，中文字体已打包），文字在 `config/page_exploration.json`，配音在 `config/page_exploration_voiceover.json`。更改后运行：
+
+```powershell
+pwsh -File .\tools\build-page-exploration.ps1 -BlenderExe "D:\tools\blender-5.4.0\blender.exe"
+pwsh -File .\tools\build-scenario-path.ps1
+```
+
+第二条命令从归档基片重建第五幕和转场，再合入第二幕；最终输出为 `output/scenario-path-v1/application-knowledge-graph-and-data-final.mp4` 与 `application-knowledge-graph-mechanical-final.mp4`。检查后将它们分别替换到 `../videos/` 的两版发布主片。单独运行 `integrate_page_exploration.py` 时，输入必须是尚未修改第二幕的旧基片，不能对已更新主片重复应用：它利用原始干净旁白抵消 6.6–13.2 秒的旧语音，再加入新旁白，保留背景音乐以及前一幕结束的配音。无需联网重建时可直接复用已交付的第二幕 MP4 和 WAV。
+
 2026-11-05 更新：新第五幕已以连贯转场合入 71.4 秒主片与 88.8 秒机械手融合版。最终处理入口为 `scripts/smooth_scenario_transitions.py`，已并入 `tools/build-scenario-path.ps1`。进入转场 25.2–26.4 秒；退出转场 47–48.4 秒，匹配水平节点位置并错开文字淡化。该步骤直接复制音轨，已验证处理前后音频数据哈希一致。
 
 2026-11-04 更新：第五幕从“输入 URL”改为“疑似问题场景”，包含 ROOT 逐层探索、同层横向查找和 AI 补全缺失连接。当前完整片仍在 `../videos/application-knowledge-graph-with-mechanical-replay.mp4`。重建这一段并合成主片使用 `tools/build-scenario-path.ps1`。早期 Blender 工程保留原 URL 分镜作为历史来源；当前最终流程必须执行这一步画面替换。

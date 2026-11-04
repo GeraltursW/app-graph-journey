@@ -35,3 +35,11 @@ Check-Exit 'Main-film smooth transitions'
     --out (Join-Path $OutputDirectory 'smooth-transitions') --reuse-transitions `
     --output (Join-Path $OutputDirectory 'application-knowledge-graph-mechanical-smooth.mp4')
 Check-Exit 'Integrated-film smooth transitions'
+& $Python (Join-Path $ProjectRoot 'scripts\integrate_page_exploration.py') `
+    --source (Join-Path $OutputDirectory 'application-knowledge-graph-and-data-smooth.mp4') `
+    --output (Join-Path $OutputDirectory 'application-knowledge-graph-and-data-final.mp4')
+Check-Exit 'Main-film page exploration update'
+& $Python (Join-Path $ProjectRoot 'scripts\integrate_page_exploration.py') `
+    --source (Join-Path $OutputDirectory 'application-knowledge-graph-mechanical-smooth.mp4') `
+    --output (Join-Path $OutputDirectory 'application-knowledge-graph-mechanical-final.mp4')
+Check-Exit 'Integrated-film page exploration update'

@@ -1,0 +1,11 @@
+{
+  "scene": "shot_02_exploration",
+  "start": 6.0,
+  "duration": 8.0,
+  "title": "人工智能持续探索页面",
+  "caption": "人工智能持续探索页面，理解页面层级。",
+  "labels": ["人工智能", "持续探索", "理解层级"],
+  "audio_replace_start": 6.6,
+  "audio_replace_end": 13.2,
+  "voice_gain": 0.8
+}

@@ -1,0 +1,64 @@
+{
+  "version": "v1.7.2",
+  "text": "人工智能持续探索页面，理解页面层级。",
+  "rendered_frames": 240,
+  "render_fps": 30,
+  "output_fps": 60,
+  "visual_review": "phone border, updated labels/caption and camera transition checked",
+  "videos": [
+    {
+      "file": "application-knowledge-graph-and-data.mp4",
+      "media": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "width": 1280,
+            "height": 720,
+            "r_frame_rate": "60/1",
+            "duration": "71.400000"
+          },
+          {
+            "codec_name": "aac",
+            "r_frame_rate": "0/0",
+            "duration": "71.400000"
+          }
+        ],
+        "format": {
+          "duration": "71.400000"
+        }
+      },
+      "preceding_audio_correlation": 0.999751,
+      "shot_audio_peak_dbfs": -4.87,
+      "full_decode": "passed"
+    },
+    {
+      "file": "application-knowledge-graph-with-mechanical-replay.mp4",
+      "media": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "width": 1280,
+            "height": 720,
+            "r_frame_rate": "60/1",
+            "duration": "88.800000"
+          },
+          {
+            "codec_name": "aac",
+            "r_frame_rate": "0/0",
+            "duration": "88.800000"
+          }
+        ],
+        "format": {
+          "duration": "88.800000"
+        }
+      },
+      "preceding_audio_correlation": 0.999741,
+      "shot_audio_peak_dbfs": -5.26,
+      "full_decode": "passed"
+    }
+  ]
+}

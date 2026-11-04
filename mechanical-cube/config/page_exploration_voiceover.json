@@ -1,0 +1,10 @@
+{
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+5%",
+  "volume": "+0%",
+  "pitch": "-2Hz",
+  "total_duration": 6.6,
+  "segments": [
+    {"id":"page_exploration","start":0.2,"max_duration":6.0,"text":"人工智能持续探索页面，理解页面层级。"}
+  ]
+}
