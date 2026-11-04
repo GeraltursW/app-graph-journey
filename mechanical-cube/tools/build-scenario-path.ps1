@@ -1,0 +1,23 @@
+param([string]$OutputDirectory = '')
+$ErrorActionPreference = 'Stop'
+$ProjectRoot = Split-Path -Parent $PSScriptRoot
+if (-not $OutputDirectory) { $OutputDirectory = Join-Path $ProjectRoot 'output\scenario-path-v1' }
+New-Item -ItemType Directory -Path $OutputDirectory -Force | Out-Null
+$OutputDirectory = (Resolve-Path -LiteralPath $OutputDirectory).Path
+$Python = Join-Path $ProjectRoot '.venv\Scripts\python.exe'
+if (-not (Test-Path -LiteralPath $Python)) { $Python = 'python' }
+function Check-Exit([string]$Step) { if ($LASTEXITCODE -ne 0) { throw "$Step failed" } }
+& $Python (Join-Path $ProjectRoot 'scripts\render_scenario_path.py') --out $OutputDirectory
+Check-Exit 'Scenario rendering'
+& $Python (Join-Path $ProjectRoot 'scripts\generate_mechanical_cube_voiceover.py') `
+    --config (Join-Path $ProjectRoot 'config\scenario_path_voiceover.json') `
+    --source-video (Join-Path $OutputDirectory 'scenario-path-clean.mp4') `
+    --output-video (Join-Path $OutputDirectory 'scenario-path-voiceover.mp4') `
+    --voice-track (Join-Path $OutputDirectory 'scenario-path-voiceover.wav') `
+    --report (Join-Path $OutputDirectory 'voiceover-report.json') `
+    --parts (Join-Path $OutputDirectory 'voiceover-parts')
+Check-Exit 'Scenario narration'
+Copy-Item -LiteralPath (Join-Path $OutputDirectory 'scenario-path-clean.mp4') -Destination (Join-Path $ProjectRoot 'releases\latest\scenario-path-clean.mp4') -Force
+Copy-Item -LiteralPath (Join-Path $OutputDirectory 'scenario-path-voiceover.wav') -Destination (Join-Path $ProjectRoot 'assets\audio\scenario-path-voiceover.wav') -Force
+& $Python (Join-Path $ProjectRoot 'scripts\integrate_scenario_path.py') --output (Join-Path $OutputDirectory 'application-knowledge-graph-scenario.mp4')
+Check-Exit 'Full-film assembly'

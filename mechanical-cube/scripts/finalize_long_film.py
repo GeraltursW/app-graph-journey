@@ -4,6 +4,7 @@ import argparse
 import json
 import math
 import subprocess
+import shutil
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -23,6 +24,7 @@ def main():
     work=a.output.parent/'audio-master-work'
     work.mkdir(parents=True,exist_ok=True)
     narration=work/'narration.wav'
+    base_narration=work/'narration-base.wav'
     audio_filters=[
         '[0:a]aresample=48000,aformat=channel_layouts=stereo,asetpts=PTS-STARTPTS,apad=whole_dur=62,atrim=end=62[a]',
         '[1:a]aresample=48000,aformat=channel_layouts=stereo,asetpts=PTS-STARTPTS,apad=whole_dur=4,atrim=end=4[b]',
@@ -36,7 +38,17 @@ def main():
          '-i',str(ROOT/'releases/latest/mechanical-transition-card-voiceover.mp4'),
          '-i',str(ROOT/'releases/latest/mechanical-cube-main-ai-integrated-voiceover.mp4'),
          '-i',str(ROOT/'releases/latest/analytics-outro-voiceover.wav'),
-         '-filter_complex',';'.join(audio_filters),'-map','[out]','-c:a','pcm_s24le',str(narration)])
+         '-filter_complex',';'.join(audio_filters),'-map','[out]','-c:a','pcm_s24le',str(base_narration)])
+    replacement=c.get('narration_replacement')
+    if replacement:
+        start=float(replacement['start']);length=float(replacement['duration'])
+        run(['-i',str(base_narration),'-i',str(ROOT/replacement['source']),
+             '-filter_complex',f'[0:a]asplit=2[old1][old2];[old1]atrim=end={start},asetpts=PTS-STARTPTS[a];'
+                 f'[1:a]aresample=48000,aformat=channel_layouts=stereo,apad=whole_dur={length},atrim=end={length},asetpts=PTS-STARTPTS,volume={replacement.get("gain",1)}[b];'
+                 f'[old2]atrim=start={start+length},asetpts=PTS-STARTPTS[c];[a][b][c]concat=n=3:v=0:a=1[out]',
+             '-map','[out]','-c:a','pcm_s24le',str(narration)])
+    else:
+        shutil.copyfile(base_narration,narration)
 
     excerpt=float(c['music_excerpt_seconds'])
     overlap=float(c['music_crossfade_seconds'])

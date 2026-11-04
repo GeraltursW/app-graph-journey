@@ -8,6 +8,8 @@
 
 - 约 89 秒完整主片：[`../videos/application-knowledge-graph-with-mechanical-replay.mp4`](../videos/application-knowledge-graph-with-mechanical-replay.mp4)
 - 当前主片第一帧直接显示“应用知识图谱”；原片前 30 秒背景音乐循环铺满全片，独立旁白保留。
+- 第五幕已改为“疑似问题场景”：ROOT 逐层探索、两层横向查找、AI 补全原本缺失的关联，再将用户实际场景固化为用例。
+- 第五幕带配音和音乐的衔接预览：[`releases/latest/scenario-path-preview.mp4`](releases/latest/scenario-path-preview.mp4)。
 - 最新融合配音成片：[`releases/latest/mechanical-cube-main-ai-integrated-voiceover.mp4`](releases/latest/mechanical-cube-main-ai-integrated-voiceover.mp4)
 - 最新融合无声成片：[`releases/latest/mechanical-cube-main-ai-integrated-clean.mp4`](releases/latest/mechanical-cube-main-ai-integrated-clean.mp4)
 - AI 操作分镜源片：[`releases/latest/c159cc4d19a03485a4677970789f6f1a.mp4`](releases/latest/c159cc4d19a03485a4677970789f6f1a.mp4)
@@ -78,6 +80,22 @@ python .\mechanical-cube\scripts\finalize_long_film.py
 输出为 `mechanical-cube/output/application-knowledge-graph-final-music.mp4`，检查后可替换发布主片。脚本用完整标题画面覆盖首秒，保持 88.8 秒时长和配音同步。音乐源为 `assets/audio/music-first-30s.flac`，重复三次，在 29.4 秒及 58.8 秒开始 0.6 秒交叉淡化，末尾柔和淡出。参数位于 `config/long_film_audio.json`。
 
 原片音乐与配音已混在同一音轨，音乐素材使用匹配的干净旁白参考进行相减提取；无损 FLAC 已随工程保存。需要重新提取时，安装 NumPy 并运行 `scripts/extract_background_music.py`。普通合成仅依赖 Python 标准库和 FFmpeg。
+
+## 第五幕：疑似问题场景
+
+```powershell
+pwsh -File .\mechanical-cube\tools\build-scenario-path.ps1
+```
+
+该命令生成 21 秒新分镜及配音，再合成至 88.8 秒主片。现有音乐和片头逻辑继续使用 `finalize_long_film.py`。输出到 `mechanical-cube/output/scenario-path-v1/`，检查后再替换发布主片。
+
+- 动画：`scripts/render_scenario_path.py`（Pillow + FFmpeg，720p / 60 fps）。
+- 文案：`config/scenario_path_voiceover.json`；已合成旁白保存在 `assets/audio/scenario-path-voiceover.wav`。
+- 合成：`scripts/integrate_scenario_path.py`；新画面位于主片 26–47 秒，末帧延长并在 48–48.4 秒叠化回用例固化。
+- 合成底片固定为 `releases/iterations/11-long-film-looped-music-v1.6.mp4`，重复执行不会累积叠化效果。
+- 配音替换范围为 26–45 秒；45 秒后的用例固化旁白保持连续。
+- 相似页面召回保留为约 2.7 秒独立画面。第 2、3 层横向搜索仅用扫描提示，不预先创建边。
+- “我的页面 → 我的喜欢”初始没有连线；13.4 秒开始由 AI 补出紫色连接，保留关联标记，随后亮起整条实际场景路径。
 
 ## 目录说明
 

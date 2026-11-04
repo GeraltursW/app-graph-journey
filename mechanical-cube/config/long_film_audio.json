@@ -8,5 +8,11 @@
   "music_fade_out_seconds": 1.5,
   "music_source": "assets/audio/music-first-30s.flac",
   "narration_source": "assets/audio/main-narration-first-62s.flac",
-  "opening_frame": "assets/long-film-opening.png"
+  "opening_frame": "assets/long-film-opening.png",
+  "narration_replacement": {
+    "start": 26.0,
+    "duration": 19.0,
+    "gain": 0.8,
+    "source": "assets/audio/scenario-path-voiceover.wav"
+  }
 }
