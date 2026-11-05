@@ -6,20 +6,24 @@
 
 ## 当前交付
 
+- v1.9.0：两版主片均为 1920×1080 / 60 fps，新增独立底部字幕区域。画面说明与字幕统一 Microsoft YaHei，完整画面保留，不遮挡手机和图表。
+- 机械手旁白使用 `+0%` 正常语速，无音频变速；五步演示随语音延长到 23.4 秒，章节过渡 6.23 秒。
+- 字幕源文件：[`../videos/subtitles/`](../videos/subtitles/)（SRT / ASS）；正常语速机械手段：[`releases/latest/mechanical-natural-voiceover.mp4`](releases/latest/mechanical-natural-voiceover.mp4)。
+- [机械手章节带字幕预览](releases/latest/mechanical-natural-preview.mp4)；[最终时间轴](docs/final-delivery-timeline.json)；[交付检查记录](docs/final-delivery-validation.json)。两版全片解码正常，字幕时间与版面通过检查，机械手旁白逐段与原速 WAV 对齐，输出无音频削波。
 - 固化用例时只保留绿色正确路径：ROOT → 我的页面 → 我的喜欢 → 视频详情。“朋友页查找未命中”只用于展示探索过程，不进入保存的用例。
 - 第五幕示例更新：点击底部“朋友”→滑动查找未命中→直接点击底部“我”→找到“我的喜欢”→打开视频。朋友与我为同级 Tab，水平连接，不包含返回操作。
 - 第二幕（00:06–00:14）的画面文案和配音统一为“人工智能持续探索页面，理解页面层级。”，已同步两版完整主片。
 - 第二幕含配乐预览：[`releases/latest/page-exploration-preview.mp4`](releases/latest/page-exploration-preview.mp4)；独立可编辑工程：[`blender/page-exploration.blend`](blender/page-exploration.blend)。
-- 约 89 秒完整主片：[`../videos/application-knowledge-graph-with-mechanical-replay.mp4`](../videos/application-knowledge-graph-with-mechanical-replay.mp4)
+- 100.03 秒完整主片：[`../videos/application-knowledge-graph-with-mechanical-replay.mp4`](../videos/application-knowledge-graph-with-mechanical-replay.mp4)
 - 71.4 秒独立主片也已同步第五幕修改，保留其连续配乐：[`../videos/application-knowledge-graph-and-data.mp4`](../videos/application-knowledge-graph-and-data.mp4)。
 - 第五幕已完整合入主片：1.2 秒柔和推进进入，1.4 秒保持节点位置接入用例卡片，文字错开淡入淡出。
 - 当前主片第一帧直接显示“应用知识图谱”；原片前 30 秒背景音乐循环铺满全片，独立旁白保留。
 - 第五幕输入仍为“疑似问题场景”；AI 从 ROOT 探索到朋友页，查找未命中后发现并补全“朋友 → 我”的同级切换关联，再将实际路径固化为用例。
 - 第五幕带配音和音乐的衔接预览：[`releases/latest/scenario-path-preview.mp4`](releases/latest/scenario-path-preview.mp4)。
-- 最新融合配音成片：[`releases/latest/mechanical-cube-main-ai-integrated-voiceover.mp4`](releases/latest/mechanical-cube-main-ai-integrated-voiceover.mp4)
-- 最新融合无声成片：[`releases/latest/mechanical-cube-main-ai-integrated-clean.mp4`](releases/latest/mechanical-cube-main-ai-integrated-clean.mp4)
+- 早期结构介绍与 AI 演示合成：[`releases/latest/mechanical-cube-main-ai-integrated-voiceover.mp4`](releases/latest/mechanical-cube-main-ai-integrated-voiceover.mp4)（保留历史配音速度）
+- 早期融合无声成片：[`releases/latest/mechanical-cube-main-ai-integrated-clean.mp4`](releases/latest/mechanical-cube-main-ai-integrated-clean.mp4)
 - AI 操作分镜源片：[`releases/latest/c159cc4d19a03485a4677970789f6f1a.mp4`](releases/latest/c159cc4d19a03485a4677970789f6f1a.mp4)
-- 最新结尾（测试完成 → 数据汇聚 → 报表，含旁白）：[`releases/latest/analytics-outro-voiceover.mp4`](releases/latest/analytics-outro-voiceover.mp4)
+- 最新结尾（测试完成 → 数据汇聚 → 报表，统一字体、含旁白）：[`releases/latest/analytics-outro-typography-voiceover.mp4`](releases/latest/analytics-outro-typography-voiceover.mp4)
 - 最新分析镜头 Blender 源文件：[`blender/final_analytics_v3.blend`](blender/final_analytics_v3.blend)
 - 上一版配音成片：[`releases/latest/mechanical-cube-ai-control-voiceover.mp4`](releases/latest/mechanical-cube-ai-control-voiceover.mp4)
 - 当前基础模型：[`blender/robot_base_stage01_professional.blend`](blender/robot_base_stage01_professional.blend)
@@ -44,16 +48,15 @@ cd app-graph-journey\mechanical-cube
 powershell -ExecutionPolicy Bypass -File .\tools\setup.ps1
 ```
 
-安装 Blender 5.4 Alpha、Python 3.11+ 和 FFmpeg 后，可直接打开 `blender/` 中的工程继续修改。要从脚本完整重建当前成片：
+安装 Python 3.11+、FFmpeg 和依赖后，重建当前带字幕交付版：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\tools\render-latest.ps1 `
-  -BlenderExe "D:\tools\blender-5.4.0\blender.exe"
+pwsh -File .\tools\build-final-delivery.ps1 -ReuseRenders
 ```
 
-首次运行会生成 `output/`。该目录是可再生缓存，不提交到 Git。完整接手步骤、已知限制和验收方法见 [HANDOFF.md](HANDOFF.md)。
+去掉 `-ReuseRenders` 可重新生成正常语速配音、机械手画面与转场；已缓存原始语音，文案未变时无需联网合成。字体和文案参数在 `config/final_delivery.json`，主片字幕文案在 `config/main_caption_script.json`。旧的 `render-latest.ps1` 只用于重建早期机械结构介绍。安装 Blender 5.4 Alpha 后可直接编辑 `blender/`。完整流程见 [HANDOFF.md](HANDOFF.md)。
 
-将新的 AI 操作分镜重新融合进主片：
+以下为历史机械分镜和 88.8 秒基片的生成入口，最终交付还需运行上述字幕与正常语速流程。将新的 AI 操作分镜融合进早期结构介绍：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\tools\integrate-ai-storyboard.ps1

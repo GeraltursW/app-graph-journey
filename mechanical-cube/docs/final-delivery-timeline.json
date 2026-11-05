@@ -1,0 +1,23 @@
+{
+  "chapter_start": 60.9,
+  "chapter_duration": 6.233333333333333,
+  "mechanical_start": 66.63333333333333,
+  "mechanical_duration": 23.4,
+  "outro_start": 90.03333333333333,
+  "duration": 100.03333333333333,
+  "main_duration": 71.4,
+  "font": "Microsoft YaHei",
+  "subtitle_band": [
+    1008,
+    1080
+  ],
+  "picture_region": [
+    64,
+    0,
+    1856,
+    1008
+  ],
+  "audio_time_stretch": 1.0,
+  "main_caption_count": 19,
+  "mechanical_caption_count": 25
+}

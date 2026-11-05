@@ -1,0 +1,93 @@
+{
+  "version": "1.9.0",
+  "font_family": "Microsoft YaHei",
+  "source_font_audit": {
+    "main_text_objects": 174,
+    "dashboard_text_objects": 21
+  },
+  "natural_tts_rate": "+0%",
+  "audio_time_stretch": 1.0,
+  "files": {
+    "application-knowledge-graph-and-data": {
+      "duration_seconds": 71.4,
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 60,
+      "decode": "passed",
+      "decoded_audio_peak": 0.986462,
+      "clipping_samples": 0,
+      "subtitle_cues": 19,
+      "subtitle_timing_and_width": "passed"
+    },
+    "application-knowledge-graph-with-mechanical-replay": {
+      "duration_seconds": 100.033333,
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 60,
+      "decode": "passed",
+      "decoded_audio_peak": 0.950092,
+      "clipping_samples": 0,
+      "subtitle_cues": 25,
+      "subtitle_timing_and_width": "passed"
+    }
+  },
+  "voice_alignment": [
+    {
+      "stage": "chapter",
+      "source_duration": 5.28,
+      "start": 61.25,
+      "correlation": 1.0,
+      "offset_ms": 0.0
+    },
+    {
+      "stage": "capture",
+      "source_duration": 2.784,
+      "start": 66.883,
+      "correlation": 1.0,
+      "offset_ms": 0.0
+    },
+    {
+      "stage": "feedback",
+      "source_duration": 5.112,
+      "start": 70.383,
+      "correlation": 1.0,
+      "offset_ms": 0.0
+    },
+    {
+      "stage": "recognition",
+      "source_duration": 4.032,
+      "start": 76.199667,
+      "correlation": 1.0,
+      "offset_ms": 0.333333
+    },
+    {
+      "stage": "coordinate",
+      "source_duration": 3.0,
+      "start": 80.933,
+      "correlation": 1.0,
+      "offset_ms": 0.0
+    },
+    {
+      "stage": "execute",
+      "source_duration": 4.944,
+      "start": 84.633,
+      "correlation": 1.0,
+      "offset_ms": 0.0
+    }
+  ],
+  "visual_review": [
+    "Approved green-only saved test path retained",
+    "Mechanical panel, PLC label and chapter font unified",
+    "Subtitles fit dedicated bottom band",
+    "Phone and charts remain unobstructed",
+    "Mechanical chapter and analytics transitions reviewed"
+  ]
+}

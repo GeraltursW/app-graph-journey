@@ -1,0 +1,42 @@
+[
+  {
+    "offset": 1000000,
+    "duration": 6875000,
+    "text": "人工智能"
+  },
+  {
+    "offset": 8125000,
+    "duration": 3500000,
+    "text": "识别"
+  },
+  {
+    "offset": 11875000,
+    "duration": 3375000,
+    "text": "目标"
+  },
+  {
+    "offset": 15375000,
+    "duration": 4000000,
+    "text": "控件"
+  },
+  {
+    "offset": 20375000,
+    "duration": 2375000,
+    "text": "并"
+  },
+  {
+    "offset": 22875000,
+    "duration": 3875000,
+    "text": "计算"
+  },
+  {
+    "offset": 27000000,
+    "duration": 3875000,
+    "text": "点击"
+  },
+  {
+    "offset": 31000000,
+    "duration": 3625000,
+    "text": "位置"
+  }
+]

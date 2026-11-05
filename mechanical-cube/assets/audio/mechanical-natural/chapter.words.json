@@ -1,0 +1,47 @@
+[
+  {
+    "offset": 1000000,
+    "duration": 5125000,
+    "text": "接下来"
+  },
+  {
+    "offset": 7875000,
+    "duration": 4375000,
+    "text": "演示"
+  },
+  {
+    "offset": 12500000,
+    "duration": 7375000,
+    "text": "人工智能"
+  },
+  {
+    "offset": 20125000,
+    "duration": 3250000,
+    "text": "控制"
+  },
+  {
+    "offset": 23500000,
+    "duration": 5625000,
+    "text": "机械手"
+  },
+  {
+    "offset": 30500000,
+    "duration": 4625000,
+    "text": "完成"
+  },
+  {
+    "offset": 35375000,
+    "duration": 4250000,
+    "text": "测试"
+  },
+  {
+    "offset": 39750000,
+    "duration": 3250000,
+    "text": "用例"
+  },
+  {
+    "offset": 43125000,
+    "duration": 3875000,
+    "text": "复现"
+  }
+]

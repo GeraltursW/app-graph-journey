@@ -1,0 +1,57 @@
+[
+  {
+    "offset": 1000000,
+    "duration": 5875000,
+    "text": "移动头"
+  },
+  {
+    "offset": 7000000,
+    "duration": 4000000,
+    "text": "完成"
+  },
+  {
+    "offset": 11250000,
+    "duration": 3875000,
+    "text": "X"
+  },
+  {
+    "offset": 16125000,
+    "duration": 2875000,
+    "text": "Y"
+  },
+  {
+    "offset": 19125000,
+    "duration": 4125000,
+    "text": "定位"
+  },
+  {
+    "offset": 25000000,
+    "duration": 3750000,
+    "text": "触笔"
+  },
+  {
+    "offset": 29000000,
+    "duration": 1750000,
+    "text": "沿"
+  },
+  {
+    "offset": 30875000,
+    "duration": 2500000,
+    "text": "Z"
+  },
+  {
+    "offset": 33375000,
+    "duration": 2250000,
+    "text": "轴"
+  },
+  {
+    "offset": 35875000,
+    "duration": 3000000,
+    "text": "执行"
+  },
+  {
+    "offset": 39000000,
+    "duration": 4625000,
+    "text": "点击"
+  }
+]

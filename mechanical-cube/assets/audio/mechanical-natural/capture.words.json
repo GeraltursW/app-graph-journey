@@ -1,0 +1,27 @@
+[
+  {
+    "offset": 1000000,
+    "duration": 5125000,
+    "text": "摄像头"
+  },
+  {
+    "offset": 6375000,
+    "duration": 3250000,
+    "text": "采集"
+  },
+  {
+    "offset": 9750000,
+    "duration": 4250000,
+    "text": "手机"
+  },
+  {
+    "offset": 14250000,
+    "duration": 4250000,
+    "text": "当前"
+  },
+  {
+    "offset": 18625000,
+    "duration": 3500000,
+    "text": "页面"
+  }
+]

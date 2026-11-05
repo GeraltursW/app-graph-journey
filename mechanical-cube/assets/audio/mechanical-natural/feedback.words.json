@@ -1,0 +1,47 @@
+[
+  {
+    "offset": 1000000,
+    "duration": 3875000,
+    "text": "图像"
+  },
+  {
+    "offset": 5000000,
+    "duration": 4250000,
+    "text": "数据"
+  },
+  {
+    "offset": 9375000,
+    "duration": 3875000,
+    "text": "通过"
+  },
+  {
+    "offset": 14125000,
+    "duration": 7000000,
+    "text": "USB"
+  },
+  {
+    "offset": 22875000,
+    "duration": 5000000,
+    "text": "回传"
+  },
+  {
+    "offset": 28750000,
+    "duration": 5250000,
+    "text": "PLC"
+  },
+  {
+    "offset": 34000000,
+    "duration": 1750000,
+    "text": "内"
+  },
+  {
+    "offset": 35750000,
+    "duration": 1750000,
+    "text": "的"
+  },
+  {
+    "offset": 37750000,
+    "duration": 7750000,
+    "text": "人工智能"
+  }
+]

@@ -1,18 +1,20 @@
 # App Graph Journey
 
-## 最新视频交付（2026-10-29）
+## 最新视频交付（2026-11-05）
 
+- [应用知识图谱完整机械手融合版 · 100.03 秒](videos/application-knowledge-graph-with-mechanical-replay.mp4)
 - [应用知识图谱与数据呈现 · 71.4 秒](videos/application-knowledge-graph-and-data.mp4)
+- [配套中文字幕 SRT / ASS](videos/subtitles/)
 - [Test Cube 独立 AI 操作流程 · 17.4 秒](videos/test-cube-ai-operation-standalone.mp4)
 - [Test Cube 旋转透视介绍与 AI 流程 · 33.05 秒](videos/test-cube-orbit-xray.mp4)
 
-[交付说明](videos/DELIVERY-2026-10-29.md)。三段均为 720p / 60 fps；Test Cube 视频已统一内部主机名称为“服务器”。
+[交付说明](videos/DELIVERY-2026-10-29.md)。两版应用知识图谱主片为 1080p / 60 fps，绿色正确用例已合入，机械手配音为正常语速，说明文字与字幕统一微软雅黑。Test Cube 两支独立影片保留此前的 720p 版本。
 
 ## Mechanical CUBE
 
 机械手/CUBE 的完整迭代工程、Blender 源文件、AI 控制闭环视频与跨电脑交接文档位于 [`mechanical-cube/`](mechanical-cube/README.md)。
 
-此前的融合主片在 09 实验室手机复现之后加入机械手 AI 复现方案：[`videos/application-knowledge-graph-with-mechanical-replay.mp4`](videos/application-knowledge-graph-with-mechanical-replay.mp4)。
+完整主片在实验室手机复现后加入机械手 AI 复现方案，再连续进入性能、功耗、热数据报表。当前重建入口为 [`mechanical-cube/tools/build-final-delivery.ps1`](mechanical-cube/tools/build-final-delivery.ps1)。
 
 App Graph Journey 是从 App Graph 主项目中独立出来的三维演进展示页，用滚动叙事呈现移动应用页面图谱从采集、探索、场景功能匹配、用例编排到执行结果回流的完整过程。
 

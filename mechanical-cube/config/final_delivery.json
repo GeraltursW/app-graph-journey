@@ -1,0 +1,22 @@
+{
+  "font_family": "Microsoft YaHei",
+  "font_regular": "C:/Windows/Fonts/msyh.ttc",
+  "font_bold": "C:/Windows/Fonts/msyhbd.ttc",
+  "output_size": [1920, 1080],
+  "picture_size": [1792, 1008],
+  "subtitle_size": 36,
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+0%",
+  "pitch": "-2Hz",
+  "chapter": {
+    "id": "chapter",
+    "text": "接下来，演示人工智能控制机械手，完成测试用例复现。"
+  },
+  "stages": [
+    {"id":"capture","title":"摄像头采集","lines":["采集手机当前页面","获取待识别的页面图像"],"text":"摄像头采集手机当前页面。","source_frames":[0,39]},
+    {"id":"feedback","title":"图片回传","lines":["图像数据通过 USB 回传","PLC 内的人工智能接收"],"text":"图像数据通过 USB，回传 PLC 内的人工智能。","source_frames":[39,120]},
+    {"id":"recognition","title":"AI 处理","lines":["识别目标控件","计算屏幕点击坐标"],"text":"人工智能识别目标控件，并计算点击位置。","source_frames":[120,212]},
+    {"id":"coordinate","title":"坐标回传","lines":["目标 X、Y 坐标","回传机械移动器"],"text":"目标坐标回传机械移动器。","source_frames":[212,281]},
+    {"id":"execute","title":"执行点击","lines":["X、Y 轴完成定位","Z 轴触笔执行点击"],"text":"移动头完成 X、Y 定位，触笔沿 Z 轴执行点击。","source_frames":[281,336]}
+  ]
+}

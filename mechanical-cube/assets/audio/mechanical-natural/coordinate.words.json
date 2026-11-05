@@ -1,0 +1,27 @@
+[
+  {
+    "offset": 1000000,
+    "duration": 3375000,
+    "text": "目标"
+  },
+  {
+    "offset": 4500000,
+    "duration": 4250000,
+    "text": "坐标"
+  },
+  {
+    "offset": 9750000,
+    "duration": 5375000,
+    "text": "回传"
+  },
+  {
+    "offset": 15375000,
+    "duration": 3875000,
+    "text": "机械"
+  },
+  {
+    "offset": 19375000,
+    "duration": 4875000,
+    "text": "移动器"
+  }
+]
