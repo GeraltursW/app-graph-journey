@@ -6,6 +6,7 @@
 
 ## 当前交付
 
+- 固化用例时只保留绿色正确路径：ROOT → 我的页面 → 我的喜欢 → 视频详情。“朋友页查找未命中”只用于展示探索过程，不进入保存的用例。
 - 第五幕示例更新：点击底部“朋友”→滑动查找未命中→直接点击底部“我”→找到“我的喜欢”→打开视频。朋友与我为同级 Tab，水平连接，不包含返回操作。
 - 第二幕（00:06–00:14）的画面文案和配音统一为“人工智能持续探索页面，理解页面层级。”，已同步两版完整主片。
 - 第二幕含配乐预览：[`releases/latest/page-exploration-preview.mp4`](releases/latest/page-exploration-preview.mp4)；独立可编辑工程：[`blender/page-exploration.blend`](blender/page-exploration.blend)。
@@ -104,7 +105,7 @@ pwsh -File .\mechanical-cube\tools\build-scenario-path.ps1
 - 相似页面召回保留为约 2.7 秒独立画面，展示朋友页、我的页面、我的喜欢三张候选截图。
 - 朋友页和我的页面处于同一层级；初始没有横向连线。12.2 秒开始点击底部“我”，AI 补出紫色水平连接；不经过 ROOT，不出现返回箭头。
 - 6.5–10 秒在朋友页内容区域上滑，底部导航固定；10–12.2 秒显示未命中。14.3 秒后进入我的页面，定位喜欢列表并验证成功。
-- 同步生成 `releases/latest/scenario-case-clean.mp4`，替换 47–52 秒的用例卡片，操作箭头与新的同级切换路径一致。
+- 目标确认后，探索中的朋友分支和紫色尝试连线淡出；仅将 ROOT → 我 → 喜欢 → 视频展开为绿色路径。同步生成 `releases/latest/scenario-case-clean.mp4`，替换 47–52 秒用例卡片，只保存三个正确点击步骤。
 
 第五幕转场由 `scripts/smooth_scenario_transitions.py` 完成，已纳入 `build-scenario-path.ps1`：25.2–26.4 秒进入新场景；47–48.4 秒从水平路径接入就位后的用例卡片。文字区域采用边缘柔化与错峰淡化，避免同时显示两套字幕。该步骤直接复制主片音轨。随后 `integrate_page_exploration.py` 合入第二幕的新画面与配音，最终文件名分别以 `and-data-final.mp4` 和 `mechanical-final.mp4` 结尾。
 

@@ -1,0 +1,81 @@
+{
+  "version": "v1.8.1",
+  "saved_route": [
+    "r",
+    "m",
+    "l",
+    "v"
+  ],
+  "saved_labels": [
+    "ROOT",
+    "我的页面",
+    "我的喜欢",
+    "视频详情"
+  ],
+  "saved_actions": [
+    "点击底部我",
+    "点击喜欢",
+    "点击当前视频"
+  ],
+  "failed_attempts_saved": false,
+  "correct_route_uses_existing_edges": true,
+  "early_exploration_frames_unchanged": [
+    8.8,
+    12.8,
+    14.6,
+    16.2
+  ],
+  "purple_pixels_after_unfolding": 0,
+  "purple_pixels_in_saved_case": 0,
+  "visual_review": "Four green nodes and three green arrows; Friends and failure text removed from saved case.",
+  "media": [
+    {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 1280,
+          "height": 720,
+          "r_frame_rate": "60/1",
+          "duration": "71.400000"
+        },
+        {
+          "codec_name": "aac",
+          "r_frame_rate": "0/0",
+          "duration": "71.400000"
+        }
+      ],
+      "format": {
+        "duration": "71.400000"
+      },
+      "file": "应用知识图谱_仅保留正确用例.mp4",
+      "audio_packet_hash_unchanged": true,
+      "decode": "passed"
+    },
+    {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 1280,
+          "height": 720,
+          "r_frame_rate": "60/1",
+          "duration": "88.800000"
+        },
+        {
+          "codec_name": "aac",
+          "r_frame_rate": "0/0",
+          "duration": "88.800000"
+        }
+      ],
+      "format": {
+        "duration": "88.800000"
+      },
+      "file": "应用知识图谱_机械手融合_仅保留正确用例.mp4",
+      "audio_packet_hash_unchanged": true,
+      "decode": "passed"
+    }
+  ]
+}
