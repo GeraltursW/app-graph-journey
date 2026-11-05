@@ -1,0 +1,43 @@
+{
+  "version": "v1.8.0",
+  "master_scene_range": [
+    26,
+    47
+  ],
+  "case_range": [
+    47,
+    52
+  ],
+  "actions": [
+    "tap_friends_bottom_tab",
+    "swipe_content",
+    "target_not_found",
+    "tap_me_bottom_tab",
+    "open_likes",
+    "open_video"
+  ],
+  "back_action": false,
+  "sibling_tabs": [
+    "friends",
+    "me"
+  ],
+  "sibling_node_y": 300,
+  "relation_initially_absent": true,
+  "edge_added_local_time": [
+    12.2,
+    14.3
+  ],
+  "fixed_bottom_navigation_pixel_comparison": "passed at local 6.5 and 10.9 seconds, x96..310 y516..550",
+  "media": {
+    "resolution": [
+      1280,
+      720
+    ],
+    "fps": 60,
+    "audio_sample_rate": 48000,
+    "main_duration": 71.4,
+    "mechanical_duration": 88.8,
+    "full_decode": "passed"
+  },
+  "visual_review": "actual bottom-tab click, horizontal graph link, vector recall, unfolded case and transitions checked"
+}

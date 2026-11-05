@@ -2,6 +2,10 @@
 
 ## 交付状态
 
+2026-11-05 v1.8.0：第五幕改用“朋友 → 我”的真实底部 Tab 关系。操作为点击朋友、滑动查找未命中、直接点击我、找到喜欢列表、打开视频。朋友和我在相同 Y 坐标、相同深度，横向连接由 AI 在切换时补全；本版没有返回动作。主片仍为 71.4 / 88.8 秒，第二幕文案保持 v1.7.2。
+
+新分镜入口为 `scripts/render_friends_scenario.py`，素材为 `assets/screenshots/myfriends.jpg`。滑动用已有截图内容区域做位移动画，底部导航固定，属于镜头演示。`tools/build-scenario-path.ps1` 已切换到新入口，并生成 21 秒探索镜头与 5 秒用例卡片。`smooth_scenario_transitions.py` 将探索与卡片一致地合入 25.2–52 秒；入场为 25.2–26.4 秒，路径到用例卡片转场为 47–48.4 秒。音频配置仍在 `config/scenario_path_voiceover.json`，26–45 秒替换，后续用例旁白保留。
+
 2026-11-05 v1.7.2：第二幕（6–14 秒）画面和配音改为“人工智能持续探索页面，理解页面层级。”。两版完整主片均已同步，分别为 71.4 秒与 88.8 秒。第二幕以原生 30 fps 重渲染，主片保持 1280×720 / 60 fps 输出。
 
 第二幕独立工程为 `blender/page-exploration.blend`（Eevee，中文字体已打包），文字在 `config/page_exploration.json`，配音在 `config/page_exploration_voiceover.json`。更改后运行：

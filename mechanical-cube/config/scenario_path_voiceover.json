@@ -1,11 +1,11 @@
 {
   "voice": "zh-CN-YunyangNeural", "rate": "+5%", "volume": "+0%", "pitch": "-2Hz", "total_duration": 21.0,
   "segments": [
-    {"id":"scenario_input","start":0.3,"max_duration":1.9,"text":"输入疑似问题场景。"},
+    {"id":"scenario_input","start":0.3,"max_duration":1.9,"text":"查找我的喜欢。"},
     {"id":"scenario_recall","start":2.3,"max_duration":2.5,"text":"向量数据库召回相关页面。"},
-    {"id":"scenario_descend","start":4.95,"max_duration":3.4,"text":"人工智能从根节点出发，逐层探索。"},
-    {"id":"scenario_scan","start":8.55,"max_duration":3.2,"text":"在不同层级横向寻找相关页面。"},
-    {"id":"scenario_connect","start":12.2,"max_duration":3.2,"text":"发现缺失关联，自动补全连接，"},
-    {"id":"scenario_complete","start":15.7,"max_duration":2.9,"text":"串起用户实际操作的场景路径。"}
+    {"id":"scenario_descend","start":4.95,"max_duration":3.6,"text":"人工智能进入朋友页面，滑动查找。"},
+    {"id":"scenario_scan","start":9.0,"max_duration":2.4,"text":"没有找到我的喜欢。"},
+    {"id":"scenario_connect","start":12.2,"max_duration":3.5,"text":"点击底部的我，完成同级切换。"},
+    {"id":"scenario_complete","start":15.9,"max_duration":2.9,"text":"找到喜欢列表，验证成功。"}
   ]
 }

@@ -2,6 +2,7 @@
 
 Entry: 25.2--26.4 s, eased feathered reveal (no double graph exposure).
 Exit: 47--48.4 s, matched stationary path into settled case cards.
+When provided, matching case cards replace 48.4--52 s as well.
 Text fades out before replacement text appears. Existing audio is stream-copied.
 """
 from pathlib import Path
@@ -71,6 +72,7 @@ def main():
     p.add_argument('--source',type=Path,default=ROOT.parent/'videos/application-knowledge-graph-and-data.mp4')
     p.add_argument('--reference',type=Path,default=ROOT/'releases/iterations/12-app-graph-data-continuous-music-v1.6.mp4')
     p.add_argument('--shot',type=Path,default=ROOT/'releases/latest/scenario-path-clean.mp4')
+    p.add_argument('--case',type=Path,default=ROOT/'releases/latest/scenario-case-clean.mp4')
     p.add_argument('--out',type=Path,default=ROOT/'output/scenario-smooth-v2')
     p.add_argument('--output',type=Path,default=ROOT/'output/application-knowledge-graph-smooth.mp4')
     p.add_argument('--reuse-transitions',action='store_true')
@@ -88,7 +90,7 @@ def main():
         finally:
             enc.stdin.close();source.stdout.close();target.stdout.close()
         if enc.wait() or source.wait() or target.wait():raise RuntimeError('Entry encoding failed')
-        old=still(a.shot,20.983334);new=still(a.reference,48.4);enc=encoder(a.out/'exit.mp4')
+        old=still(a.shot,20.983334);new=still(a.case,0) if a.case.exists() else still(a.reference,48.4);enc=encoder(a.out/'exit.mp4')
         try:
             for i in range(84):
                 frame=text_safe_blend(old,new,i/83,False);enc.stdin.write(frame.tobytes())
@@ -101,11 +103,18 @@ def main():
                 '[2:v]setpts=PTS-STARTPTS,settb=AVTB[c];[a][b][c]concat=n=3:v=1:a=0[v]',
             '-map','[v]','-an','-r','60','-c:v','libx264','-preset','slow','-crf','15','-pix_fmt','yuv420p','-movflags','+faststart',segment])
     total=subprocess.check_output(['ffprobe','-v','error','-show_entries','format=duration','-of','default=nw=1:nk=1',str(a.source)],text=True).strip()
-    run(['-i',a.source,'-i',segment,
-        '-filter_complex','[1:v]setpts=PTS+25.2/TB[shot];[0:v][shot]overlay=eof_action=pass:enable=\'gte(t,25.2)*lt(t,48.4)\',format=yuv420p[v]',
+    inputs=['-i',a.source,'-i',segment]
+    graph='[1:v]setpts=PTS+25.2/TB[shot];[0:v][shot]overlay=eof_action=pass:enable=\'gte(t,25.2)*lt(t,48.4)\'[scenario];'
+    if a.case.exists():
+        inputs.extend(['-i',a.case])
+        graph+='[2:v]trim=start=1.4:end=5,setpts=PTS-STARTPTS+48.4/TB[case];[scenario][case]overlay=eof_action=pass:enable=\'gte(t,48.4)*lt(t,52)\',format=yuv420p[v]'
+    else:
+        graph+='[scenario]format=yuv420p[v]'
+    run([*inputs,'-filter_complex',graph,
         '-map','[v]','-map','0:a:0','-t',total,'-c:v','libx264','-preset','slow','-crf','16','-c:a','copy','-movflags','+faststart',a.output])
     (a.out/'transition-timeline.json').write_text(json.dumps({'entry':[25.2,26.4],'scenario_body':[26.4,47.0],
-        'exit':[47.0,48.4],'audio':'copied unchanged from current main film','duration':float(total)},indent=2),encoding='utf-8')
+        'exit':[47.0,48.4],'matching_case':[48.4,52.0] if a.case.exists() else None,
+        'audio':'copied unchanged from current main film','duration':float(total)},indent=2),encoding='utf-8')
     print(a.output)
 
 if __name__=='__main__':main()
