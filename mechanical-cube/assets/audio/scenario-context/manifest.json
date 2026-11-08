@@ -1,0 +1,174 @@
+{
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+0%",
+  "audio_time_stretch": 1,
+  "fps": 60,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "stages": [
+    {
+      "id": "single",
+      "title": "从一次复现开始",
+      "minimum_duration": 4.8,
+      "text": "从单个用户场景的识别与复现出发。",
+      "parts": [
+        "从单个用户场景的识别与复现出发"
+      ],
+      "audio_duration": 3.528,
+      "duration": 4.8,
+      "voice_offset": 0.4,
+      "audio": "assets/audio/scenario-context/single.wav",
+      "words": "assets/audio/scenario-context/single.words.json",
+      "start": 0
+    },
+    {
+      "id": "library",
+      "title": "用例积累，覆盖持续扩展",
+      "minimum_duration": 6.2,
+      "text": "随着用例积累和测试覆盖范围扩大，逐步建设场景库。",
+      "parts": [
+        "随着用例积累和测试覆盖范围扩大",
+        "逐步建设场景库"
+      ],
+      "audio_duration": 5.544,
+      "duration": 6.5,
+      "voice_offset": 0.4,
+      "audio": "assets/audio/scenario-context/library.wav",
+      "words": "assets/audio/scenario-context/library.words.json",
+      "start": 4.8
+    },
+    {
+      "id": "extract",
+      "title": "提取典型 UI 操作序列",
+      "minimum_duration": 6.2,
+      "text": "结合大数据分析与应用知识图谱，提取典型操作序列。",
+      "parts": [
+        "结合大数据分析与应用知识图谱",
+        "提取典型操作序列"
+      ],
+      "audio_duration": 5.112,
+      "duration": 6.2,
+      "voice_offset": 0.4,
+      "audio": "assets/audio/scenario-context/extract.wav",
+      "words": "assets/audio/scenario-context/extract.words.json",
+      "start": 11.3
+    },
+    {
+      "id": "student_plan",
+      "title": "AI 为大学生 A 创建场景用例",
+      "minimum_duration": 7.0,
+      "text": "以大学生A为例，人工智能将典型操作序列，组合成具体的抖音场景用例。",
+      "parts": [
+        "以大学生A为例",
+        "人工智能将典型操作序列",
+        "组合成具体的抖音场景用例"
+      ],
+      "audio_duration": 6.72,
+      "duration": 7.683333333333334,
+      "voice_offset": 0.4,
+      "audio": "assets/audio/scenario-context/student_plan.wav",
+      "words": "assets/audio/scenario-context/student_plan.words.json",
+      "start": 17.5
+    },
+    {
+      "id": "student_feed",
+      "title": "推荐页：上滑 2 次，浏览 3 条视频",
+      "minimum_duration": 5.2,
+      "text": "先在推荐页上滑两次，浏览三条视频。",
+      "parts": [
+        "先在推荐页上滑两次",
+        "浏览三条视频"
+      ],
+      "audio_duration": 3.816,
+      "duration": 5.2,
+      "voice_offset": 0.4,
+      "audio": "assets/audio/scenario-context/student_feed.wav",
+      "words": "assets/audio/scenario-context/student_feed.words.json",
+      "start": 25.183333333333334
+    },
+    {
+      "id": "student_tabs",
+      "title": "点击「我」，再进入「喜欢」",
+      "minimum_duration": 5.0,
+      "text": "接着点击底部的我，再点击喜欢，进入喜欢列表。",
+      "parts": [
+        "接着点击底部的我",
+        "再点击喜欢，进入喜欢列表"
+      ],
+      "audio_duration": 4.416,
+      "duration": 5.366666666666666,
+      "voice_offset": 0.4,
+      "audio": "assets/audio/scenario-context/student_tabs.wav",
+      "words": "assets/audio/scenario-context/student_tabs.words.json",
+      "start": 30.383333333333333
+    },
+    {
+      "id": "student_likes",
+      "title": "喜欢列表：连续上滑 3 次",
+      "minimum_duration": 5.4,
+      "text": "在喜欢列表上滑三次，寻找想看的视频。",
+      "parts": [
+        "在喜欢列表上滑三次",
+        "寻找想看的视频"
+      ],
+      "audio_duration": 3.96,
+      "duration": 5.4,
+      "voice_offset": 0.4,
+      "audio": "assets/audio/scenario-context/student_likes.wav",
+      "words": "assets/audio/scenario-context/student_likes.words.json",
+      "start": 35.75
+    },
+    {
+      "id": "student_open",
+      "title": "打开目标视频，完成场景用例",
+      "minimum_duration": 6.0,
+      "text": "最后打开目标视频，形成页面、操作和次数明确的场景用例。",
+      "parts": [
+        "最后打开目标视频",
+        "形成页面、操作和次数明确的场景用例"
+      ],
+      "audio_duration": 5.856,
+      "duration": 6.816666666666666,
+      "voice_offset": 0.4,
+      "audio": "assets/audio/scenario-context/student_open.wav",
+      "words": "assets/audio/scenario-context/student_open.words.json",
+      "start": 41.15
+    },
+    {
+      "id": "temporal",
+      "title": "为这条场景用例，叠加时序条件",
+      "minimum_duration": 8.8,
+      "text": "以这条用例为基础，融合网络、应用状态和设备负载等影响因子，进行时序建模。",
+      "parts": [
+        "以这条用例为基础",
+        "融合网络、应用状态和设备负载等影响因子",
+        "进行时序建模"
+      ],
+      "audio_duration": 7.464,
+      "duration": 8.8,
+      "voice_offset": 0.4,
+      "audio": "assets/audio/scenario-context/temporal.wav",
+      "words": "assets/audio/scenario-context/temporal.words.json",
+      "start": 47.96666666666667
+    },
+    {
+      "id": "context",
+      "title": "重建故障发生时的完整上下文",
+      "minimum_duration": 6.4,
+      "text": "重建故障发生时的完整上下文，再下发到实验室设备进行复现。",
+      "parts": [
+        "重建故障发生时的完整上下文",
+        "再下发到实验室设备进行复现"
+      ],
+      "audio_duration": 5.664,
+      "duration": 6.616666666666666,
+      "voice_offset": 0.4,
+      "audio": "assets/audio/scenario-context/context.wav",
+      "words": "assets/audio/scenario-context/context.words.json",
+      "start": 56.766666666666666
+    }
+  ],
+  "duration": 63.38333333333333
+}

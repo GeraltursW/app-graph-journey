@@ -2,6 +2,41 @@
 
 ## 交付状态
 
+2026-11-08 **v1.10.0**：当前完整主片为 `../videos/application-knowledge-graph-with-mechanical-replay.mp4`，**159.383 秒，1920×1080 / 60 fps**，45 条烧录中文字幕，正常语速旁白。71.4 秒短版保留 v1.9 内容。旧 100.033 秒完整主片归档为 `releases/iterations/15-main-before-scene-library-v1.9.0.mp4`。
+
+| 主片时间 | 内容 |
+| --- | --- |
+| 00:00–01:00.600 | 已确认的探索、绿色用例固化和实验室手机复现 |
+| 01:00.600–01:01.400 | 手机位置匹配，进入场景库 |
+| 01:01.400–01:18.900 | 单场景复现、场景库积累、典型操作序列提取 |
+| 01:18.900–01:49.367 | AI 生成大学生 A 的抖音场景用例并展示操作 |
+| 01:49.367–02:04.783 | 叠加影响因子的时序建模、重建故障上下文 |
+| 02:04.783–02:05.983 | 上下文卡片中的机械盒子放大至操作画面 |
+| 02:05.983–02:29.383 | 机械手 AI 复现五步，保持原速 23.4 秒 |
+| 02:29.383–02:39.383 | 测试完成、性能/功耗/热汇聚与数据报表 |
+
+新电脑安装依赖后，从 `mechanical-cube` 目录执行：
+
+```powershell
+pwsh -File .\tools\build-integrated-main.ps1
+# 修改场景库/学生用例画面后，同时重绘新分镜：
+pwsh -File .\tools\build-integrated-main.ps1 -RebuildScenario
+# 验证成片、字幕边界、语音原速对齐并导出关键帧：
+.\.venv\Scripts\python.exe .\scripts\validate_integrated_main.py --out .\output\integrated-main-v1.10
+```
+
+默认输出到 `output/integrated-main-v1.10/`，含完整成片、干净母版、SRT/ASS、时间轴及旁白/音乐分轨。默认合成可离线运行，不依赖 Blender；`-RebuildScenario` 使用 Pillow 重绘新分镜，语音文案未改变时复用仓库缓存。修改语音文案后需要联网重新合成。当前渲染依赖 Windows 微软雅黑字体 `C:/Windows/Fonts/msyh.ttc` 和 `msyhbd.ttc`，Python 依赖见 `requirements.txt`。
+
+配置入口：`config/scenario_context.json` 管理十阶段文案与最低时长；`config/student_a_case.json` 管理大学生 A 的动作和计数；`config/main_scene_integration.json` 管理主片拼接、转场、字幕和配乐；`scripts/render_student_case.py` 管理演示手机 UI。大学生 A 是明确标注的 AI 生成示例：推荐页上滑 2 次浏览 3 条视频，点击我、喜欢，上滑 3 次，再打开视频 14，共 5 次滑动和 3 次点击。手机 UI 为动画演示，不代表真实设备执行记录；弱网、后台和高负载组合是示例故障情境。
+
+完整合成从干净母版开始，不将带字幕/音乐的预览重复叠加。新增画面原生 1080p；旧 720p 动画保留完整画幅并放大到 1792×1008，统一置于 1080p 画布，底部 72 px 为字幕区。全片使用一条连续音乐轨，将原前 30 秒音乐以 0.6 秒交叉淡化循环至结尾。原机械手章节说明卡已由上下文下发和盒子放大转场替代，机械手五步语音不变速。
+
+当前时间轴和验收记录分别为 `docs/main-integration-timeline.json`、`docs/main-integration-validation.json`。9563 帧完整解码通过，音画时长差小于 1 ms，45 条字幕无重叠且在版面内，10 段新增语音及机械手原速 WAV 与旁白轨相关系数接近 1.0，AAC 解码峰值约 0.5902，无削波。关键画面与两处转场已人工检查。
+
+## 历史交付记录
+
+以下入口和时间均属于对应历史版本；当前完整主片以本文件上方 v1.10.0 说明为准。
+
 2026-11-05 v1.9.0：最终机械手融合版为 100.033 秒，独立主片 71.4 秒，两者均输出 1920×1080 / 60 fps，字幕已烧录。正常语速机械手使用 Yunyang、`rate=+0%`、音频变速因子 1.0，五步时长共 23.4 秒，章节过渡 6.233 秒。原 88.8 秒与 71.4 秒无字幕版分别归档在 `releases/iterations/14-mechanical-pre-subtitles-v1.8.1.mp4` 和 `13-main-pre-subtitles-v1.8.1.mp4`。
 
 当前最终入口为 `tools/build-final-delivery.ps1`，加 `-ReuseRenders` 可使用仓库内视频和 WAV 离线重建；不加则重新渲染机械手与结尾。`prepare_natural_mechanical.py` 缓存原始 MP3、无变速 WAV、词级时间信息；`render_mechanical_natural.py` 根据真实配音长度调整动画，用光流补帧保持 60 fps。`finalize_subtitled_films.py` 重新拼接完整机械手章节、连续结尾与循环音乐，并输出字幕。
@@ -65,14 +100,14 @@ Blender 使用 Workbench 渲染 PNG 帧。这个选择是有意的：测试中 E
 1. 安装 Git、Python、FFmpeg 和 Blender。
 2. 克隆仓库并进入 `mechanical-cube`。
 3. 运行 `tools/setup.ps1`，确认所有命令可用并创建 `.venv`。
-4. 先播放 `releases/latest/mechanical-cube-main-ai-integrated-voiceover.mp4`，确认目标效果。
+4. 先播放 `../videos/application-knowledge-graph-with-mechanical-replay.mp4`，确认完整主片目标效果。
 5. 打开 `blender/mechanical_cube_xray_intro.blend` 和 `blender/mechanical_cube_ai_control_loop.blend`，检查字体、材质和相机视图。
-6. 使用 `tools/render-latest.ps1` 完整重建，或加 `-SkipBlender` 只重做编码、转场和配音。
+6. 使用 `tools/build-integrated-main.ps1` 合成当前主片；修改新场景时加 `-RebuildScenario`。`tools/render-latest.ps1` 仅用于早期机械结构介绍。
 7. 对照 `SHA256SUMS.txt` 验证交付文件没有损坏。
 
 若只需重新融合现有 AI 分镜，运行 `tools/integrate-ai-storyboard.ps1`。旁白时间轴位于 `config/mechanical_cube_integrated_voiceover.json`。
 
-## 完整重建流程
+## 早期机械结构介绍重建流程
 
 `tools/render-latest.ps1` 会依次执行：
 

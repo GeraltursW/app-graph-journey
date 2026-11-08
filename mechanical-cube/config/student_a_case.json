@@ -1,0 +1,28 @@
+{
+  "id": "student-a-douyin-browse-likes",
+  "label": "大学生 A",
+  "source": "AI-generated illustrative scenario; animated UI rehearsal, not a device execution log",
+  "app": "抖音",
+  "goal": "浏览推荐视频，再查看喜欢的内容",
+  "basis": ["页面跳转", "连续滑动", "内容打开"],
+  "initial_page": "首页 / 推荐",
+  "steps": [
+    {"id":"feed","page":"首页 / 推荐","action":"swipe_up","repeat":2,"visible_videos":3,"display":"推荐页上滑 2 次","detail":"浏览第 01 → 02 → 03 条视频"},
+    {"id":"me","page":"首页 / 推荐","action":"tap","target":"底部导航：我","to_page":"我的页面","display":"点击底部「我」","detail":"首页 → 我的页面 · 同级 Tab 切换"},
+    {"id":"likes","page":"我的页面","action":"tap","target":"喜欢 Tab","to_page":"喜欢列表","display":"点击「喜欢」Tab","detail":"我的页面 → 喜欢列表"},
+    {"id":"scroll","page":"喜欢列表","action":"swipe_up","repeat":3,"display":"喜欢列表上滑 3 次","detail":"停留在喜欢列表 · 内容向上滚动"},
+    {"id":"open","page":"喜欢列表","action":"tap","target":"视频 14","to_page":"视频详情","display":"打开目标视频 14","detail":"喜欢列表 → 视频详情"}
+  ],
+  "swipe_events": {
+    "student_feed": [[0.75,1.5],[1.9,2.65]],
+    "student_likes": [[0.65,1.4],[2.0,2.75],[3.35,4.1]]
+  },
+  "tap_events": {
+    "me": [1.2,1.9],
+    "likes": [2.4,3.1],
+    "open": [0.8,1.5]
+  },
+  "expected_page": "视频详情 / 视频 14",
+  "total_swipes": 5,
+  "total_taps": 3
+}

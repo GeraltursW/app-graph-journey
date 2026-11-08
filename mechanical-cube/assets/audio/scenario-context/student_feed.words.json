@@ -1,0 +1,47 @@
+[
+  {
+    "offset": 1000000,
+    "duration": 2250000,
+    "text": "先"
+  },
+  {
+    "offset": 3250000,
+    "duration": 2000000,
+    "text": "在"
+  },
+  {
+    "offset": 5500000,
+    "duration": 4250000,
+    "text": "推荐页"
+  },
+  {
+    "offset": 9750000,
+    "duration": 3625000,
+    "text": "上滑"
+  },
+  {
+    "offset": 13500000,
+    "duration": 4625000,
+    "text": "两次"
+  },
+  {
+    "offset": 19625000,
+    "duration": 3625000,
+    "text": "浏览"
+  },
+  {
+    "offset": 23500000,
+    "duration": 2125000,
+    "text": "三"
+  },
+  {
+    "offset": 25625000,
+    "duration": 1625000,
+    "text": "条"
+  },
+  {
+    "offset": 27375000,
+    "duration": 5125000,
+    "text": "视频"
+  }
+]

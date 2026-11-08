@@ -1,0 +1,19 @@
+{
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+0%",
+  "pitch": "-2Hz",
+  "fps": 60,
+  "resolution": [1920, 1080],
+  "stages": [
+    {"id":"single","title":"从一次复现开始","minimum_duration":4.8,"text":"从单个用户场景的识别与复现出发。","parts":["从单个用户场景的识别与复现出发"]},
+    {"id":"library","title":"用例积累，覆盖持续扩展","minimum_duration":6.2,"text":"随着用例积累和测试覆盖范围扩大，逐步建设场景库。","parts":["随着用例积累和测试覆盖范围扩大","逐步建设场景库"]},
+    {"id":"extract","title":"提取典型 UI 操作序列","minimum_duration":6.2,"text":"结合大数据分析与应用知识图谱，提取典型操作序列。","parts":["结合大数据分析与应用知识图谱","提取典型操作序列"]},
+    {"id":"student_plan","title":"AI 为大学生 A 创建场景用例","minimum_duration":7.0,"text":"以大学生A为例，人工智能将典型操作序列，组合成具体的抖音场景用例。","parts":["以大学生A为例","人工智能将典型操作序列","组合成具体的抖音场景用例"]},
+    {"id":"student_feed","title":"推荐页：上滑 2 次，浏览 3 条视频","minimum_duration":5.2,"text":"先在推荐页上滑两次，浏览三条视频。","parts":["先在推荐页上滑两次","浏览三条视频"]},
+    {"id":"student_tabs","title":"点击「我」，再进入「喜欢」","minimum_duration":5.0,"text":"接着点击底部的我，再点击喜欢，进入喜欢列表。","parts":["接着点击底部的我","再点击喜欢，进入喜欢列表"]},
+    {"id":"student_likes","title":"喜欢列表：连续上滑 3 次","minimum_duration":5.4,"text":"在喜欢列表上滑三次，寻找想看的视频。","parts":["在喜欢列表上滑三次","寻找想看的视频"]},
+    {"id":"student_open","title":"打开目标视频，完成场景用例","minimum_duration":6.0,"text":"最后打开目标视频，形成页面、操作和次数明确的场景用例。","parts":["最后打开目标视频","形成页面、操作和次数明确的场景用例"]},
+    {"id":"temporal","title":"为这条场景用例，叠加时序条件","minimum_duration":8.8,"text":"以这条用例为基础，融合网络、应用状态和设备负载等影响因子，进行时序建模。","parts":["以这条用例为基础","融合网络、应用状态和设备负载等影响因子","进行时序建模"]},
+    {"id":"context","title":"重建故障发生时的完整上下文","minimum_duration":6.4,"text":"重建故障发生时的完整上下文，再下发到实验室设备进行复现。","parts":["重建故障发生时的完整上下文","再下发到实验室设备进行复现"]}
+  ]
+}

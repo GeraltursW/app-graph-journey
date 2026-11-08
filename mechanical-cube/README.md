@@ -6,15 +6,18 @@
 
 ## 当前交付
 
-- v1.9.0：两版主片均为 1920×1080 / 60 fps，新增独立底部字幕区域。画面说明与字幕统一 Microsoft YaHei，完整画面保留，不遮挡手机和图表。
-- 机械手旁白使用 `+0%` 正常语速，无音频变速；五步演示随语音延长到 23.4 秒，章节过渡 6.23 秒。
+- v1.10.0：完整主片 **159.383 秒 / 1920×1080 / 60 fps**，实验室手机复现之后合入场景库、典型操作序列、大学生 A 用例、时序建模与故障上下文，再接入机械手和数据报表。
+- 新分镜 63.383 秒，原生 1080p；入口 0.8 秒手机位置匹配，出口 1.2 秒机械盒子放大。上下文下发画面替代原有 6.23 秒机械手说明卡。
+- [新增段落连续预览](releases/latest/scenario-context-preview.mp4)；[大学生 A 独立预览](releases/latest/student-a-case-preview.mp4)；[完整时间轴](docs/main-integration-timeline.json)；[验收记录](docs/main-integration-validation.json)。
+- 大学生 A 用例：推荐页上滑 2 次、浏览 3 条视频 → 底部“我” → “喜欢” → 上滑 3 次 → 打开视频 14。合计 5 次滑动、3 次点击，页面、操作、次数同步展示；属于 AI 生成的动画示例。
+- 机械手旁白保持 `+0%` 正常语速，无音频变速，五步演示 23.4 秒。全片 45 条字幕，统一 Microsoft YaHei，底部独立字幕区保留完整手机与图表。
 - 字幕源文件：[`../videos/subtitles/`](../videos/subtitles/)（SRT / ASS）；正常语速机械手段：[`releases/latest/mechanical-natural-voiceover.mp4`](releases/latest/mechanical-natural-voiceover.mp4)。
-- [机械手章节带字幕预览](releases/latest/mechanical-natural-preview.mp4)；[最终时间轴](docs/final-delivery-timeline.json)；[交付检查记录](docs/final-delivery-validation.json)。两版全片解码正常，字幕时间与版面通过检查，机械手旁白逐段与原速 WAV 对齐，输出无音频削波。
+- [机械手章节带字幕预览](releases/latest/mechanical-natural-preview.mp4)；[v1.9 时间轴](docs/final-delivery-timeline.json)；[v1.9 检查记录](docs/final-delivery-validation.json)。旧完整主片归档于 `releases/iterations/15-main-before-scene-library-v1.9.0.mp4`。
 - 固化用例时只保留绿色正确路径：ROOT → 我的页面 → 我的喜欢 → 视频详情。“朋友页查找未命中”只用于展示探索过程，不进入保存的用例。
 - 第五幕示例更新：点击底部“朋友”→滑动查找未命中→直接点击底部“我”→找到“我的喜欢”→打开视频。朋友与我为同级 Tab，水平连接，不包含返回操作。
 - 第二幕（00:06–00:14）的画面文案和配音统一为“人工智能持续探索页面，理解页面层级。”，已同步两版完整主片。
 - 第二幕含配乐预览：[`releases/latest/page-exploration-preview.mp4`](releases/latest/page-exploration-preview.mp4)；独立可编辑工程：[`blender/page-exploration.blend`](blender/page-exploration.blend)。
-- 100.03 秒完整主片：[`../videos/application-knowledge-graph-with-mechanical-replay.mp4`](../videos/application-knowledge-graph-with-mechanical-replay.mp4)
+- 159.38 秒完整主片：[`../videos/application-knowledge-graph-with-mechanical-replay.mp4`](../videos/application-knowledge-graph-with-mechanical-replay.mp4)
 - 71.4 秒独立主片也已同步第五幕修改，保留其连续配乐：[`../videos/application-knowledge-graph-and-data.mp4`](../videos/application-knowledge-graph-and-data.mp4)。
 - 第五幕已完整合入主片：1.2 秒柔和推进进入，1.4 秒保持节点位置接入用例卡片，文字错开淡入淡出。
 - 当前主片第一帧直接显示“应用知识图谱”；原片前 30 秒背景音乐循环铺满全片，独立旁白保留。
@@ -51,12 +54,12 @@ powershell -ExecutionPolicy Bypass -File .\tools\setup.ps1
 安装 Python 3.11+、FFmpeg 和依赖后，重建当前带字幕交付版：
 
 ```powershell
-pwsh -File .\tools\build-final-delivery.ps1 -ReuseRenders
+pwsh -File .\tools\build-integrated-main.ps1
 ```
 
-去掉 `-ReuseRenders` 可重新生成正常语速配音、机械手画面与转场；已缓存原始语音，文案未变时无需联网合成。字体和文案参数在 `config/final_delivery.json`，主片字幕文案在 `config/main_caption_script.json`。旧的 `render-latest.ps1` 只用于重建早期机械结构介绍。安装 Blender 5.4 Alpha 后可直接编辑 `blender/`。完整流程见 [HANDOFF.md](HANDOFF.md)。
+加 `-RebuildScenario` 可重绘场景库、大学生 A 和时序建模；语音已缓存，文案未变时无需联网合成。新的动画与旁白配置为 `config/scenario_context.json`，动作参数为 `config/student_a_case.json`，合成参数为 `config/main_scene_integration.json`。旧 `build-final-delivery.ps1 -ReuseRenders` 重建 v1.9 的 100.03 秒完整片和 71.4 秒短片；`render-latest.ps1` 重建早期机械结构介绍。安装 Blender 5.4 Alpha 后可直接编辑 `blender/`。完整流程见 [HANDOFF.md](HANDOFF.md)。
 
-以下为历史机械分镜和 88.8 秒基片的生成入口，最终交付还需运行上述字幕与正常语速流程。将新的 AI 操作分镜融合进早期结构介绍：
+以下为历史机械分镜和 88.8 秒基片的生成入口，不直接生成当前 159.38 秒主片。将新的 AI 操作分镜融合进早期结构介绍：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\tools\integrate-ai-storyboard.ps1

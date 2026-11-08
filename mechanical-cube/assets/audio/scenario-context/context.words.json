@@ -1,0 +1,72 @@
+[
+  {
+    "offset": 1000000,
+    "duration": 4375000,
+    "text": "重建"
+  },
+  {
+    "offset": 5500000,
+    "duration": 3250000,
+    "text": "故障"
+  },
+  {
+    "offset": 9000000,
+    "duration": 3000000,
+    "text": "发生"
+  },
+  {
+    "offset": 12000000,
+    "duration": 1375000,
+    "text": "时"
+  },
+  {
+    "offset": 13375000,
+    "duration": 1500000,
+    "text": "的"
+  },
+  {
+    "offset": 15125000,
+    "duration": 3625000,
+    "text": "完整"
+  },
+  {
+    "offset": 18875000,
+    "duration": 6125000,
+    "text": "上下文"
+  },
+  {
+    "offset": 26750000,
+    "duration": 2750000,
+    "text": "再"
+  },
+  {
+    "offset": 29500000,
+    "duration": 3625000,
+    "text": "下发"
+  },
+  {
+    "offset": 33250000,
+    "duration": 1750000,
+    "text": "到"
+  },
+  {
+    "offset": 35250000,
+    "duration": 4250000,
+    "text": "实验室"
+  },
+  {
+    "offset": 39625000,
+    "duration": 3875000,
+    "text": "设备"
+  },
+  {
+    "offset": 43750000,
+    "duration": 3250000,
+    "text": "进行"
+  },
+  {
+    "offset": 47125000,
+    "duration": 3750000,
+    "text": "复现"
+  }
+]

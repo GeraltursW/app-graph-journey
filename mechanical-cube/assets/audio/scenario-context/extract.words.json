@@ -1,0 +1,57 @@
+[
+  {
+    "offset": 1000000,
+    "duration": 4000000,
+    "text": "结合"
+  },
+  {
+    "offset": 5250000,
+    "duration": 3750000,
+    "text": "大数据"
+  },
+  {
+    "offset": 9125000,
+    "duration": 4125000,
+    "text": "分析"
+  },
+  {
+    "offset": 14250000,
+    "duration": 2375000,
+    "text": "与"
+  },
+  {
+    "offset": 16750000,
+    "duration": 3500000,
+    "text": "应用"
+  },
+  {
+    "offset": 20375000,
+    "duration": 2625000,
+    "text": "知识"
+  },
+  {
+    "offset": 23125000,
+    "duration": 4750000,
+    "text": "图谱"
+  },
+  {
+    "offset": 29250000,
+    "duration": 4375000,
+    "text": "提取"
+  },
+  {
+    "offset": 33875000,
+    "duration": 4125000,
+    "text": "典型"
+  },
+  {
+    "offset": 38125000,
+    "duration": 3375000,
+    "text": "操作"
+  },
+  {
+    "offset": 41625000,
+    "duration": 3750000,
+    "text": "序列"
+  }
+]
