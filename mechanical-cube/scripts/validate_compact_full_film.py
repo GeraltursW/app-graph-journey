@@ -49,11 +49,15 @@ def main():
     peak=float(np.max(np.abs(final)));assert peak<1
     summary=next(s for s in timeline['shots'] if s.get('renderer')=='student_summary')
     summary_start=summary['start'];factor_start=summary_start+summary['duration']
+    preview=summary['step_preview'];list_start=summary_start+preview['show_start'];list_end=list_start+preview['hold_duration']
+    assert 1<=preview['hold_duration']<=2 and not preview['narrate_steps']
+    assert float(np.max(np.abs(narration[round(list_start*16000):round(list_end*16000)])))<1e-7, 'Step list must have no narration'
     times=[0,12,33.3,55,head-1/fps,head,head+2.8,head+7.5,outro-1/fps,outro,outro+.5,outro+1.5,outro+3.8,outro+5,outro+7.2,total-.1,
            5.383333,5.4,6.8,7.5,9,10.983333,11,19.4,
            36.383333,36.4,37.62,38.57,39.52,40.35,40.983333,41,41.583333,41.6,
            summary_start-1/fps,summary_start,factor_start-1/fps,factor_start,
-           factor_start+.25,factor_start+1,summary_start+1.8,summary_start+3.5,factor_start-.35]
+           factor_start+.25,factor_start+1,summary_start+1.8,summary_start+3.5,factor_start-.35,
+           list_start+.2,list_end-.2]
     frames=[]
     for i,t in enumerate(times):
         target=out/f'qa-{i:02d}.png'
@@ -78,6 +82,9 @@ def main():
         a=np.asarray(frames[left],dtype=np.float32)[110:1008];b=np.asarray(frames[right],dtype=np.float32)[110:1008]
         mse=float(np.mean((a-b)**2));psnr=float(10*np.log10(255**2/max(mse,1e-10)))
         assert psnr>30,(label,psnr);continuity[label]={'psnr_db':psnr,'mean_absolute_pixel_difference':float(np.mean(np.abs(a-b)))}
+    a=np.asarray(frames[-2],dtype=np.float32)[110:1008];b=np.asarray(frames[-1],dtype=np.float32)[110:1008]
+    static_psnr=float(10*np.log10(255**2/max(float(np.mean((a-b)**2)),1e-10)))
+    assert static_psnr>45,('Step list should remain static',static_psnr)
     steps=json.loads((out/'step-label-timeline.json').read_text('utf-8'))['entries']
     assert len(steps)==timeline['step_count']==16
     assert [s['id'] for s in steps]==[f'{i:02d}' for i in range(1,len(steps)+1)]
@@ -95,7 +102,9 @@ def main():
             'av_duration_difference_seconds':abs(float(v['duration'])-float(aud['duration'])),
             'caption_count':len(cues),'step_count':len(steps),'step_coverage':'continuous','controller_label':'服务器',
             'mechanical_narration':'机械手操作','maximum_caption_width_px':max_width,'font':'Microsoft YaHei',
-            'student_case':'brief_creation_confirmation_only','student_summary_range':[summary_start,factor_start],
+            'student_case':'creation_then_silent_step_list','student_summary_range':[summary_start,factor_start],
+            'student_steps_static_range':[list_start,list_end],'student_steps_static_seconds':preview['hold_duration'],
+            'student_steps_static_psnr_db':static_psnr,'student_steps_narration':False,
             'student_summary_to_factors_transition_seconds':summary['transition_to_next'],
             'normal_rate_narration':aligned,'aac_mix_correlation':corr,'decoded_peak':peak,
             'join_continuity':continuity,'sampled_frame_times':times,'file_bytes':movie.stat().st_size}

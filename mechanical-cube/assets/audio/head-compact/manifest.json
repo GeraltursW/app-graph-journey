@@ -1,6 +1,6 @@
 {
-  "revision": "v1.13.0-student-summary",
-  "duration": 69.4,
+  "revision": "v1.14.0-student-step-glance",
+  "duration": 69.8,
   "fps": 60,
   "voice": "zh-CN-YunyangNeural",
   "rate": "+0%",
@@ -283,7 +283,7 @@
     {
       "id": "12",
       "title": "AI 创建大学生场景用例",
-      "duration": 4.6,
+      "duration": 5.0,
       "voices": [
         {
           "id": "student_plan",
@@ -293,6 +293,13 @@
       ],
       "renderer": "student_summary",
       "transition_to_next": 0.7,
+      "step_preview": {
+        "source": "config/student_a_case.json",
+        "show_start": 2.8,
+        "hold_duration": 1.5,
+        "fade_in": 0.2,
+        "narrate_steps": false
+      },
       "start": 52.6
     },
     {
@@ -310,7 +317,7 @@
           "text": "叠加网络、应用状态和负载，进行时序建模。"
         }
       ],
-      "start": 57.2
+      "start": 57.6
     },
     {
       "id": "14",
@@ -338,7 +345,7 @@
           "text": "重建故障上下文，下发设备复现。"
         }
       ],
-      "start": 63.6
+      "start": 64.0
     }
   ],
   "voices": [
@@ -558,7 +565,7 @@
       "start": 52.75,
       "audio_duration": 2.5525,
       "speech_end": 2.3125,
-      "window": 4.39,
+      "window": 4.79,
       "audio": "assets/audio/head-compact/student_plan.wav",
       "words": "assets/audio/head-compact/student_plan.words.json",
       "time_stretch": 1.0
@@ -568,7 +575,7 @@
       "offset": 0.15,
       "text": "叠加网络、应用状态和负载，进行时序建模。",
       "shot": "13",
-      "start": 57.35,
+      "start": 57.75,
       "audio_duration": 4.115,
       "speech_end": 3.875,
       "window": 6.19,
@@ -582,7 +589,7 @@
       "window": 4.5,
       "text": "重建故障上下文，下发设备复现。",
       "shot": "14",
-      "start": 63.75,
+      "start": 64.15,
       "audio_duration": 3.0525,
       "speech_end": 2.8125,
       "audio": "assets/audio/head-compact/context.wav",

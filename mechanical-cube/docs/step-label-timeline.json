@@ -105,45 +105,45 @@
       "title": "AI 创建大学生用例",
       "text": "STEP 12 / 16   AI 创建大学生用例",
       "start": 52.6,
-      "end": 57.2,
+      "end": 57.6,
       "start_frame": 3156,
-      "end_frame": 3432
+      "end_frame": 3456
     },
     {
       "id": "13",
       "title": "影响因子时序建模",
       "text": "STEP 13 / 16   影响因子时序建模",
-      "start": 57.2,
-      "end": 63.6,
-      "start_frame": 3432,
-      "end_frame": 3816
+      "start": 57.6,
+      "end": 64.0,
+      "start_frame": 3456,
+      "end_frame": 3840
     },
     {
       "id": "14",
       "title": "重建故障上下文",
       "text": "STEP 14 / 16   重建故障上下文",
-      "start": 63.6,
-      "end": 69.4,
-      "start_frame": 3816,
-      "end_frame": 4164
+      "start": 64.0,
+      "end": 69.8,
+      "start_frame": 3840,
+      "end_frame": 4188
     },
     {
       "id": "15",
       "title": "AI 控制机械手",
       "text": "STEP 15 / 16   AI 控制机械手",
-      "start": 69.4,
-      "end": 78.2,
-      "start_frame": 4164,
-      "end_frame": 4692
+      "start": 69.8,
+      "end": 78.6,
+      "start_frame": 4188,
+      "end_frame": 4716
     },
     {
       "id": "16",
       "title": "数据汇聚与报表",
       "text": "STEP 16 / 16   数据汇聚与报表",
-      "start": 78.2,
-      "end": 88.2,
-      "start_frame": 4692,
-      "end_frame": 5292
+      "start": 78.6,
+      "end": 88.6,
+      "start_frame": 4716,
+      "end_frame": 5316
     }
   ],
   "legacy_header_masks": [
@@ -194,7 +194,7 @@
     ],
     [
       41.6,
-      68.95,
+      69.35,
       64,
       20,
       700,

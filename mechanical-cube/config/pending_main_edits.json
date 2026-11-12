@@ -7,9 +7,9 @@
       "shot": 15,
       "status": "integrated_in_v1.12.0",
       "approved_duration_seconds": 8.8,
-      "preview": "output/compact-full-v1.13/mechanical/mechanical-compact-preview.mp4",
-      "clean_master": "output/compact-full-v1.13/mechanical/mechanical-compact-clean.mp4",
-      "narration": "output/compact-full-v1.13/mechanical/narration.wav",
+      "preview": "output/compact-full-v1.14/mechanical/mechanical-compact-preview.mp4",
+      "clean_master": "output/compact-full-v1.14/mechanical/mechanical-compact-clean.mp4",
+      "narration": "output/compact-full-v1.14/mechanical/narration.wav",
       "config": "config/mechanical_compact.json",
       "build_script": "scripts/build_mechanical_compact.py",
       "requirements": [
@@ -65,13 +65,13 @@
           "duration_seconds": 12.2
         }
       ],
-      "note": "大学生操作演示不再展开，前段仅保留 14 幕、69.4 秒；AI 创建用例后直接进入影响因子建模。",
-      "actual_duration_seconds": 69.4,
-      "clean_master": "output/compact-full-v1.13/head/head-compact-clean.mp4",
-      "narration": "output/compact-full-v1.13/head/narration.wav",
+      "note": "前段为 14 幕、69.8 秒；AI 创建大学生用例后展示 5 个静态步骤 1.5 秒，不展开动画和解读，再进入影响因子建模。",
+      "actual_duration_seconds": 69.8,
+      "clean_master": "output/compact-full-v1.14/head/head-compact-clean.mp4",
+      "narration": "output/compact-full-v1.14/head/narration.wav",
       "config": "config/head_compact.json",
       "build_script": "scripts/build_head_compact.py",
-      "timeline": "output/compact-full-v1.13/head/timeline.json",
+      "timeline": "output/compact-full-v1.14/head/timeline.json",
       "validation": "docs/compact-main-validation.json",
       "integrated_on": "2026-11-12"
     },
@@ -164,12 +164,25 @@
       "transition_seconds": 0.7,
       "next_step": "叠加网络、应用状态和负载，进行时序建模",
       "step_count": 16
+    },
+    {
+      "id": "student_step_glance",
+      "status": "integrated_in_v1.14.0",
+      "static_step_count": 5,
+      "static_range_seconds": [
+        55.4,
+        56.9
+      ],
+      "static_duration_seconds": 1.5,
+      "narrate_steps": false,
+      "detailed_walkthrough": false,
+      "chapter_count": 16
     }
   ],
   "latest_full_delivery": {
     "status": "integrated_and_validated",
     "video": "../videos/application-knowledge-graph-with-mechanical-replay.mp4",
-    "duration_seconds": 88.2,
+    "duration_seconds": 88.6,
     "resolution": [
       1920,
       1080
@@ -180,5 +193,5 @@
     "build_script": "scripts/build_compact_full_film.py",
     "step_count": 16
   },
-  "release_version": "v1.13.0"
+  "release_version": "v1.14.0"
 }

@@ -1,5 +1,5 @@
 {
-  "duration": 69.4,
+  "duration": 69.8,
   "fps": 60,
   "voice": "zh-CN-YunyangNeural",
   "pitch": "-2Hz",
@@ -273,7 +273,7 @@
     {
       "id": "12",
       "title": "AI 创建大学生场景用例",
-      "duration": 4.6,
+      "duration": 5.0,
       "voices": [
         {
           "id": "student_plan",
@@ -282,7 +282,14 @@
         }
       ],
       "renderer": "student_summary",
-      "transition_to_next": 0.7
+      "transition_to_next": 0.7,
+      "step_preview": {
+        "source": "config/student_a_case.json",
+        "show_start": 2.8,
+        "hold_duration": 1.5,
+        "fade_in": 0.2,
+        "narrate_steps": false
+      }
     },
     {
       "id": "13",
@@ -328,5 +335,5 @@
       ]
     }
   ],
-  "revision": "v1.13.0-student-summary"
+  "revision": "v1.14.0-student-step-glance"
 }

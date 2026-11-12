@@ -96,7 +96,7 @@ def main():
     run(['-i', 'main-clean.mp4', '-i', 'mix.wav', '-vf', f'{step_filter},ass={NAME}.zh-CN.ass', '-map', '0:v', '-map', '1:a',
          '-t', total, '-c:v', 'libx264', '-preset', 'fast', '-crf', 17, '-pix_fmt', 'yuv420p',
          '-c:a', 'aac', '-b:a', '192k', '-af', 'volume=0.9', '-movflags', '+faststart', NAME+'.mp4'], cwd=out)
-    timeline = {'version':'v1.13.0', 'duration':total, 'fps':60, 'frame_count':round(total*60),
+    timeline = {'version':'v1.14.0', 'duration':total, 'fps':60, 'frame_count':round(total*60),
                 'resolution':[1920,1080], 'font':'Microsoft YaHei', 'subtitle_band':[1008,1080],
                 'head_duration':h['duration'], 'mechanical_start':mechanical_start, 'mechanical_duration':m['duration'],
                 'outro_start':outro_start, 'outro_duration':10, 'caption_count':len(cues), 'captions':cues,

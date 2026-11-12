@@ -1,26 +1,24 @@
 {
-  "version": "v1.13.0",
+  "version": "v1.14.0",
   "step_count": 16,
   "numbering": "01–16 continuous",
-  "coverage_frames": 5292,
-  "lab_label": "STEP 08 / 16   实验室手机复现",
+  "coverage_frames": 5316,
   "student_label": "STEP 12 / 16   AI 创建大学生用例",
   "factor_label": "STEP 13 / 16   影响因子时序建模",
   "mechanical_label": "STEP 15 / 16   AI 控制机械手",
   "outro_label": "STEP 16 / 16   数据汇聚与报表",
-  "removed_v1_12_steps": [
-    13,
-    14,
-    15
-  ],
   "student_summary_seconds": [
     52.6,
-    57.2
+    57.6
   ],
+  "student_static_steps_seconds": [
+    55.4,
+    56.9
+  ],
+  "student_static_duration": 1.5,
+  "student_static_step_count": 5,
+  "student_steps_narration": false,
   "transition_seconds": 0.7,
-  "student_to_factors_psnr_db": 38.901761128560615,
-  "mechanical_narration": "机械手操作",
-  "controller_label": "服务器",
   "audio_time_stretch": 1.0,
   "caption_count": 26
 }

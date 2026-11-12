@@ -176,7 +176,7 @@ b3da31f3d007a8eba7655d519e54754353fb88091ebba4fa461de835fa18be16  releases/lates
 14de25ba451057062aa2d71a3d681429a6f51309f7a76273f4890dd90612c1a2  releases/latest/student-a-case-preview.mp4
 c1f7b6f36f3c27f93cc95054a240b2269a83729657062ac99b7b758b707cd56b  ../videos/10月27日.mp4
 087754019e092d4bb22dcf68d30d631df431227e636beec61fe730161815be07  ../videos/application-knowledge-graph-and-data.mp4
-e04cb5155a763a7fbed857c6ec2a99921e1855ad3eca12973c57b635b0e5126d  ../videos/application-knowledge-graph-with-mechanical-replay.mp4
+8996dc0ca33d62d3e463b78f5639387cae7eb861652142a24297ff83695dd6be  ../videos/application-knowledge-graph-with-mechanical-replay.mp4
 1fc89b4a66bafd88f53a0b07aaa4e58fc453135d12d167e84fa69219747d4bcd  ../videos/mechanical-cube-ai-control-voiceover.mp4
 79372754cd4f919311b9a4bdf4adfd2ebb97c6439eb5f5d9f3017e0d6ea2de10  ../videos/robot-four-clicks-v07-page-switch.mp4
 7810b13191feb1a19224f439de5884a616b42a509b63c6059aea0853c25fe1f7  ../videos/test-cube-ai-operation-standalone.mp4

@@ -1,11 +1,11 @@
 {
-  "duration": 88.2,
+  "duration": 88.6,
   "resolution": [
     1920,
     1080
   ],
   "fps": 60,
-  "frames": 5292,
+  "frames": 5316,
   "decode": "passed",
   "av_duration_difference_seconds": 0.0,
   "caption_count": 26,
@@ -15,36 +15,43 @@
   "mechanical_narration": "机械手操作",
   "maximum_caption_width_px": 684.0,
   "font": "Microsoft YaHei",
-  "student_case": "brief_creation_confirmation_only",
+  "student_case": "creation_then_silent_step_list",
   "student_summary_range": [
     52.6,
-    57.2
+    57.6
   ],
+  "student_steps_static_range": [
+    55.4,
+    56.9
+  ],
+  "student_steps_static_seconds": 1.5,
+  "student_steps_static_psnr_db": 63.90036437349007,
+  "student_steps_narration": false,
   "student_summary_to_factors_transition_seconds": 0.7,
   "normal_rate_narration": [
     {
       "start": 0,
-      "duration": 69.4,
+      "duration": 69.8,
       "source_correlation": 1.0,
       "time_stretch": 1.0
     },
     {
-      "start": 69.4,
+      "start": 69.8,
       "duration": 8.8,
       "source_correlation": 1.0,
       "time_stretch": 1.0
     }
   ],
-  "aac_mix_correlation": 0.999766037038328,
-  "decoded_peak": 0.8564976453781128,
+  "aac_mix_correlation": 0.9997832664444335,
+  "decoded_peak": 0.8345274925231934,
   "join_continuity": {
     "context_to_mechanical": {
-      "psnr_db": 40.06959792772625,
-      "mean_absolute_pixel_difference": 1.4067844152450562
+      "psnr_db": 40.06360540633406,
+      "mean_absolute_pixel_difference": 1.4057855606079102
     },
     "mechanical_to_analytics": {
-      "psnr_db": 46.77005228978978,
-      "mean_absolute_pixel_difference": 0.6803081035614014
+      "psnr_db": 46.54094806359505,
+      "mean_absolute_pixel_difference": 0.6923694014549255
     },
     "connection_to_exploration": {
       "psnr_db": 47.59904708814289,
@@ -67,12 +74,12 @@
       "mean_absolute_pixel_difference": 1.1136879920959473
     },
     "sequence_to_student_summary": {
-      "psnr_db": 42.4701135003534,
-      "mean_absolute_pixel_difference": 1.3282721042633057
+      "psnr_db": 42.614029819132256,
+      "mean_absolute_pixel_difference": 1.322454810142517
     },
     "student_summary_to_factors": {
-      "psnr_db": 38.901761128560615,
-      "mean_absolute_pixel_difference": 1.6143232583999634
+      "psnr_db": 41.056132211153404,
+      "mean_absolute_pixel_difference": 1.389331579208374
     }
   },
   "sampled_frame_times": [
@@ -80,18 +87,18 @@
     12,
     33.3,
     55,
-    69.38333333333334,
-    69.4,
-    72.2,
-    76.9,
-    78.18333333333334,
-    78.2,
-    78.7,
-    79.7,
-    82.0,
-    83.2,
-    85.4,
-    88.10000000000001,
+    69.78333333333333,
+    69.8,
+    72.6,
+    77.3,
+    78.58333333333333,
+    78.6,
+    79.1,
+    80.1,
+    82.39999999999999,
+    83.6,
+    85.8,
+    88.5,
     5.383333,
     5.4,
     6.8,
@@ -112,17 +119,19 @@
     41.6,
     52.583333333333336,
     52.6,
-    57.18333333333334,
-    57.2,
-    57.45,
-    58.2,
+    57.583333333333336,
+    57.6,
+    57.85,
+    58.6,
     54.4,
     56.1,
-    56.85
+    57.25,
+    55.6,
+    56.699999999999996
   ],
-  "file_bytes": 15227854,
+  "file_bytes": 15371640,
   "delivery_file": "../videos/application-knowledge-graph-with-mechanical-replay.mp4",
-  "sha256": "e04cb5155a763a7fbed857c6ec2a99921e1855ad3eca12973c57b635b0e5126d",
+  "sha256": "8996dc0ca33d62d3e463b78f5639387cae7eb861652142a24297ff83695dd6be",
   "step_label_validation": "docs/step-label-validation.json",
   "portable_rebuild": {
     "status": "passed",

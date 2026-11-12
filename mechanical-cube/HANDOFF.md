@@ -2,9 +2,9 @@
 
 ## 交付状态
 
-2026-11-13 **v1.13.0**：当前主片为 `../videos/application-knowledge-graph-with-mechanical-replay.mp4`，**88.2 秒 / 1920×1080 / 60 fps**，16 幕、26 条烧录中文字幕。旁白保持正常语速，前 30 秒音乐以 0.6 秒交叉淡化循环铺满。
+2026-11-13 **v1.14.0**：当前主片为 `../videos/application-knowledge-graph-with-mechanical-replay.mp4`，**88.6 秒 / 1920×1080 / 60 fps**，16 幕、26 条烧录中文字幕。旁白保持正常语速，前 30 秒音乐以 0.6 秒交叉淡化循环铺满。
 
-大学生示例只告诉观众“AI 创建了大学生场景用例”，不展开推荐浏览、同级切换与打开目标视频等操作。52.6–57.2 秒采用黑白界面、绿色完成状态，通过 0.7 秒过渡接入影响因子时序建模。原 v1.12 的 13–15 幕及对应旁白已移除。机械手仍使用“机械手操作”口播，铭牌及上下文缩略图为“服务器”。
+大学生示例先用原旁白说明“AI 创建了大学生场景用例”，再同时展示 5 个操作步骤。列表在 55.4–56.9 秒静态停留 1.5 秒，旁白已结束，不逐步高亮、不添加逐步解读；随后以 0.7 秒过渡进入影响因子建模。机械手继续使用“机械手操作”口播，铭牌为“服务器”。
 
 | STEP | 主片时间 | 内容 |
 | --- | --- | --- |
@@ -19,11 +19,11 @@
 | 09 / 16 | 00:41.6–00:44.0 | 单场景识别与复现 |
 | 10 / 16 | 00:44.0–00:48.4 | 建设场景库 |
 | 11 / 16 | 00:48.4–00:52.6 | 提取典型操作序列 |
-| 12 / 16 | 00:52.6–00:57.2 | AI 创建大学生用例 |
-| 13 / 16 | 00:57.2–01:03.6 | 影响因子时序建模 |
-| 14 / 16 | 01:03.6–01:09.4 | 重建故障上下文 |
-| 15 / 16 | 01:09.4–01:18.2 | AI 控制机械手 |
-| 16 / 16 | 01:18.2–01:28.2 | 数据汇聚与报表 |
+| 12 / 16 | 00:52.6–00:57.6 | AI 创建大学生用例 |
+| 13 / 16 | 00:57.6–01:04.0 | 影响因子时序建模 |
+| 14 / 16 | 01:04.0–01:09.8 | 重建故障上下文 |
+| 15 / 16 | 01:09.8–01:18.6 | AI 控制机械手 |
+| 16 / 16 | 01:18.6–01:28.6 | 数据汇聚与报表 |
 
 ## 新电脑重建当前版本
 
@@ -38,12 +38,12 @@ powershell -ExecutionPolicy Bypass -File .\tools\build-compact-full.ps1 -Rebuild
 powershell -ExecutionPolicy Bypass -File .\tools\build-compact-full.ps1 -RebuildMechanical
 ```
 
-默认输出 `output/compact-full-v1.13/`。构建入口检测 revision，自动更新过期缓存；配音缓存包含新版 AI 创建旁白，原文不变时可离线重建。Windows 使用微软雅黑，依赖见 `requirements.txt`；当前镜头由 Pillow / FFmpeg 生成，历史 Blender 工程继续保留。
+默认输出 `output/compact-full-v1.14/`。构建入口检测 revision，自动更新过期缓存；配音缓存包含新版 AI 创建旁白，原文不变时可离线重建。Windows 使用微软雅黑，依赖见 `requirements.txt`；当前镜头由 Pillow / FFmpeg 生成，历史 Blender 工程继续保留。
 
 | 修改内容 | 入口 |
 | --- | --- |
-| 69.4 秒前段与口播 | `config/head_compact.json`、`scripts/build_head_compact.py` |
-| 简洁 AI 创建大学生用例画面 | `scripts/render_student_summary.py` |
+| 69.8 秒前段与口播 | `config/head_compact.json`、`scripts/build_head_compact.py` |
+| AI 创建与静态步骤列表 | `scripts/render_student_summary.py` |
 | 黑白 AI 探索与实验室复现 | `scripts/render_control_exploration.py`、`scripts/render_lab_replay_monochrome.py` |
 | 8.8 秒机械手、服务器铭牌 | `config/mechanical_compact.json`、`scripts/build_mechanical_compact.py` |
 | 16 幕 STEP | `config/film_step_labels.json`、`scripts/film_step_labels.py` |
@@ -51,9 +51,9 @@ powershell -ExecutionPolicy Bypass -File .\tools\build-compact-full.ps1 -Rebuild
 
 原始输入为仓库内历史干净母版、机械手母版、报表母版及 `assets/audio/`。`releases/latest/compact-*` 仍为 v1.11 历史缓存，不能作为当前交付；构建入口会重绘到本地输出目录。正式字幕仅烧录一次：`film-step-labels.ass` 负责 16 幕提示，SRT / ASS 负责 26 条旁白字幕。
 
-约束：朋友与我为同级底部 Tab；只固化绿色成功路径；大学生例子只显示创建完成；之后展示网络、应用状态、负载的时序关系。机械手保留摄像头采集、AI 识别、坐标回传与操作。新增界面为原生 1080p，历史动画保持完整画幅，底部 72 px 为字幕区。
+约束：朋友与我为同级底部 Tab；只固化绿色成功路径；大学生例子显示创建完成和静态步骤；之后展示网络、应用状态、负载的时序关系。机械手保留摄像头采集、AI 识别、坐标回传与操作。新增界面为原生 1080p，历史动画保持完整画幅，底部 72 px 为字幕区。
 
-验收见 `docs/compact-main-validation.json` 和 `docs/step-label-validation.json`：5292 帧完整解码、16 幕编号连续、26 条字幕、语速与音画同步、AI 创建镜头前后转场。
+验收见 `docs/compact-main-validation.json` 和 `docs/step-label-validation.json`：5316 帧完整解码、16 幕编号连续、26 条字幕、语速与音画同步、步骤列表静态性和无旁白区间、AI 创建镜头前后转场。
 
 ## GitHub 精简交付
 
@@ -61,13 +61,15 @@ powershell -ExecutionPolicy Bypass -File .\tools\build-compact-full.ps1 -Rebuild
 
 ## 历史交付记录
 
+2026-11-13 v1.13.0：88.2 秒、16 幕、26 条字幕，大学生用例仅展示 AI 创建确认；标签 `mechanical-cube-v1.13.0`。
+
 2026-11-13 v1.12.0：98.4 秒、19 幕、29 条字幕。原 14 → 16 直接衔接，机械手口播与服务器铭牌已统一；标签 `mechanical-cube-v1.12.0`。
 
 2026-11-13 v1.11.0：101.8 秒、20 幕、30 条字幕，版本标签 `mechanical-cube-v1.11.0`。
 
 2026-11-08 v1.10.0：159.383 秒，45 条字幕，包含场景库、大学生 A、时序建模和故障上下文。该版合成入口为 `tools/build-integrated-main.ps1`；时间轴与验收见 `docs/main-integration-timeline-v1.10.json` 和 `docs/main-integration-validation-v1.10.json`。
 
-以下入口和时间均属于对应历史版本；当前完整主片以本文件上方 v1.13.0 说明为准。
+以下入口和时间均属于对应历史版本；当前完整主片以本文件上方 v1.14.0 说明为准。
 
 2026-11-05 v1.9.0：最终机械手融合版为 100.033 秒，独立主片 71.4 秒，两者均输出 1920×1080 / 60 fps，字幕已烧录。正常语速机械手使用 Yunyang、`rate=+0%`、音频变速因子 1.0，五步时长共 23.4 秒，章节过渡 6.233 秒。原 88.8 秒与 71.4 秒无字幕版分别归档在 `releases/iterations/14-mechanical-pre-subtitles-v1.8.1.mp4` 和 `13-main-pre-subtitles-v1.8.1.mp4`。
 

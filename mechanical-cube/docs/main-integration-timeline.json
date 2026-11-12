@@ -1,8 +1,8 @@
 {
-  "version": "v1.13.0",
-  "duration": 88.2,
+  "version": "v1.14.0",
+  "duration": 88.6,
   "fps": 60,
-  "frame_count": 5292,
+  "frame_count": 5316,
   "resolution": [
     1920,
     1080
@@ -12,10 +12,10 @@
     1008,
     1080
   ],
-  "head_duration": 69.4,
-  "mechanical_start": 69.4,
+  "head_duration": 69.8,
+  "mechanical_start": 69.8,
   "mechanical_duration": 8.8,
-  "outro_start": 78.2,
+  "outro_start": 78.6,
   "outro_duration": 10,
   "caption_count": 26,
   "captions": [
@@ -101,52 +101,52 @@
     },
     {
       "start": 52.6,
-      "end": 57.2,
+      "end": 57.6,
       "text": "AI创建了大学生场景用例"
     },
     {
-      "start": 57.2,
-      "end": 63.6,
+      "start": 57.6,
+      "end": 64.0,
       "text": "叠加网络、应用状态和负载，进行时序建模"
     },
     {
-      "start": 63.6,
-      "end": 69.4,
+      "start": 64.0,
+      "end": 69.8,
       "text": "重建故障上下文，下发设备复现"
     },
     {
-      "start": 69.4,
-      "end": 71.7,
+      "start": 69.8,
+      "end": 72.1,
       "text": "摄像头采集图片"
     },
     {
-      "start": 71.7,
-      "end": 73.78333333333333,
+      "start": 72.1,
+      "end": 74.18333333333332,
       "text": "AI 识别控件位置"
     },
     {
-      "start": 73.78333333333335,
-      "end": 76.16666666666669,
+      "start": 74.18333333333334,
+      "end": 76.56666666666668,
       "text": "坐标转换后回传"
     },
     {
-      "start": 76.16666666666667,
-      "end": 78.2,
+      "start": 76.56666666666666,
+      "end": 78.6,
       "text": "机械手操作"
     },
     {
-      "start": 78.85000000000001,
-      "end": 80.7,
+      "start": 79.25,
+      "end": 81.1,
       "text": "测试完成后"
     },
     {
-      "start": 80.7,
-      "end": 85.10000000000001,
+      "start": 81.1,
+      "end": 85.5,
       "text": "性能、功耗、热等数据同步汇聚"
     },
     {
-      "start": 85.10000000000001,
-      "end": 88.2,
+      "start": 85.5,
+      "end": 88.6,
       "text": "数据报表一目了然"
     }
   ],
@@ -428,7 +428,7 @@
     {
       "id": "12",
       "title": "AI 创建大学生场景用例",
-      "duration": 4.6,
+      "duration": 5.0,
       "voices": [
         {
           "id": "student_plan",
@@ -438,6 +438,13 @@
       ],
       "renderer": "student_summary",
       "transition_to_next": 0.7,
+      "step_preview": {
+        "source": "config/student_a_case.json",
+        "show_start": 2.8,
+        "hold_duration": 1.5,
+        "fade_in": 0.2,
+        "narrate_steps": false
+      },
       "start": 52.6
     },
     {
@@ -455,7 +462,7 @@
           "text": "叠加网络、应用状态和负载，进行时序建模。"
         }
       ],
-      "start": 57.2
+      "start": 57.6
     },
     {
       "id": "14",
@@ -483,7 +490,7 @@
           "text": "重建故障上下文，下发设备复现。"
         }
       ],
-      "start": 63.6
+      "start": 64.0
     }
   ],
   "mechanical_stages": [
@@ -587,8 +594,8 @@
   "music_loop_seconds": 30,
   "music_crossfade_seconds": 0.6,
   "music_volume": 0.36,
-  "source_head": "output/compact-full-v1.13/head",
-  "source_mechanical": "output/compact-full-v1.13/mechanical",
+  "source_head": "output/compact-full-v1.14/head",
+  "source_mechanical": "output/compact-full-v1.14/mechanical",
   "step_count": 16,
   "step_labels": [
     {
@@ -695,45 +702,45 @@
       "title": "AI 创建大学生用例",
       "text": "STEP 12 / 16   AI 创建大学生用例",
       "start": 52.6,
-      "end": 57.2,
+      "end": 57.6,
       "start_frame": 3156,
-      "end_frame": 3432
+      "end_frame": 3456
     },
     {
       "id": "13",
       "title": "影响因子时序建模",
       "text": "STEP 13 / 16   影响因子时序建模",
-      "start": 57.2,
-      "end": 63.6,
-      "start_frame": 3432,
-      "end_frame": 3816
+      "start": 57.6,
+      "end": 64.0,
+      "start_frame": 3456,
+      "end_frame": 3840
     },
     {
       "id": "14",
       "title": "重建故障上下文",
       "text": "STEP 14 / 16   重建故障上下文",
-      "start": 63.6,
-      "end": 69.4,
-      "start_frame": 3816,
-      "end_frame": 4164
+      "start": 64.0,
+      "end": 69.8,
+      "start_frame": 3840,
+      "end_frame": 4188
     },
     {
       "id": "15",
       "title": "AI 控制机械手",
       "text": "STEP 15 / 16   AI 控制机械手",
-      "start": 69.4,
-      "end": 78.2,
-      "start_frame": 4164,
-      "end_frame": 4692
+      "start": 69.8,
+      "end": 78.6,
+      "start_frame": 4188,
+      "end_frame": 4716
     },
     {
       "id": "16",
       "title": "数据汇聚与报表",
       "text": "STEP 16 / 16   数据汇聚与报表",
-      "start": 78.2,
-      "end": 88.2,
-      "start_frame": 4692,
-      "end_frame": 5292
+      "start": 78.6,
+      "end": 88.6,
+      "start_frame": 4716,
+      "end_frame": 5316
     }
   ]
 }

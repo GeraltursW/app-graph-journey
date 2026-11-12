@@ -147,7 +147,7 @@ def main():
                 elif spec.get('renderer')=='lab_replay_monochrome':render_lab_replay(a.source.resolve(),out,name,spec['duration'])
                 elif spec.get('renderer')=='control_exploration':render_control_exploration(a.source.resolve(),out,name,spec['duration'])
                 elif spec.get('renderer')=='page_nodes_monochrome':render_page_nodes(a.source.resolve(),out,name,spec['duration'])
-                elif spec.get('renderer')=='student_summary':render_student_summary(a.source.resolve(),out,name,spec['duration'])
+                elif spec.get('renderer')=='student_summary':render_student_summary(a.source.resolve(),out,name,spec['duration'],spec['step_preview'])
                 else:picture_piece(a.source.resolve(),out,name,spec)
             parts.append(context_thumbnail(path,a.mechanical.resolve(),out,spec['duration']) if spec.get('replace_mechanical_thumbnail') else path)
         print('SHOT_READY',shot['id'],shot['duration'],flush=True)
