@@ -13,6 +13,7 @@ from integrate_scenario_main import smooth, boxmix, write_bridge
 from render_page_nodes_monochrome import render_page_nodes
 from render_control_exploration import render_control_exploration
 from render_lab_replay_monochrome import render_lab_replay, render_lab_context_bridge
+from render_student_summary import render_student_summary
 
 ROOT=Path(__file__).resolve().parents[1]
 NAME='head-compact-preview'
@@ -146,6 +147,7 @@ def main():
                 elif spec.get('renderer')=='lab_replay_monochrome':render_lab_replay(a.source.resolve(),out,name,spec['duration'])
                 elif spec.get('renderer')=='control_exploration':render_control_exploration(a.source.resolve(),out,name,spec['duration'])
                 elif spec.get('renderer')=='page_nodes_monochrome':render_page_nodes(a.source.resolve(),out,name,spec['duration'])
+                elif spec.get('renderer')=='student_summary':render_student_summary(a.source.resolve(),out,name,spec['duration'])
                 else:picture_piece(a.source.resolve(),out,name,spec)
             parts.append(context_thumbnail(path,a.mechanical.resolve(),out,spec['duration']) if spec.get('replace_mechanical_thumbnail') else path)
         print('SHOT_READY',shot['id'],shot['duration'],flush=True)

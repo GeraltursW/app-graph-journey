@@ -6,15 +6,14 @@
 
 ## 当前交付
 
-2026-11-13 **v1.12.0**：完整主片为 **98.4 秒 / 1920×1080 / 60 fps**，19 幕、29 条中文字幕。
+2026-11-13 **v1.13.0**：完整主片 **88.2 秒 / 1920×1080 / 60 fps**，16 幕、26 条中文字幕。
 
 - 正式视频：`../videos/application-knowledge-graph-with-mechanical-replay.mp4`。
-- 第 14 幕直接衔接原第 16 幕，删除“喜欢列表上滑三次”的独立画面与旁白；后续 STEP 连续顺延。
-- 机械手现为第 18 幕，旁白与字幕为“机械手操作”；设备铭牌和上下文缩略图统一为“服务器”。
-- 第 19 幕汇聚性能、功耗、热数据。正常语速、黑白控件样式及连续循环音乐保留。
-- 当前时间轴与验收：`docs/compact-main-timeline.json`、`docs/compact-main-validation.json`。
-- 字幕：`../videos/subtitles/`；重建与同步规则：`HANDOFF.md`、`docs/PUBLISHING.md`。
-- `releases/latest/compact-*` 为 v1.11 历史构建缓存；脚本会检测版本并重绘到 `output/`，这些缓存不是当前交付视频。
+- 大学生示例仅保留“AI 创建了大学生场景用例”及创建完成反馈；删除旧版推荐页浏览、切换到我与喜欢、打开目标视频三幕的画面和旁白。
+- 52.6–57.2 秒为简洁的 AI 创建镜头，直接平滑过渡到影响因子建模，后续 STEP 连续顺延。
+- 机械手为第 15 幕，口播为“机械手操作”，设备及上下文缩略图铭牌均为“服务器”；第 16 幕展示数据汇聚与报表。
+- 时间轴与验收：`docs/compact-main-timeline.json`、`docs/compact-main-validation.json`；字幕在 `../videos/subtitles/`。
+- `releases/latest/compact-*` 为 v1.11 历史缓存，当前构建脚本会重绘过期素材到本地 `output/`。
 
 ## 结构与运动关系
 
@@ -35,11 +34,11 @@ powershell -ExecutionPolicy Bypass -File .\tools\setup.ps1
 powershell -ExecutionPolicy Bypass -File .\tools\build-compact-full.ps1
 ```
 
-默认输出到 `output/compact-full-v1.12/`，包含完整 MP4、干净画面、语音与混音分轨、SRT/ASS、STEP 时间轴和验收记录。默认流程使用仓库缓存，可离线运行，不需要 Blender。依赖 Python 3.11+、FFmpeg、Pillow、NumPy 和 Windows 微软雅黑；修改配音文案后才需要联网调用 edge-tts。
+默认输出到 `output/compact-full-v1.13/`，包含完整 MP4、干净画面、语音与混音分轨、SRT/ASS、STEP 时间轴和验收记录。默认流程使用仓库缓存，可离线运行，不需要 Blender。依赖 Python 3.11+、FFmpeg、Pillow、NumPy 和 Windows 微软雅黑；修改配音文案后才需要联网调用 edge-tts。
 
 修改 `config/head_compact.json` 或前段渲染脚本后，运行 `tools/build-compact-full.ps1 -RebuildHead`。修改 `config/mechanical_compact.json` 后，运行 `tools/build-compact-full.ps1 -RebuildMechanical`；该选项也重建前段，保证进入机械手的转场匹配。修改 `config/film_step_labels.json` 后默认重建即可。旧 `build-integrated-main.ps1` 属于 v1.10，旧 `build-final-delivery.ps1` 属于 v1.9。完整交接见 [HANDOFF.md](HANDOFF.md)。
 
-以下为历史机械分镜和 88.8 秒基片的生成入口，不直接生成当前 98.4 秒主片。将新的 AI 操作分镜融合进早期结构介绍：
+以下为历史机械分镜和 88.8 秒基片的生成入口，不直接生成当前 88.2 秒主片。将新的 AI 操作分镜融合进早期结构介绍：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\tools\integrate-ai-storyboard.ps1

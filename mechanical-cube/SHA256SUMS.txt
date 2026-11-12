@@ -32,8 +32,8 @@ e194d13f38cc6065e6ea05c47a104102105d0732e4e65d3e73b66d05a80c832a  assets/audio/h
 853c5fc4e314ba215bd6ce846c7ef40a03d4d5649c5f475766ccda8d73f8ce0a  assets/audio/head-compact/student_likes.wav
 984db4c2215a488e0476d4a339089908c24c30e4f42d23d2c930e57527dd0825  assets/audio/head-compact/student_open.mp3
 82ecde248258be0a78a5485002802593a4f25c3255382f02a8faeb1c5e142564  assets/audio/head-compact/student_open.wav
-0b13666e4fc8709e4c78d2378eecced1cfaefca9b13f67cb5c19001ee7135d8a  assets/audio/head-compact/student_plan.mp3
-25fb93ce71267649dc3a95f23fd0778aa0c2bbc0dd7e14482eb6e8e5dbc88ddf  assets/audio/head-compact/student_plan.wav
+58e21dd16bed3213de1f603519a2047111fa1759d3aec3cf7cb7113cf586142f  assets/audio/head-compact/student_plan.mp3
+d5bcfc2ee921530bd28cbaa12711171492a2784f0493b664e31cef140a435466  assets/audio/head-compact/student_plan.wav
 072fbbf0c2e69023cb5dc7dea5aa1d027f4ab67505e81bb46f8a3156727b032d  assets/audio/head-compact/student_tabs.mp3
 25044fd9f919a77c3709d183525e91bfa896773cc66898949cbd5f1146f4929a  assets/audio/head-compact/student_tabs.wav
 94deea329fbfa6d5b9e245bc63d136b502cc5c0c1e4a4df6b903a6c2126d3ea3  assets/audio/head-compact/switch.mp3
@@ -176,7 +176,7 @@ b3da31f3d007a8eba7655d519e54754353fb88091ebba4fa461de835fa18be16  releases/lates
 14de25ba451057062aa2d71a3d681429a6f51309f7a76273f4890dd90612c1a2  releases/latest/student-a-case-preview.mp4
 c1f7b6f36f3c27f93cc95054a240b2269a83729657062ac99b7b758b707cd56b  ../videos/10月27日.mp4
 087754019e092d4bb22dcf68d30d631df431227e636beec61fe730161815be07  ../videos/application-knowledge-graph-and-data.mp4
-f7f37174f469736fd244ffb654524c762f9eb8b96388c1393dcae0af53152e55  ../videos/application-knowledge-graph-with-mechanical-replay.mp4
+e04cb5155a763a7fbed857c6ec2a99921e1855ad3eca12973c57b635b0e5126d  ../videos/application-knowledge-graph-with-mechanical-replay.mp4
 1fc89b4a66bafd88f53a0b07aaa4e58fc453135d12d167e84fa69219747d4bcd  ../videos/mechanical-cube-ai-control-voiceover.mp4
 79372754cd4f919311b9a4bdf4adfd2ebb97c6439eb5f5d9f3017e0d6ea2de10  ../videos/robot-four-clicks-v07-page-switch.mp4
 7810b13191feb1a19224f439de5884a616b42a509b63c6059aea0853c25fe1f7  ../videos/test-cube-ai-operation-standalone.mp4

@@ -47,10 +47,13 @@ def main():
         aligned.append({'start':start,'duration':duration,'source_correlation':corr,'time_stretch':1.0})
     length=min(len(mix),len(final));corr=float(np.corrcoef(mix[:length],final[:length])[0,1]);assert corr>.99
     peak=float(np.max(np.abs(final)));assert peak<1
+    summary=next(s for s in timeline['shots'] if s.get('renderer')=='student_summary')
+    summary_start=summary['start'];factor_start=summary_start+summary['duration']
     times=[0,12,33.3,55,head-1/fps,head,head+2.8,head+7.5,outro-1/fps,outro,outro+.5,outro+1.5,outro+3.8,outro+5,outro+7.2,total-.1,
            5.383333,5.4,6.8,7.5,9,10.983333,11,19.4,
            36.383333,36.4,37.62,38.57,39.52,40.35,40.983333,41,41.583333,41.6,
-           63.45,63.7,64-1/fps,64,64.2,65.0]
+           summary_start-1/fps,summary_start,factor_start-1/fps,factor_start,
+           factor_start+.25,factor_start+1,summary_start+1.8,summary_start+3.5,factor_start-.35]
     frames=[]
     for i,t in enumerate(times):
         target=out/f'qa-{i:02d}.png'
@@ -71,16 +74,20 @@ def main():
     for label,left,right in [('context_to_mechanical',4,5),('mechanical_to_analytics',8,9),
                              ('connection_to_exploration',16,17),('exploration_to_nodes',21,22),
                              ('saved_case_to_lab',24,25),('lab_to_bridge',30,31),('lab_bridge_to_context',32,33),
-                             ('enter_likes_to_open_video',36,37)]:
+                             ('sequence_to_student_summary',34,35),('student_summary_to_factors',36,37)]:
         a=np.asarray(frames[left],dtype=np.float32)[110:1008];b=np.asarray(frames[right],dtype=np.float32)[110:1008]
         mse=float(np.mean((a-b)**2));psnr=float(10*np.log10(255**2/max(mse,1e-10)))
         assert psnr>30,(label,psnr);continuity[label]={'psnr_db':psnr,'mean_absolute_pixel_difference':float(np.mean(np.abs(a-b)))}
     steps=json.loads((out/'step-label-timeline.json').read_text('utf-8'))['entries']
-    assert len(steps)==timeline['step_count']==19
-    assert [s['id'] for s in steps]==[f'{i:02d}' for i in range(1,20)]
+    assert len(steps)==timeline['step_count']==16
+    assert [s['id'] for s in steps]==[f'{i:02d}' for i in range(1,len(steps)+1)]
     assert steps[0]['start_frame']==0 and steps[-1]['end_frame']==round(total*fps)
     assert all(a['end_frame']==b['start_frame'] for a,b in zip(steps,steps[1:]))
     assert not any('喜欢列表上滑三次' in c['text'] for c in cues)
+    removed_voice_ids={'student_feed','student_tabs','student_likes','student_open'}
+    assert not removed_voice_ids.intersection(s['id'] for shot in timeline['shots'] for s in shot['voices'])
+    assert summary['voices'][0]['text']=='AI创建了大学生场景用例。'
+    assert steps[12]['title']=='影响因子时序建模'
     assert timeline['mechanical_stages'][-1]['text']=='机械手操作。'
     assert not any('点击' in s['text'] for s in timeline['mechanical_stages'])
     assert json.loads((source_path(timeline['source_mechanical'])/'timeline.json').read_text('utf-8'))['controller_label']=='服务器'
@@ -88,6 +95,8 @@ def main():
             'av_duration_difference_seconds':abs(float(v['duration'])-float(aud['duration'])),
             'caption_count':len(cues),'step_count':len(steps),'step_coverage':'continuous','controller_label':'服务器',
             'mechanical_narration':'机械手操作','maximum_caption_width_px':max_width,'font':'Microsoft YaHei',
+            'student_case':'brief_creation_confirmation_only','student_summary_range':[summary_start,factor_start],
+            'student_summary_to_factors_transition_seconds':summary['transition_to_next'],
             'normal_rate_narration':aligned,'aac_mix_correlation':corr,'decoded_peak':peak,
             'join_continuity':continuity,'sampled_frame_times':times,'file_bytes':movie.stat().st_size}
     (out/'validation.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')

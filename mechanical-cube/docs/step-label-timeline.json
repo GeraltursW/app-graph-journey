@@ -1,10 +1,10 @@
 {
-  "step_count": 19,
+  "step_count": 16,
   "entries": [
     {
       "id": "01",
       "title": "应用知识图谱",
-      "text": "STEP 01 / 19   应用知识图谱",
+      "text": "STEP 01 / 16   应用知识图谱",
       "start": 0.0,
       "end": 3.0,
       "start_frame": 0,
@@ -13,7 +13,7 @@
     {
       "id": "02",
       "title": "设备连接",
-      "text": "STEP 02 / 19   设备连接",
+      "text": "STEP 02 / 16   设备连接",
       "start": 3.0,
       "end": 5.4,
       "start_frame": 180,
@@ -22,7 +22,7 @@
     {
       "id": "03",
       "title": "AI 控件探索",
-      "text": "STEP 03 / 19   AI 控件探索",
+      "text": "STEP 03 / 16   AI 控件探索",
       "start": 5.4,
       "end": 11.0,
       "start_frame": 324,
@@ -31,7 +31,7 @@
     {
       "id": "04",
       "title": "页面节点沉淀",
-      "text": "STEP 04 / 19   页面节点沉淀",
+      "text": "STEP 04 / 16   页面节点沉淀",
       "start": 11.0,
       "end": 13.8,
       "start_frame": 660,
@@ -40,7 +40,7 @@
     {
       "id": "05",
       "title": "向量化与知识图谱",
-      "text": "STEP 05 / 19   向量化与知识图谱",
+      "text": "STEP 05 / 16   向量化与知识图谱",
       "start": 13.8,
       "end": 19.0,
       "start_frame": 828,
@@ -49,7 +49,7 @@
     {
       "id": "06",
       "title": "探索路径演示",
-      "text": "STEP 06 / 19   探索路径演示",
+      "text": "STEP 06 / 16   探索路径演示",
       "start": 19.0,
       "end": 33.0,
       "start_frame": 1140,
@@ -58,7 +58,7 @@
     {
       "id": "07",
       "title": "固化正确用例",
-      "text": "STEP 07 / 19   固化正确用例",
+      "text": "STEP 07 / 16   固化正确用例",
       "start": 33.0,
       "end": 36.4,
       "start_frame": 1980,
@@ -67,7 +67,7 @@
     {
       "id": "08",
       "title": "实验室手机复现",
-      "text": "STEP 08 / 19   实验室手机复现",
+      "text": "STEP 08 / 16   实验室手机复现",
       "start": 36.4,
       "end": 41.6,
       "start_frame": 2184,
@@ -76,7 +76,7 @@
     {
       "id": "09",
       "title": "单场景识别与复现",
-      "text": "STEP 09 / 19   单场景识别与复现",
+      "text": "STEP 09 / 16   单场景识别与复现",
       "start": 41.6,
       "end": 44.0,
       "start_frame": 2496,
@@ -85,7 +85,7 @@
     {
       "id": "10",
       "title": "建设场景库",
-      "text": "STEP 10 / 19   建设场景库",
+      "text": "STEP 10 / 16   建设场景库",
       "start": 44.0,
       "end": 48.4,
       "start_frame": 2640,
@@ -94,7 +94,7 @@
     {
       "id": "11",
       "title": "提取典型操作序列",
-      "text": "STEP 11 / 19   提取典型操作序列",
+      "text": "STEP 11 / 16   提取典型操作序列",
       "start": 48.4,
       "end": 52.6,
       "start_frame": 2904,
@@ -102,8 +102,8 @@
     },
     {
       "id": "12",
-      "title": "AI 生成场景用例",
-      "text": "STEP 12 / 19   AI 生成场景用例",
+      "title": "AI 创建大学生用例",
+      "text": "STEP 12 / 16   AI 创建大学生用例",
       "start": 52.6,
       "end": 57.2,
       "start_frame": 3156,
@@ -111,66 +111,39 @@
     },
     {
       "id": "13",
-      "title": "推荐页浏览",
-      "text": "STEP 13 / 19   推荐页浏览",
+      "title": "影响因子时序建模",
+      "text": "STEP 13 / 16   影响因子时序建模",
       "start": 57.2,
-      "end": 60.800000000000004,
+      "end": 63.6,
       "start_frame": 3432,
-      "end_frame": 3648
+      "end_frame": 3816
     },
     {
       "id": "14",
-      "title": "同级切换与进入喜欢",
-      "text": "STEP 14 / 19   同级切换与进入喜欢",
-      "start": 60.8,
-      "end": 64.0,
-      "start_frame": 3648,
-      "end_frame": 3840
+      "title": "重建故障上下文",
+      "text": "STEP 14 / 16   重建故障上下文",
+      "start": 63.6,
+      "end": 69.4,
+      "start_frame": 3816,
+      "end_frame": 4164
     },
     {
       "id": "15",
-      "title": "打开目标视频",
-      "text": "STEP 15 / 19   打开目标视频",
-      "start": 64.0,
-      "end": 67.4,
-      "start_frame": 3840,
-      "end_frame": 4044
+      "title": "AI 控制机械手",
+      "text": "STEP 15 / 16   AI 控制机械手",
+      "start": 69.4,
+      "end": 78.2,
+      "start_frame": 4164,
+      "end_frame": 4692
     },
     {
       "id": "16",
-      "title": "影响因子时序建模",
-      "text": "STEP 16 / 19   影响因子时序建模",
-      "start": 67.4,
-      "end": 73.80000000000001,
-      "start_frame": 4044,
-      "end_frame": 4428
-    },
-    {
-      "id": "17",
-      "title": "重建故障上下文",
-      "text": "STEP 17 / 19   重建故障上下文",
-      "start": 73.8,
-      "end": 79.6,
-      "start_frame": 4428,
-      "end_frame": 4776
-    },
-    {
-      "id": "18",
-      "title": "AI 控制机械手",
-      "text": "STEP 18 / 19   AI 控制机械手",
-      "start": 79.6,
-      "end": 88.39999999999999,
-      "start_frame": 4776,
-      "end_frame": 5304
-    },
-    {
-      "id": "19",
       "title": "数据汇聚与报表",
-      "text": "STEP 19 / 19   数据汇聚与报表",
-      "start": 88.39999999999999,
-      "end": 98.39999999999999,
-      "start_frame": 5304,
-      "end_frame": 5904
+      "text": "STEP 16 / 16   数据汇聚与报表",
+      "start": 78.2,
+      "end": 88.2,
+      "start_frame": 4692,
+      "end_frame": 5292
     }
   ],
   "legacy_header_masks": [
@@ -221,7 +194,7 @@
     ],
     [
       41.6,
-      79.14999999999999,
+      68.95,
       64,
       20,
       700,

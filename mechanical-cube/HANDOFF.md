@@ -2,31 +2,28 @@
 
 ## 交付状态
 
-2026-11-13 **v1.12.0**：当前完整主片为 `../videos/application-knowledge-graph-with-mechanical-replay.mp4`，**98.4 秒 / 1920×1080 / 60 fps**，19 幕、29 条烧录中文字幕。语音不做时间拉伸，前 30 秒音乐以 0.6 秒交叉淡化循环铺满。
+2026-11-13 **v1.13.0**：当前主片为 `../videos/application-knowledge-graph-with-mechanical-replay.mp4`，**88.2 秒 / 1920×1080 / 60 fps**，16 幕、26 条烧录中文字幕。旁白保持正常语速，前 30 秒音乐以 0.6 秒交叉淡化循环铺满。
 
-原第 15 幕“喜欢列表滑动”不再独立展开；原第 14 幕与原第 16 幕通过 0.55 秒过渡直接衔接，后续编号顺延。操作序列概览中仍可看到滑动操作，具体三次滑动不再逐次展示。机械手口播、字幕和步骤说明采用“机械手操作”，设备铭牌及故障上下文缩略图改为“服务器”。
+大学生示例只告诉观众“AI 创建了大学生场景用例”，不展开推荐浏览、同级切换与打开目标视频等操作。52.6–57.2 秒采用黑白界面、绿色完成状态，通过 0.7 秒过渡接入影响因子时序建模。原 v1.12 的 13–15 幕及对应旁白已移除。机械手仍使用“机械手操作”口播，铭牌及上下文缩略图为“服务器”。
 
 | STEP | 主片时间 | 内容 |
 | --- | --- | --- |
-| 01 / 19 | 00:00.0–00:03.0 | 应用知识图谱 |
-| 02 / 19 | 00:03.0–00:05.4 | 设备连接 |
-| 03 / 19 | 00:05.4–00:11.0 | AI 控件探索 |
-| 04 / 19 | 00:11.0–00:13.8 | 页面节点沉淀 |
-| 05 / 19 | 00:13.8–00:19.0 | 向量化与知识图谱 |
-| 06 / 19 | 00:19.0–00:33.0 | 探索路径演示 |
-| 07 / 19 | 00:33.0–00:36.4 | 固化正确用例 |
-| 08 / 19 | 00:36.4–00:41.6 | 实验室手机复现 |
-| 09 / 19 | 00:41.6–00:44.0 | 单场景识别与复现 |
-| 10 / 19 | 00:44.0–00:48.4 | 建设场景库 |
-| 11 / 19 | 00:48.4–00:52.6 | 提取典型操作序列 |
-| 12 / 19 | 00:52.6–00:57.2 | AI 生成场景用例 |
-| 13 / 19 | 00:57.2–01:00.8 | 推荐页浏览 |
-| 14 / 19 | 01:00.8–01:04.0 | 同级切换与进入喜欢 |
-| 15 / 19 | 01:04.0–01:07.4 | 打开目标视频 |
-| 16 / 19 | 01:07.4–01:13.8 | 影响因子时序建模 |
-| 17 / 19 | 01:13.8–01:19.6 | 重建故障上下文 |
-| 18 / 19 | 01:19.6–01:28.4 | AI 控制机械手 |
-| 19 / 19 | 01:28.4–01:38.4 | 数据汇聚与报表 |
+| 01 / 16 | 00:00.0–00:03.0 | 应用知识图谱 |
+| 02 / 16 | 00:03.0–00:05.4 | 设备连接 |
+| 03 / 16 | 00:05.4–00:11.0 | AI 控件探索 |
+| 04 / 16 | 00:11.0–00:13.8 | 页面节点沉淀 |
+| 05 / 16 | 00:13.8–00:19.0 | 向量化与知识图谱 |
+| 06 / 16 | 00:19.0–00:33.0 | 探索路径演示 |
+| 07 / 16 | 00:33.0–00:36.4 | 固化正确用例 |
+| 08 / 16 | 00:36.4–00:41.6 | 实验室手机复现 |
+| 09 / 16 | 00:41.6–00:44.0 | 单场景识别与复现 |
+| 10 / 16 | 00:44.0–00:48.4 | 建设场景库 |
+| 11 / 16 | 00:48.4–00:52.6 | 提取典型操作序列 |
+| 12 / 16 | 00:52.6–00:57.2 | AI 创建大学生用例 |
+| 13 / 16 | 00:57.2–01:03.6 | 影响因子时序建模 |
+| 14 / 16 | 01:03.6–01:09.4 | 重建故障上下文 |
+| 15 / 16 | 01:09.4–01:18.2 | AI 控制机械手 |
+| 16 / 16 | 01:18.2–01:28.2 | 数据汇聚与报表 |
 
 ## 新电脑重建当前版本
 
@@ -35,39 +32,42 @@
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\tools\setup.ps1
 powershell -ExecutionPolicy Bypass -File .\tools\build-compact-full.ps1
-# 修改前段画面或文案后：
+# 修改前段后：
 powershell -ExecutionPolicy Bypass -File .\tools\build-compact-full.ps1 -RebuildHead
-# 修改机械手并同步前后转场：
+# 修改机械手并同步衔接：
 powershell -ExecutionPolicy Bypass -File .\tools\build-compact-full.ps1 -RebuildMechanical
 ```
 
-输出目录为 `output/compact-full-v1.12/`。脚本检测配置 revision，首次运行会从已有仓库素材重绘过期的机械手和前段缓存；之后复用本地输出。配音缓存已包含新旁白，默认重建可离线运行；修改口播文本后才需联网合成。Windows 字体为 `C:/Windows/Fonts/msyh.ttc` 与 `msyhbd.ttc`，依赖见 `requirements.txt`。当前镜头通过 Pillow / FFmpeg 生成，历史 Blender 工程继续保留。
+默认输出 `output/compact-full-v1.13/`。构建入口检测 revision，自动更新过期缓存；配音缓存包含新版 AI 创建旁白，原文不变时可离线重建。Windows 使用微软雅黑，依赖见 `requirements.txt`；当前镜头由 Pillow / FFmpeg 生成，历史 Blender 工程继续保留。
 
 | 修改内容 | 入口 |
 | --- | --- |
-| 79.6 秒前段、原 14 → 16 转场 | `config/head_compact.json`、`scripts/build_head_compact.py` |
-| 黑白 AI 探索、页面节点、实验室复现 | `scripts/render_control_exploration.py`、`scripts/render_page_nodes_monochrome.py`、`scripts/render_lab_replay_monochrome.py` |
-| 8.8 秒机械手、服务器铭牌、正常语速旁白 | `config/mechanical_compact.json`、`scripts/build_mechanical_compact.py` |
-| 19 幕 STEP 编号 | `config/film_step_labels.json`、`scripts/film_step_labels.py` |
+| 69.4 秒前段与口播 | `config/head_compact.json`、`scripts/build_head_compact.py` |
+| 简洁 AI 创建大学生用例画面 | `scripts/render_student_summary.py` |
+| 黑白 AI 探索与实验室复现 | `scripts/render_control_exploration.py`、`scripts/render_lab_replay_monochrome.py` |
+| 8.8 秒机械手、服务器铭牌 | `config/mechanical_compact.json`、`scripts/build_mechanical_compact.py` |
+| 16 幕 STEP | `config/film_step_labels.json`、`scripts/film_step_labels.py` |
 | 全片合成、配乐与字幕 | `scripts/build_compact_full_film.py` |
 
-重建读取仓库内 `releases/iterations/16-source-main-v1.10-clean.mp4`、`releases/latest/mechanical-natural-clean.mp4`、原有报表母版、`assets/audio/` 和配置。`releases/latest/compact-*` 仍是 v1.11 历史缓存，版本检测会触发重绘；不要把它们当作本版成片。最终字幕只烧录一次：`film-step-labels.ass` 负责 19 幕提示，`*.zh-CN.ass` / `*.srt` 负责 29 条口播字幕。
+原始输入为仓库内历史干净母版、机械手母版、报表母版及 `assets/audio/`。`releases/latest/compact-*` 仍为 v1.11 历史缓存，不能作为当前交付；构建入口会重绘到本地输出目录。正式字幕仅烧录一次：`film-step-labels.ass` 负责 16 幕提示，SRT / ASS 负责 26 条旁白字幕。
 
-当前约束：朋友与我是底部同级 Tab，没有返回；只固化绿色正确路径；实验室复现“我 → 喜欢 → 当前视频”；机械手演示包含摄像头采集、AI 识别控件位置、坐标转换回传及操作。新增控件镜头为原生 1080p，历史动画保留完整画幅后放大，底部 72 px 为字幕区。
+约束：朋友与我为同级底部 Tab；只固化绿色成功路径；大学生例子只显示创建完成；之后展示网络、应用状态、负载的时序关系。机械手保留摄像头采集、AI 识别、坐标回传与操作。新增界面为原生 1080p，历史动画保持完整画幅，底部 72 px 为字幕区。
 
-验收见 `docs/compact-main-validation.json`、`docs/step-label-validation.json`，包括 5904 帧完整解码、19 幕连续编号、字幕范围、正常语速、音画时长与转场检查。
+验收见 `docs/compact-main-validation.json` 和 `docs/step-label-validation.json`：5292 帧完整解码、16 幕编号连续、26 条字幕、语速与音画同步、AI 创建镜头前后转场。
 
 ## GitHub 精简交付
 
-按 `docs/PUBLISHING.md` 同步：最新正式 MP4、字幕、必要源码配置、变动的原始配音缓存，以及当前时间轴、验收与说明。渲染帧、预览、干净中间片、混音 WAV 留在 `output/`，不新增到仓库。旧版本通过 Git 标签查阅，不为每次迭代额外复制完整视频；已有历史资源不删除、不改写 Git 历史。
+按 `docs/PUBLISHING.md` 同步：正式 MP4、字幕、必要源码配置、变动的原始配音缓存、时间轴、验收及说明。渲染帧、预览、干净中间片和混音 WAV 留在 `output/`。历史成片通过 Git 标签查看，不新增重复副本，不删除已有历史资源、不改写历史。
 
 ## 历史交付记录
+
+2026-11-13 v1.12.0：98.4 秒、19 幕、29 条字幕。原 14 → 16 直接衔接，机械手口播与服务器铭牌已统一；标签 `mechanical-cube-v1.12.0`。
 
 2026-11-13 v1.11.0：101.8 秒、20 幕、30 条字幕，版本标签 `mechanical-cube-v1.11.0`。
 
 2026-11-08 v1.10.0：159.383 秒，45 条字幕，包含场景库、大学生 A、时序建模和故障上下文。该版合成入口为 `tools/build-integrated-main.ps1`；时间轴与验收见 `docs/main-integration-timeline-v1.10.json` 和 `docs/main-integration-validation-v1.10.json`。
 
-以下入口和时间均属于对应历史版本；当前完整主片以本文件上方 v1.12.0 说明为准。
+以下入口和时间均属于对应历史版本；当前完整主片以本文件上方 v1.13.0 说明为准。
 
 2026-11-05 v1.9.0：最终机械手融合版为 100.033 秒，独立主片 71.4 秒，两者均输出 1920×1080 / 60 fps，字幕已烧录。正常语速机械手使用 Yunyang、`rate=+0%`、音频变速因子 1.0，五步时长共 23.4 秒，章节过渡 6.233 秒。原 88.8 秒与 71.4 秒无字幕版分别归档在 `releases/iterations/14-mechanical-pre-subtitles-v1.8.1.mp4` 和 `13-main-pre-subtitles-v1.8.1.mp4`。
 

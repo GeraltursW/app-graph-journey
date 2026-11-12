@@ -1,19 +1,19 @@
 # App Graph Journey
 
-## 最新视频交付（2026-11-13 · v1.12.0）
+## 最新视频交付（2026-11-13 · v1.13.0）
 
-- [应用知识图谱完整主片 · 98.4 秒](videos/application-knowledge-graph-with-mechanical-replay.mp4)
+- [应用知识图谱完整主片 · 88.2 秒](videos/application-knowledge-graph-with-mechanical-replay.mp4)
 - [中文字幕与 STEP 提示](videos/subtitles/)
-- [19 幕完整时间轴](mechanical-cube/docs/compact-main-timeline.json) · [交付验收](mechanical-cube/docs/compact-main-validation.json)
-- [完整项目交接](mechanical-cube/HANDOFF.md) · [精简同步规则](mechanical-cube/docs/PUBLISHING.md)
+- [16 幕完整时间轴](mechanical-cube/docs/compact-main-timeline.json) · [交付验收](mechanical-cube/docs/compact-main-validation.json)
+- [项目交接](mechanical-cube/HANDOFF.md) · [精简同步规则](mechanical-cube/docs/PUBLISHING.md)
 
-完整版为 1920×1080 / 60 fps，19 幕、29 条中文字幕。删除原第 15 幕“喜欢列表滑动”的独立演示，原 14 → 16 以 0.55 秒交叉淡化衔接；机械手旁白改为“机械手操作”，机身及前后转场铭牌统一为“服务器”。配音保持正常语速，音乐连续循环。上一版视频保留在 Git 标签 `mechanical-cube-v1.11.0`，本次不新增重复母版或历史视频文件。
+完整版为 1920×1080 / 60 fps，16 幕、26 条中文字幕。大学生示例仅保留约 4.6 秒的 AI 创建用例与完成反馈，不再逐步演示浏览、切换页面或打开视频；通过 0.7 秒过渡直接进入“叠加网络、应用状态和负载”的时序建模。保留正常语速、“机械手操作”口播、“服务器”铭牌及连续音乐。历史成片通过 Git 标签查看。
 
 ## Mechanical CUBE
 
 机械手/CUBE 的完整迭代工程、Blender 源文件、AI 控制闭环视频与跨电脑交接文档位于 [`mechanical-cube/`](mechanical-cube/README.md)。
 
-当前完整主片的重建入口为 [`mechanical-cube/tools/build-compact-full.ps1`](mechanical-cube/tools/build-compact-full.ps1)，使用仓库内原始素材和语音缓存可离线重建；首次运行会自动更新过期的画面缓存；加 `-RebuildHead` 可重绘前段 17 幕，加 `-RebuildMechanical` 可重绘机械手并更新衔接。大学生 A 为 AI 生成的示例用例，手机画面为动画演示。时间轴与交接说明见 [`mechanical-cube/HANDOFF.md`](mechanical-cube/HANDOFF.md)。
+当前完整主片的重建入口为 [`mechanical-cube/tools/build-compact-full.ps1`](mechanical-cube/tools/build-compact-full.ps1)，使用仓库内原始素材和语音缓存可离线重建；首次运行会自动更新过期的画面缓存；加 `-RebuildHead` 可重绘前段 14 幕，加 `-RebuildMechanical` 可重绘机械手并更新衔接。大学生 A 为 AI 生成的示例用例，手机画面为动画演示。时间轴与交接说明见 [`mechanical-cube/HANDOFF.md`](mechanical-cube/HANDOFF.md)。
 
 App Graph Journey 是从 App Graph 主项目中独立出来的三维演进展示页，用滚动叙事呈现移动应用页面图谱从采集、探索、场景功能匹配、用例编排到执行结果回流的完整过程。
 

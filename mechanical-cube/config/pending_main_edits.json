@@ -4,12 +4,12 @@
   "items": [
     {
       "id": "mechanical_compact_v3",
-      "shot": 18,
+      "shot": 15,
       "status": "integrated_in_v1.12.0",
       "approved_duration_seconds": 8.8,
-      "preview": "output/compact-full-v1.12/mechanical/mechanical-compact-preview.mp4",
-      "clean_master": "output/compact-full-v1.12/mechanical/mechanical-compact-clean.mp4",
-      "narration": "output/compact-full-v1.12/mechanical/narration.wav",
+      "preview": "output/compact-full-v1.13/mechanical/mechanical-compact-preview.mp4",
+      "clean_master": "output/compact-full-v1.13/mechanical/mechanical-compact-clean.mp4",
+      "narration": "output/compact-full-v1.13/mechanical/narration.wav",
       "config": "config/mechanical_compact.json",
       "build_script": "scripts/build_mechanical_compact.py",
       "requirements": [
@@ -65,13 +65,13 @@
           "duration_seconds": 12.2
         }
       ],
-      "note": "原 18 幕前段删除第 15 幕独立滑动演示后为 17 幕、79.6 秒；第 14 幕直接平滑衔接原第 16 幕。此前 80–85 秒要求为删除前的范围。",
-      "actual_duration_seconds": 79.6,
-      "clean_master": "output/compact-full-v1.12/head/head-compact-clean.mp4",
-      "narration": "output/compact-full-v1.12/head/narration.wav",
+      "note": "大学生操作演示不再展开，前段仅保留 14 幕、69.4 秒；AI 创建用例后直接进入影响因子建模。",
+      "actual_duration_seconds": 69.4,
+      "clean_master": "output/compact-full-v1.13/head/head-compact-clean.mp4",
+      "narration": "output/compact-full-v1.13/head/narration.wav",
       "config": "config/head_compact.json",
       "build_script": "scripts/build_head_compact.py",
-      "timeline": "output/compact-full-v1.12/head/timeline.json",
+      "timeline": "output/compact-full-v1.13/head/timeline.json",
       "validation": "docs/compact-main-validation.json",
       "integrated_on": "2026-11-12"
     },
@@ -118,13 +118,13 @@
     },
     {
       "id": "correct_global_step_labels",
-      "status": "integrated_in_v1.12.0",
+      "status": "integrated_in_v1.13.0",
       "integrated_on": "2026-11-12",
-      "step_count": 19,
-      "format": "STEP NN / 19 + 分镜标题",
+      "step_count": 16,
+      "format": "STEP NN / 16 + 分镜标题",
       "lab_step": "08",
-      "mechanical_step": "18",
-      "analytics_step": "19",
+      "mechanical_step": "15",
+      "analytics_step": "16",
       "config": "config/film_step_labels.json",
       "build_script": "scripts/film_step_labels.py",
       "validation": "docs/step-label-validation.json"
@@ -142,12 +142,34 @@
       "mechanical_text": "机械手操作",
       "controller_label": "服务器",
       "publish_policy": "docs/PUBLISHING.md"
+    },
+    {
+      "id": "brief_student_case_creation",
+      "status": "integrated_in_v1.13.0",
+      "removed_v1_12_steps": [
+        13,
+        14,
+        15
+      ],
+      "removed_walkthrough": [
+        "推荐页浏览",
+        "切换到我与喜欢",
+        "打开目标视频"
+      ],
+      "retained_voice": "AI创建了大学生场景用例。",
+      "summary_range_seconds": [
+        52.6,
+        57.2
+      ],
+      "transition_seconds": 0.7,
+      "next_step": "叠加网络、应用状态和负载，进行时序建模",
+      "step_count": 16
     }
   ],
   "latest_full_delivery": {
     "status": "integrated_and_validated",
     "video": "../videos/application-knowledge-graph-with-mechanical-replay.mp4",
-    "duration_seconds": 98.4,
+    "duration_seconds": 88.2,
     "resolution": [
       1920,
       1080
@@ -156,7 +178,7 @@
     "timeline": "docs/compact-main-timeline.json",
     "validation": "docs/compact-main-validation.json",
     "build_script": "scripts/build_compact_full_film.py",
-    "step_count": 19
+    "step_count": 16
   },
-  "release_version": "v1.12.0"
+  "release_version": "v1.13.0"
 }
