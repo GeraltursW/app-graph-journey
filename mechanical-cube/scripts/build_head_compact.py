@@ -1,9 +1,4 @@
-"""Render shots 01--18 as an 83-second review, with new normal-rate narration.
-
-Keeps the published main film untouched. Piecewise motion edits retain the
-failed Friends search, sibling-tab switch, successful saved route and all five
-swipes/three taps. The last bridge targets the approved 8.8s mechanical clip.
-"""
+"""Render the configured head sequence with natural narration and smooth joins."""
 import argparse
 import asyncio
 import hashlib
@@ -20,7 +15,7 @@ from render_control_exploration import render_control_exploration
 from render_lab_replay_monochrome import render_lab_replay, render_lab_context_bridge
 
 ROOT=Path(__file__).resolve().parents[1]
-NAME='shots-01-18-compact-preview'
+NAME='head-compact-preview'
 
 
 def run(args,cwd=None):
@@ -45,7 +40,7 @@ async def prepare(cfg):
             length=duration(wav);window=s.get('window',shot['duration']-s['offset']-.06)
             return {**s,'shot':shot['id'],'start':shot['start']+s['offset'],'audio_duration':length,'speech_end':speech_end,'window':window,'audio':wav.relative_to(ROOT).as_posix(),'words':words.relative_to(ROOT).as_posix(),'time_stretch':1.0}
     voices=await asyncio.gather(*(voice(shot,s) for shot in cfg['shots'] for s in shot['voices']))
-    manifest={'duration':cfg['duration'],'fps':cfg['fps'],'voice':cfg['voice'],'rate':'+0%','audio_time_stretch':1.0,'shots':cfg['shots'],'voices':voices}
+    manifest={'revision':cfg.get('revision'),'duration':cfg['duration'],'fps':cfg['fps'],'voice':cfg['voice'],'rate':'+0%','audio_time_stretch':1.0,'shots':cfg['shots'],'voices':voices}
     (folder/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     invalid=[(s['id'],s['audio_duration'],s['window']) for s in voices if s['audio_duration']>s['window']+.015]
     if invalid:raise ValueError('Shorten copy to fit natural-rate speech: '+repr(invalid))
@@ -75,7 +70,7 @@ def picture_piece(source,out,name,spec):
     run(['-ss',a,'-i',source,'-vf',vf,'-an','-frames:v',count,'-r','60','-c:v','libx264','-preset','fast','-crf','17','-pix_fmt','yuv420p','-movflags','+faststart',out/(name+'.mp4')])
 
 
-def final_bridge(source,mechanical,out,seconds):
+def final_bridge(source,mechanical,out,name,seconds):
     run(['-ss',124.7666666667,'-i',source,'-frames:v',1,out/'context-last.png'])
     run(['-i',mechanical,'-frames:v',1,out/'mechanical-first.png'])
     previous=Image.open(out/'context-last.png').convert('RGB')
@@ -89,7 +84,28 @@ def final_bridge(source,mechanical,out,seconds):
         box=boxmix(start_box,end_box,smooth(q,0,.78))
         im.paste(cube.resize((box[2]-box[0],box[3]-box[1]),Image.Resampling.LANCZOS),(box[0],box[1]))
         return Image.blend(im,next_frame,smooth(q,.78,1))
-    write_bridge(out,'18-02',seconds,frame)
+    write_bridge(out,name,seconds,frame)
+
+
+def smooth_join(previous,following,out,seconds):
+    """End the outgoing shot on the next shot's first frame, without a time cut."""
+    target=out/(previous.stem+'-next-first.png')
+    run(['-i',following,'-frames:v',1,target])
+    length=duration(previous);start=round((length-seconds)*60)/60
+    result=out/(previous.stem+'-smooth.mp4')
+    filters=f'[0:v]fps=60,settb=AVTB,setsar=1[a];[1:v]fps=60,settb=AVTB,setsar=1[b];[a][b]xfade=transition=fade:duration={seconds}:offset={start},trim=end_frame={round(length*60)},format=yuv420p[v]'
+    run(['-i',previous,'-loop','1','-framerate','60','-i',target,'-filter_complex',filters,'-map','[v]','-an','-frames:v',round(length*60),'-r','60','-c:v','libx264','-preset','fast','-crf','17','-movflags','+faststart',result])
+    return result
+
+
+def context_thumbnail(source,mechanical,out,seconds):
+    """Use the same server-labelled device in the context card and next shot."""
+    target=out/'context-server.png'
+    run(['-ss',1,'-i',mechanical,'-vf','crop=1092:1008:64:0,scale=570:527:flags=lanczos','-frames:v',1,target])
+    result=out/(source.stem+'-server.mp4')
+    filters='[1:v]format=rgba,fade=t=in:d=0.51:alpha=1[thumb];[0:v][thumb]overlay=x=1281:y=268:shortest=1,format=yuv420p[v]'
+    run(['-i',source,'-loop','1','-framerate','60','-i',target,'-filter_complex',filters,'-map','[v]','-an','-frames:v',round(seconds*60),'-r','60','-c:v','libx264','-preset','fast','-crf','17','-movflags','+faststart',result])
+    return result
 
 
 def soundtrack(out,cfg,manifest):
@@ -125,14 +141,19 @@ def main():
         for j,spec in enumerate(shot.get('pieces',[shot]),1):
             name=f'{shot["id"]}-{j:02d}';path=out/(name+'.mp4')
             if not(a.reuse_picture and path.exists()):
-                if spec.get('type')=='mechanical_bridge':final_bridge(a.source.resolve(),a.mechanical.resolve(),out,spec['duration'])
+                if spec.get('type')=='mechanical_bridge':final_bridge(a.source.resolve(),a.mechanical.resolve(),out,name,spec['duration'])
                 elif spec.get('type')=='lab_context_bridge':render_lab_context_bridge(a.source.resolve(),out,name,spec['duration'])
                 elif spec.get('renderer')=='lab_replay_monochrome':render_lab_replay(a.source.resolve(),out,name,spec['duration'])
                 elif spec.get('renderer')=='control_exploration':render_control_exploration(a.source.resolve(),out,name,spec['duration'])
                 elif spec.get('renderer')=='page_nodes_monochrome':render_page_nodes(a.source.resolve(),out,name,spec['duration'])
                 else:picture_piece(a.source.resolve(),out,name,spec)
-            parts.append(path)
+            parts.append(context_thumbnail(path,a.mechanical.resolve(),out,spec['duration']) if spec.get('replace_mechanical_thumbnail') else path)
         print('SHOT_READY',shot['id'],shot['duration'],flush=True)
+    for i,shot in enumerate(cfg['shots'][:-1]):
+        if shot.get('transition_to_next'):
+            previous=out/f'{shot["id"]}-{len(shot.get("pieces",[shot])):02d}.mp4'
+            following=out/f'{cfg["shots"][i+1]["id"]}-01.mp4'
+            parts[parts.index(previous)]=smooth_join(previous,following,out,shot['transition_to_next'])
     (out/'concat.txt').write_text(''.join("file '"+str(p).replace('\\','/')+"'\n" for p in parts),encoding='utf-8')
     run(['-f','concat','-safe','0','-i',out/'concat.txt','-c','copy','-movflags','+faststart',out/'head-compact-clean.mp4'])
     soundtrack(out,cfg,manifest)

@@ -54,7 +54,7 @@ async def prepare(cfg):
         s['duration'] = count / cfg['fps']
         s['frame_count'] = count
         cursor += count
-    manifest = {'duration': cursor/cfg['fps'], 'fps': cfg['fps'], 'voice': cfg['voice'], 'rate': '+0%', 'audio_time_stretch': 1.0, 'stages': stages}
+    manifest = {'revision':cfg.get('revision'),'controller_label':cfg.get('controller_label','服务器'),'duration': cursor/cfg['fps'], 'fps': cfg['fps'], 'voice': cfg['voice'], 'rate': '+0%', 'audio_time_stretch': 1.0, 'stages': stages}
     (directory / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
     return manifest
 
@@ -65,6 +65,13 @@ def panels(out, manifest):
     white, muted, green, cyan = '#f4f4f5', '#a1a1aa', '#4ade80', '#67e8f9'
     for i, s in enumerate(manifest['stages']):
         im = Image.new('RGBA', (1920,1080)); d = ImageDraw.Draw(im)
+        # Match the existing machine plaque's source-space geometry exactly.
+        plaque_layer=Image.new('RGBA',(2560,1440))
+        plate=Image.new('RGBA',(276,54),(82,73,63,255))
+        ImageDraw.Draw(plate).text((16,10),manifest['controller_label'],font=regular[32],fill=(204,211,214),anchor='lt')
+        plate=plate.rotate(-11,Image.Resampling.BICUBIC,expand=True)
+        plaque_layer.alpha_composite(plate,(558,946))
+        im.alpha_composite(plaque_layer.resize((1792,1008),Image.Resampling.LANCZOS),(64,0))
         d.rectangle((1156,0,1856,1008), fill=(2,5,9,255))
         d.text((1204,104), 'AI 控制机械手', font=regular[36], fill=white)
         d.line((1204,186,1795,186), fill='#46636e', width=2)

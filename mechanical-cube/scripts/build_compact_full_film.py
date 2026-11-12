@@ -1,4 +1,4 @@
-"""Join the approved 83s head and 8.8s mechanical demonstration with analytics.
+"""Join the configured head and mechanical demonstration with analytics.
 
 Use clean pictures and separate narration stems. The soundtrack is mixed once
 for the entire film, and subtitles are rendered once at native 1920x1080.
@@ -38,7 +38,10 @@ def main():
     mechanical_start = h['duration']
     outro_start = mechanical_start + m['duration']
     total = outro_start + 10
-    assert round(total*60) == 6108, 'Expected the approved 101.8 second edit'
+    assert round(h['duration']*60)==round(cfg['duration']*60), 'Rebuild head after changing its config'
+    mechanical_cfg=json.loads((ROOT/'config/mechanical_compact.json').read_text('utf-8'))
+    assert h.get('revision')==cfg.get('revision'), 'Head cache revision is stale'
+    assert m.get('revision')==mechanical_cfg.get('revision'), 'Mechanical cache revision is stale'
 
     bridge_layout={'global_step_header':True,'mechanical_sha256':hashlib.sha256((mech/'mechanical-compact-clean.mp4').read_bytes()).hexdigest()}
     bridge_stamp=outro/'bridge-layout.json'
@@ -93,7 +96,7 @@ def main():
     run(['-i', 'main-clean.mp4', '-i', 'mix.wav', '-vf', f'{step_filter},ass={NAME}.zh-CN.ass', '-map', '0:v', '-map', '1:a',
          '-t', total, '-c:v', 'libx264', '-preset', 'fast', '-crf', 17, '-pix_fmt', 'yuv420p',
          '-c:a', 'aac', '-b:a', '192k', '-af', 'volume=0.9', '-movflags', '+faststart', NAME+'.mp4'], cwd=out)
-    timeline = {'version':'v1.11.0', 'duration':total, 'fps':60, 'frame_count':round(total*60),
+    timeline = {'version':'v1.12.0', 'duration':total, 'fps':60, 'frame_count':round(total*60),
                 'resolution':[1920,1080], 'font':'Microsoft YaHei', 'subtitle_band':[1008,1080],
                 'head_duration':h['duration'], 'mechanical_start':mechanical_start, 'mechanical_duration':m['duration'],
                 'outro_start':outro_start, 'outro_duration':10, 'caption_count':len(cues), 'captions':cues,

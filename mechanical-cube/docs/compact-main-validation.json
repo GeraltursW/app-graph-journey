@@ -1,60 +1,68 @@
 {
-  "duration": 101.8,
+  "duration": 98.4,
   "resolution": [
     1920,
     1080
   ],
   "fps": 60,
-  "frames": 6108,
+  "frames": 5904,
   "decode": "passed",
   "av_duration_difference_seconds": 0.0,
-  "caption_count": 30,
+  "caption_count": 29,
+  "step_count": 19,
+  "step_coverage": "continuous",
+  "controller_label": "服务器",
+  "mechanical_narration": "机械手操作",
   "maximum_caption_width_px": 684.0,
   "font": "Microsoft YaHei",
   "normal_rate_narration": [
     {
       "start": 0,
-      "duration": 83,
-      "source_correlation": 1.0,
+      "duration": 79.6,
+      "source_correlation": 0.9999999999999998,
       "time_stretch": 1.0
     },
     {
-      "start": 83,
+      "start": 79.6,
       "duration": 8.8,
       "source_correlation": 1.0,
       "time_stretch": 1.0
     }
   ],
-  "aac_mix_correlation": 0.9997610586617588,
-  "decoded_peak": 0.8523241281509399,
+  "aac_mix_correlation": 0.9997585171563516,
+  "decoded_peak": 0.8485852479934692,
   "join_continuity": {
     "context_to_mechanical": {
-      "psnr_db": 40.100590878975154,
-      "mean_absolute_pixel_difference": 1.4061371088027954
+      "psnr_db": 40.058515512567226,
+      "mean_absolute_pixel_difference": 1.4078644514083862
     },
     "mechanical_to_analytics": {
-      "psnr_db": 46.82344138965255,
-      "mean_absolute_pixel_difference": 0.678623378276825
+      "psnr_db": 45.805842336353386,
+      "mean_absolute_pixel_difference": 0.7558521032333374
     },
     "connection_to_exploration": {
-      "psnr_db": 47.510147102583176,
-      "mean_absolute_pixel_difference": 0.7298286557197571
+      "psnr_db": 47.57265545695667,
+      "mean_absolute_pixel_difference": 0.7272047400474548
     },
     "exploration_to_nodes": {
-      "psnr_db": 47.34834501331049,
-      "mean_absolute_pixel_difference": 0.9972415566444397
+      "psnr_db": 47.24896974211176,
+      "mean_absolute_pixel_difference": 0.9982043504714966
     },
     "saved_case_to_lab": {
-      "psnr_db": 47.82238511403782,
-      "mean_absolute_pixel_difference": 0.2611420452594757
+      "psnr_db": 47.667867353870406,
+      "mean_absolute_pixel_difference": 0.26310840249061584
     },
     "lab_to_bridge": {
-      "psnr_db": 47.70944481029125,
-      "mean_absolute_pixel_difference": 0.8627538681030273
+      "psnr_db": 46.98283745766251,
+      "mean_absolute_pixel_difference": 1.031553864479065
     },
     "lab_bridge_to_context": {
-      "psnr_db": 44.55886125831451,
-      "mean_absolute_pixel_difference": 1.0960185527801514
+      "psnr_db": 44.44106277543618,
+      "mean_absolute_pixel_difference": 1.1022969484329224
+    },
+    "enter_likes_to_open_video": {
+      "psnr_db": 40.3614323575134,
+      "mean_absolute_pixel_difference": 1.616075038909912
     }
   },
   "sampled_frame_times": [
@@ -62,18 +70,18 @@
     12,
     33.3,
     55,
-    82.983333,
-    83,
-    85.8,
-    90.5,
-    91.783333,
-    91.8,
-    92.3,
-    93.3,
+    79.58333333333333,
+    79.6,
+    82.39999999999999,
+    87.1,
+    88.38333333333333,
+    88.39999999999999,
+    88.89999999999999,
+    89.89999999999999,
+    92.19999999999999,
+    93.39999999999999,
     95.6,
-    96.8,
-    99,
-    101.7,
+    98.3,
     5.383333,
     5.4,
     6.8,
@@ -91,19 +99,24 @@
     40.983333,
     41,
     41.583333,
-    41.6
+    41.6,
+    63.45,
+    63.7,
+    63.983333333333334,
+    64,
+    64.2,
+    65.0
   ],
-  "file_bytes": 17365678,
+  "file_bytes": 16718248,
   "delivery_file": "../videos/application-knowledge-graph-with-mechanical-replay.mp4",
-  "sha256": "2b7a326ced0904c6b6502b0bfe4649ecf0b9e39580b6bc19ad3fe29c317c1232",
-  "visual_review": "Reviewed all twenty left headers, legacy divider lines, mechanical top silhouettes and analytics header transitions.",
+  "sha256": "f7f37174f469736fd244ffb654524c762f9eb8b96388c1393dcae0af53152e55",
   "step_label_validation": "docs/step-label-validation.json",
-  "step_count": 20,
   "portable_rebuild": {
     "status": "passed",
     "entry_point": "tools/build-compact-full.ps1",
-    "cached_inputs_within_repository": true,
-    "output_sha256": "2b7a326ced0904c6b6502b0bfe4649ecf0b9e39580b6bc19ad3fe29c317c1232",
-    "matches_delivery_byte_for_byte": true
+    "rebuilt_head_from_sources": true,
+    "rebuilt_mechanical_from_sources": true,
+    "used_repository_voice_cache": true,
+    "delivery_is_rebuild_output": true
   }
 }

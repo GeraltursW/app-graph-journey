@@ -4,26 +4,25 @@
   "items": [
     {
       "id": "mechanical_compact_v3",
-      "shot": 19,
-      "status": "integrated_in_v1.11.0",
+      "shot": 18,
+      "status": "integrated_in_v1.12.0",
       "approved_duration_seconds": 8.8,
-      "preview": "releases/latest/compact-mechanical/mechanical-compact-preview.mp4",
-      "clean_master": "releases/latest/compact-mechanical/mechanical-compact-clean.mp4",
-      "narration": "releases/latest/compact-mechanical/narration.wav",
+      "preview": "output/compact-full-v1.12/mechanical/mechanical-compact-preview.mp4",
+      "clean_master": "output/compact-full-v1.12/mechanical/mechanical-compact-clean.mp4",
+      "narration": "output/compact-full-v1.12/mechanical/narration.wav",
       "config": "config/mechanical_compact.json",
       "build_script": "scripts/build_mechanical_compact.py",
       "requirements": [
-        "摄像头采集图片 → AI识别控件位置 → 坐标转换并回传 → 定位点击",
-        "配音明确读出AI，保持正常语速",
+        "摄像头采集图片 → AI识别控件位置 → 坐标转换回传 → 机械手操作",
+        "配音保持正常语速",
         "字幕连续衔接",
-        "删除上一版第8至9秒画面，保留最终点击完成",
-        "最终合入时更新前后转场、配乐及全片字幕时间轴"
+        "PLC 主机统一替换为服务器"
       ],
       "integrated_on": "2026-11-12"
     },
     {
       "id": "shots_01_18_compression",
-      "status": "integrated_in_v1.11.0",
+      "status": "integrated_in_v1.12.0",
       "requested_duration_range_seconds": [
         80,
         85
@@ -66,19 +65,19 @@
           "duration_seconds": 12.2
         }
       ],
-      "note": "83秒前段已合入101.8秒完整版：AI分区探索、黑白页面节点及探索路径演示配音已整合；36.4–41.6秒实验室手机统一使用相同黑白线框、绿色控件高亮、白色点击光标和完成勾选；按我→喜欢→当前视频复现。",
-      "actual_duration_seconds": 83,
-      "clean_master": "releases/latest/compact-head/head-compact-clean.mp4",
-      "narration": "releases/latest/compact-head/narration.wav",
+      "note": "原 18 幕前段删除第 15 幕独立滑动演示后为 17 幕、79.6 秒；第 14 幕直接平滑衔接原第 16 幕。此前 80–85 秒要求为删除前的范围。",
+      "actual_duration_seconds": 79.6,
+      "clean_master": "output/compact-full-v1.12/head/head-compact-clean.mp4",
+      "narration": "output/compact-full-v1.12/head/narration.wav",
       "config": "config/head_compact.json",
       "build_script": "scripts/build_head_compact.py",
-      "timeline": "releases/latest/compact-head/timeline.json",
-      "validation": "releases/latest/compact-head/lab-revision-validation.json",
+      "timeline": "output/compact-full-v1.12/head/timeline.json",
+      "validation": "docs/compact-main-validation.json",
       "integrated_on": "2026-11-12"
     },
     {
       "id": "control_exploration_and_intent",
-      "status": "integrated_in_v1.11.0",
+      "status": "integrated_in_v1.12.0",
       "integrated_on": "2026-11-12",
       "exploration_seconds": [
         5.4,
@@ -99,7 +98,7 @@
     },
     {
       "id": "lab_style_unification",
-      "status": "integrated_in_v1.11.0",
+      "status": "integrated_in_v1.12.0",
       "integrated_on": "2026-11-12",
       "range_seconds": [
         36.4,
@@ -119,22 +118,36 @@
     },
     {
       "id": "correct_global_step_labels",
-      "status": "integrated_in_v1.11.0",
+      "status": "integrated_in_v1.12.0",
       "integrated_on": "2026-11-12",
-      "step_count": 20,
-      "format": "STEP NN / 20 + 分镜标题",
+      "step_count": 19,
+      "format": "STEP NN / 19 + 分镜标题",
       "lab_step": "08",
-      "mechanical_step": "19",
-      "analytics_step": "20",
+      "mechanical_step": "18",
+      "analytics_step": "19",
       "config": "config/film_step_labels.json",
       "build_script": "scripts/film_step_labels.py",
       "validation": "docs/step-label-validation.json"
+    },
+    {
+      "id": "nineteen_steps_and_server",
+      "status": "integrated_in_v1.12.0",
+      "removed_old_step": 15,
+      "transition_old_steps": [
+        14,
+        16
+      ],
+      "transition_seconds": 0.55,
+      "step_count": 19,
+      "mechanical_text": "机械手操作",
+      "controller_label": "服务器",
+      "publish_policy": "docs/PUBLISHING.md"
     }
   ],
   "latest_full_delivery": {
     "status": "integrated_and_validated",
     "video": "../videos/application-knowledge-graph-with-mechanical-replay.mp4",
-    "duration_seconds": 101.8,
+    "duration_seconds": 98.4,
     "resolution": [
       1920,
       1080
@@ -143,7 +156,7 @@
     "timeline": "docs/compact-main-timeline.json",
     "validation": "docs/compact-main-validation.json",
     "build_script": "scripts/build_compact_full_film.py",
-    "step_count": 20
+    "step_count": 19
   },
-  "release_version": "v1.11.0"
+  "release_version": "v1.12.0"
 }

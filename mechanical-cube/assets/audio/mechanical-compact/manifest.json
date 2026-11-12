@@ -1,4 +1,6 @@
 {
+  "revision": "v1.12.0-server",
+  "controller_label": "服务器",
   "duration": 8.8,
   "fps": 60,
   "voice": "zh-CN-YunyangNeural",
@@ -74,12 +76,12 @@
     },
     {
       "id": "execute",
-      "title": "定位并执行点击",
+      "title": "机械手操作",
       "lines": [
         "X、Y 轴定位",
-        "Z 轴触笔完成点击"
+        "Z 轴触笔执行操作"
       ],
-      "text": "完成定位和点击。",
+      "text": "机械手操作。",
       "source": [
         17.75,
         23.4
@@ -91,7 +93,8 @@
         74,
         134
       ],
-      "audio_duration": 1.815,
+      "caption": "机械手操作",
+      "audio_duration": 1.315,
       "audio": "assets/audio/mechanical-compact/execute.wav",
       "words": "assets/audio/mechanical-compact/execute.words.json",
       "voice_offset": 0.1,

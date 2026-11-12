@@ -4,18 +4,17 @@
 
 ![机械 CUBE 预览](docs/mechanical-cube-preview.png)
 
-## 当前交付（v1.11.0 · 2026-11-13）
+## 当前交付
 
-- [完整主片](../videos/application-knowledge-graph-with-mechanical-replay.mp4)：**101.8 秒 / 1920×1080 / 60 fps**，20 幕，30 条中文字幕。
-- 前 18 幕共 83 秒；AI 探索按顶部 Tab、中间内容、底部 Tab 分区，交错遍历 3 个顶部与 4 个底部控件；路径演示字幕和旁白改为“探索路径演示”。
-- 页面节点和实验室手机采用统一黑白线框、绿色细框高亮、白色点击光标与完成勾选。实验室按“我 → 喜欢 → 当前视频”执行三个正确点击，并验证目标页面。
-- [8.8 秒机械手预览](releases/latest/compact-mechanical/mechanical-compact-preview.mp4)：摄像头采集图片 → AI 识别控件位置 → 坐标转换并回传 → 完成定位点击。配音明确读出 AI，保持正常语速。
-- [实验室手机局部预览](releases/latest/lab-replay-compact-preview.mp4)包含主片 33–44 秒及前后转场。
-- 左上角统一为 STEP 01 / 20 至 STEP 20 / 20；实验室手机为 08，机械手为 19，数据汇聚为 20。配置入口为 `config/film_step_labels.json`。
-- [SRT / ASS 与 STEP 提示](../videos/subtitles/)；[完整时间轴](docs/compact-main-timeline.json)；[画面与音轨验收](docs/compact-main-validation.json)；[编号检查](docs/step-label-validation.json)。
-- [83 秒干净前段与旁白缓存](releases/latest/compact-head/)和[机械手干净母版](releases/latest/compact-mechanical/)用于重建；`releases/latest/compact-main-clean.mp4`为最终合成前的干净画面，正式 STEP 与字幕在最终输出时统一生成。
-- [v1.10 的 159.38 秒主片](releases/iterations/16-main-before-compact-v1.10.0.mp4)已归档。71.4 秒短版与此前的 Blender 结构、动画、截图和独立预览继续保留。
-- 大学生 A 为动画示例：上滑 2 次浏览 3 条视频，点击我及喜欢，喜欢列表上滑 3 次，打开视频 14。固化用例只保留绿色正确路径；条件建模及图表数据为演示内容。
+2026-11-13 **v1.12.0**：完整主片为 **98.4 秒 / 1920×1080 / 60 fps**，19 幕、29 条中文字幕。
+
+- 正式视频：`../videos/application-knowledge-graph-with-mechanical-replay.mp4`。
+- 第 14 幕直接衔接原第 16 幕，删除“喜欢列表上滑三次”的独立画面与旁白；后续 STEP 连续顺延。
+- 机械手现为第 18 幕，旁白与字幕为“机械手操作”；设备铭牌和上下文缩略图统一为“服务器”。
+- 第 19 幕汇聚性能、功耗、热数据。正常语速、黑白控件样式及连续循环音乐保留。
+- 当前时间轴与验收：`docs/compact-main-timeline.json`、`docs/compact-main-validation.json`。
+- 字幕：`../videos/subtitles/`；重建与同步规则：`HANDOFF.md`、`docs/PUBLISHING.md`。
+- `releases/latest/compact-*` 为 v1.11 历史构建缓存；脚本会检测版本并重绘到 `output/`，这些缓存不是当前交付视频。
 
 ## 结构与运动关系
 
@@ -36,11 +35,11 @@ powershell -ExecutionPolicy Bypass -File .\tools\setup.ps1
 powershell -ExecutionPolicy Bypass -File .\tools\build-compact-full.ps1
 ```
 
-默认输出到 `output/compact-full-v1.11/`，包含完整 MP4、干净画面、语音与混音分轨、SRT/ASS、STEP 时间轴和验收记录。默认流程使用仓库缓存，可离线运行，不需要 Blender。依赖 Python 3.11+、FFmpeg、Pillow、NumPy 和 Windows 微软雅黑；修改配音文案后才需要联网调用 edge-tts。
+默认输出到 `output/compact-full-v1.12/`，包含完整 MP4、干净画面、语音与混音分轨、SRT/ASS、STEP 时间轴和验收记录。默认流程使用仓库缓存，可离线运行，不需要 Blender。依赖 Python 3.11+、FFmpeg、Pillow、NumPy 和 Windows 微软雅黑；修改配音文案后才需要联网调用 edge-tts。
 
 修改 `config/head_compact.json` 或前段渲染脚本后，运行 `tools/build-compact-full.ps1 -RebuildHead`。修改 `config/mechanical_compact.json` 后，运行 `tools/build-compact-full.ps1 -RebuildMechanical`；该选项也重建前段，保证进入机械手的转场匹配。修改 `config/film_step_labels.json` 后默认重建即可。旧 `build-integrated-main.ps1` 属于 v1.10，旧 `build-final-delivery.ps1` 属于 v1.9。完整交接见 [HANDOFF.md](HANDOFF.md)。
 
-以下为历史机械分镜和 88.8 秒基片的生成入口，不直接生成当前 101.8 秒主片。将新的 AI 操作分镜融合进早期结构介绍：
+以下为历史机械分镜和 88.8 秒基片的生成入口，不直接生成当前 98.4 秒主片。将新的 AI 操作分镜融合进早期结构介绍：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\tools\integrate-ai-storyboard.ps1

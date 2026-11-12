@@ -1,5 +1,6 @@
 {
-  "duration": 83.0,
+  "revision": "v1.12.0-19-steps",
+  "duration": 79.6,
   "fps": 60,
   "voice": "zh-CN-YunyangNeural",
   "rate": "+0%",
@@ -328,31 +329,15 @@
           "text": "点击我，再进入喜欢。"
         }
       ],
+      "transition_to_next": 0.55,
       "start": 60.8
     },
     {
       "id": "15",
-      "title": "喜欢列表上滑三次",
-      "duration": 3.4,
-      "source": [
-        97.15,
-        102.55
-      ],
-      "voices": [
-        {
-          "id": "student_likes",
-          "offset": 0.1,
-          "text": "喜欢列表上滑三次。"
-        }
-      ],
-      "start": 64.0
-    },
-    {
-      "id": "16",
       "title": "打开目标视频完成用例",
       "duration": 3.4,
       "source": [
-        102.55,
+        103.35,
         109.3666666667
       ],
       "voices": [
@@ -362,10 +347,10 @@
           "text": "打开目标视频，完成用例。"
         }
       ],
-      "start": 67.4
+      "start": 64.0
     },
     {
-      "id": "17",
+      "id": "16",
       "title": "影响因子时序建模",
       "duration": 6.4,
       "source": [
@@ -379,10 +364,10 @@
           "text": "叠加网络、应用状态和负载，进行时序建模。"
         }
       ],
-      "start": 70.8
+      "start": 67.4
     },
     {
-      "id": "18",
+      "id": "17",
       "title": "故障上下文与设备下发",
       "duration": 5.8,
       "pieces": [
@@ -391,7 +376,8 @@
             118.1666666667,
             124.7833333333
           ],
-          "duration": 4.8
+          "duration": 4.8,
+          "replace_mechanical_thumbnail": true
         },
         {
           "type": "mechanical_bridge",
@@ -406,7 +392,7 @@
           "text": "重建故障上下文，下发设备复现。"
         }
       ],
-      "start": 77.2
+      "start": 73.8
     }
   ],
   "voices": [
@@ -658,24 +644,11 @@
       "time_stretch": 1.0
     },
     {
-      "id": "student_likes",
-      "offset": 0.1,
-      "text": "喜欢列表上滑三次。",
-      "shot": "15",
-      "start": 64.1,
-      "audio_duration": 1.99,
-      "speech_end": 1.75,
-      "window": 3.2399999999999998,
-      "audio": "assets/audio/head-compact/student_likes.wav",
-      "words": "assets/audio/head-compact/student_likes.words.json",
-      "time_stretch": 1.0
-    },
-    {
       "id": "student_open",
       "offset": 0.1,
       "text": "打开目标视频，完成用例。",
-      "shot": "16",
-      "start": 67.5,
+      "shot": "15",
+      "start": 64.1,
       "audio_duration": 2.44,
       "speech_end": 2.2,
       "window": 3.2399999999999998,
@@ -687,8 +660,8 @@
       "id": "temporal",
       "offset": 0.15,
       "text": "叠加网络、应用状态和负载，进行时序建模。",
-      "shot": "17",
-      "start": 70.95,
+      "shot": "16",
+      "start": 67.55000000000001,
       "audio_duration": 4.115,
       "speech_end": 3.875,
       "window": 6.19,
@@ -701,8 +674,8 @@
       "offset": 0.15,
       "window": 4.5,
       "text": "重建故障上下文，下发设备复现。",
-      "shot": "18",
-      "start": 77.35000000000001,
+      "shot": "17",
+      "start": 73.95,
       "audio_duration": 3.0525,
       "speech_end": 2.8125,
       "audio": "assets/audio/head-compact/context.wav",

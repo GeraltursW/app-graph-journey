@@ -27,28 +27,30 @@ def main():
     v=next(s for s in probe['streams'] if s['codec_type']=='video')
     aud=next(s for s in probe['streams'] if s['codec_type']=='audio')
     assert [v['width'],v['height']]==[1920,1080]
-    assert v['avg_frame_rate']=='60/1' and int(v['nb_frames'])==6108
-    assert abs(float(v['duration'])-101.8)<.001 and abs(float(aud['duration'])-101.8)<.025
+    total=timeline['duration'];fps=timeline['fps'];head=timeline['head_duration'];mechanical=timeline['mechanical_duration'];outro=timeline['outro_start']
+    assert v['avg_frame_rate']==f'{fps}/1' and int(v['nb_frames'])==round(total*fps)
+    assert abs(float(v['duration'])-total)<.001 and abs(float(aud['duration'])-total)<.025
     decoded=subprocess.run(['ffmpeg','-v','error','-xerror','-i',str(movie),'-f','null','-'],capture_output=True,text=True)
     assert decoded.returncode==0 and not decoded.stderr, decoded.stderr
-    cues=timeline['captions'];assert len(cues)==30
-    assert all(0<=c['start']<c['end']<=101.801 for c in cues)
+    cues=timeline['captions'];assert len(cues)==timeline['caption_count']
+    assert all(0<=c['start']<c['end']<=total+.001 for c in cues)
     assert all(c['end']<=n['start']+.001 for c,n in zip(cues,cues[1:]))
     font=ImageFont.truetype('C:/Windows/Fonts/msyh.ttc',36)
     max_width=max(font.getlength(c['text']) for c in cues);assert max_width<1740
     narration=audio(out/'narration.wav');final=audio(movie);mix=audio(out/'mix.wav')
-    assert len(narration)==round(101.8*16000)
+    assert len(narration)==round(total*16000)
     aligned=[]
-    for start,duration,path in [(0,83,source_path(timeline['source_head'])/'narration.wav'),
-                               (83,8.8,source_path(timeline['source_mechanical'])/'narration.wav')]:
+    for start,duration,path in [(0,head,source_path(timeline['source_head'])/'narration.wav'),
+                               (head,mechanical,source_path(timeline['source_mechanical'])/'narration.wav')]:
         stem=audio(path);offset=round(start*16000);sample=narration[offset:offset+len(stem)]
         corr=float(np.corrcoef(stem[320:-320],sample[320:-320])[0,1]);assert corr>.9999
         aligned.append({'start':start,'duration':duration,'source_correlation':corr,'time_stretch':1.0})
     length=min(len(mix),len(final));corr=float(np.corrcoef(mix[:length],final[:length])[0,1]);assert corr>.99
     peak=float(np.max(np.abs(final)));assert peak<1
-    times=[0,12,33.3,55,82.983333,83,85.8,90.5,91.783333,91.8,92.3,93.3,95.6,96.8,99,101.7,
+    times=[0,12,33.3,55,head-1/fps,head,head+2.8,head+7.5,outro-1/fps,outro,outro+.5,outro+1.5,outro+3.8,outro+5,outro+7.2,total-.1,
            5.383333,5.4,6.8,7.5,9,10.983333,11,19.4,
-           36.383333,36.4,37.62,38.57,39.52,40.35,40.983333,41,41.583333,41.6]
+           36.383333,36.4,37.62,38.57,39.52,40.35,40.983333,41,41.583333,41.6,
+           63.45,63.7,64-1/fps,64,64.2,65.0]
     frames=[]
     for i,t in enumerate(times):
         target=out/f'qa-{i:02d}.png'
@@ -68,13 +70,24 @@ def main():
     continuity={}
     for label,left,right in [('context_to_mechanical',4,5),('mechanical_to_analytics',8,9),
                              ('connection_to_exploration',16,17),('exploration_to_nodes',21,22),
-                             ('saved_case_to_lab',24,25),('lab_to_bridge',30,31),('lab_bridge_to_context',32,33)]:
+                             ('saved_case_to_lab',24,25),('lab_to_bridge',30,31),('lab_bridge_to_context',32,33),
+                             ('enter_likes_to_open_video',36,37)]:
         a=np.asarray(frames[left],dtype=np.float32)[110:1008];b=np.asarray(frames[right],dtype=np.float32)[110:1008]
         mse=float(np.mean((a-b)**2));psnr=float(10*np.log10(255**2/max(mse,1e-10)))
         assert psnr>30,(label,psnr);continuity[label]={'psnr_db':psnr,'mean_absolute_pixel_difference':float(np.mean(np.abs(a-b)))}
-    report={'duration':101.8,'resolution':[1920,1080],'fps':60,'frames':6108,'decode':'passed',
+    steps=json.loads((out/'step-label-timeline.json').read_text('utf-8'))['entries']
+    assert len(steps)==timeline['step_count']==19
+    assert [s['id'] for s in steps]==[f'{i:02d}' for i in range(1,20)]
+    assert steps[0]['start_frame']==0 and steps[-1]['end_frame']==round(total*fps)
+    assert all(a['end_frame']==b['start_frame'] for a,b in zip(steps,steps[1:]))
+    assert not any('喜欢列表上滑三次' in c['text'] for c in cues)
+    assert timeline['mechanical_stages'][-1]['text']=='机械手操作。'
+    assert not any('点击' in s['text'] for s in timeline['mechanical_stages'])
+    assert json.loads((source_path(timeline['source_mechanical'])/'timeline.json').read_text('utf-8'))['controller_label']=='服务器'
+    report={'duration':total,'resolution':[1920,1080],'fps':fps,'frames':round(total*fps),'decode':'passed',
             'av_duration_difference_seconds':abs(float(v['duration'])-float(aud['duration'])),
-            'caption_count':30,'maximum_caption_width_px':max_width,'font':'Microsoft YaHei',
+            'caption_count':len(cues),'step_count':len(steps),'step_coverage':'continuous','controller_label':'服务器',
+            'mechanical_narration':'机械手操作','maximum_caption_width_px':max_width,'font':'Microsoft YaHei',
             'normal_rate_narration':aligned,'aac_mix_correlation':corr,'decoded_peak':peak,
             'join_continuity':continuity,'sampled_frame_times':times,'file_bytes':movie.stat().st_size}
     (out/'validation.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')

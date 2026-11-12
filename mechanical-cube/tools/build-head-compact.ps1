@@ -7,5 +7,5 @@ if (-not (Test-Path -LiteralPath $Python)) { $Python = 'python' }
 $RenderOptions = @('--out', $OutputDirectory)
 if ($ReusePicture) { $RenderOptions += '--reuse-picture' }
 & $Python (Join-Path $ProjectRoot 'scripts\build_head_compact.py') @RenderOptions
-if ($LASTEXITCODE -ne 0) { throw 'Shots 01-18 compact preview failed' }
-Write-Host "83-second review: $OutputDirectory"
+if ($LASTEXITCODE -ne 0) { throw 'Head compact preview failed' }
+Write-Host "Head compact review: $OutputDirectory"
