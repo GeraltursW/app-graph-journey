@@ -54,8 +54,13 @@ def main():
         bridge_stamp.write_text(json.dumps(bridge_layout,indent=2)+'\n',encoding='utf-8')
     # The device holds its exact final pose as it shrinks; the following chart
     # shares the existing five-second bridge with a one-second dissolve.
+    cleanup=json.loads((ROOT/'config/analytics_caption_cleanup.json').read_text('utf-8'))
+    x,y,_,_=cleanup['rectangle'];cleanup_start=(cleanup['start_frame']-1)/cleanup['fps']
     run(['-i', outro/'analytics-bridge-clean.mp4', '-i', ROOT/'releases/latest/final-analytics-v3-clean.mp4',
-         '-filter_complex', f'[0:v]fps=60,settb=AVTB,setsar=1[a];[1:v]{FIT},drawbox=x=64:y=0:w=1792:h=76:color=0x09090b:t=fill,fps=60,settb=AVTB,setsar=1[b];'
+         '-i',ROOT/cleanup['overlay_asset'],
+         '-filter_complex', f'[0:v]fps=60,settb=AVTB,setsar=1[a];[2:v]setpts=PTS-STARTPTS+{cleanup_start}/TB[patch];'
+         f"[1:v][patch]overlay=x={x}:y={y}:enable='gte(t,{cleanup_start})':eof_action=pass[dashboard];"
+         f'[dashboard]{FIT},drawbox=x=64:y=0:w=1792:h=76:color=0x09090b:t=fill,fps=60,settb=AVTB,setsar=1[b];'
          '[a][b]xfade=transition=fade:duration=1:offset=4,format=yuv420p[v]',
          '-map', '[v]', '-an', '-t', 10, '-r', 60, '-c:v', 'libx264', '-preset', 'fast', '-crf', 17,
          '-movflags', '+faststart', out/'outro-clean.mp4'])
@@ -96,7 +101,7 @@ def main():
     run(['-i', 'main-clean.mp4', '-i', 'mix.wav', '-vf', f'{step_filter},ass={NAME}.zh-CN.ass', '-map', '0:v', '-map', '1:a',
          '-t', total, '-c:v', 'libx264', '-preset', 'fast', '-crf', 17, '-pix_fmt', 'yuv420p',
          '-c:a', 'aac', '-b:a', '192k', '-af', 'volume=0.9', '-movflags', '+faststart', NAME+'.mp4'], cwd=out)
-    timeline = {'version':'v1.14.0', 'duration':total, 'fps':60, 'frame_count':round(total*60),
+    timeline = {'version':'v1.14.1', 'duration':total, 'fps':60, 'frame_count':round(total*60),
                 'resolution':[1920,1080], 'font':'Microsoft YaHei', 'subtitle_band':[1008,1080],
                 'head_duration':h['duration'], 'mechanical_start':mechanical_start, 'mechanical_duration':m['duration'],
                 'outro_start':outro_start, 'outro_duration':10, 'caption_count':len(cues), 'captions':cues,
@@ -104,7 +109,8 @@ def main():
                 'music_loop_seconds':30, 'music_crossfade_seconds':0.6, 'music_volume':0.36,
                 'source_head':head.relative_to(ROOT).as_posix() if head.is_relative_to(ROOT) else str(head),
                 'source_mechanical':mech.relative_to(ROOT).as_posix() if mech.is_relative_to(ROOT) else str(mech),
-                'step_count':len(step_labels),'step_labels':step_labels}
+                'step_count':len(step_labels),'step_labels':step_labels,
+                'analytics_conclusion':'subtitle_only','analytics_cleanup':cleanup}
     (out/'timeline.json').write_text(json.dumps(timeline,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print('FULL_FILM_COMPLETE', total, flush=True)
 

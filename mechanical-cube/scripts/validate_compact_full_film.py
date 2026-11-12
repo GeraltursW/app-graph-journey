@@ -98,6 +98,14 @@ def main():
     assert timeline['mechanical_stages'][-1]['text']=='机械手操作。'
     assert not any('点击' in s['text'] for s in timeline['mechanical_stages'])
     assert json.loads((source_path(timeline['source_mechanical'])/'timeline.json').read_text('utf-8'))['controller_label']=='服务器'
+    # The closing statement remains in the subtitle band, with no duplicate green title.
+    assert timeline['analytics_conclusion']=='subtitle_only'
+    assert cues[-1]['text']=='数据报表一目了然' and abs(cues[-1]['end']-total)<.001
+    raw=subprocess.check_output(['ffmpeg','-v','error','-ss',str(total-1.4),'-i',str(movie),
+        '-vf','crop=448:84:736:882','-f','rawvideo','-pix_fmt','rgb24','-'])
+    strip=np.frombuffer(raw,dtype=np.uint8).reshape(-1,84,448,3).astype(np.int16)
+    green=(strip[:,:,:,1]>35)&(strip[:,:,:,1]>strip[:,:,:,0]+15)&(strip[:,:,:,1]>strip[:,:,:,2]+15)
+    green_pixels=int(green.sum());assert green_pixels==0,('Duplicate green conclusion remains',green_pixels)
     report={'duration':total,'resolution':[1920,1080],'fps':fps,'frames':round(total*fps),'decode':'passed',
             'av_duration_difference_seconds':abs(float(v['duration'])-float(aud['duration'])),
             'caption_count':len(cues),'step_count':len(steps),'step_coverage':'continuous','controller_label':'服务器',
@@ -106,6 +114,7 @@ def main():
             'student_steps_static_range':[list_start,list_end],'student_steps_static_seconds':preview['hold_duration'],
             'student_steps_static_psnr_db':static_psnr,'student_steps_narration':False,
             'student_summary_to_factors_transition_seconds':summary['transition_to_next'],
+            'analytics_conclusion':'subtitle_only','ending_green_title_pixels':green_pixels,
             'normal_rate_narration':aligned,'aac_mix_correlation':corr,'decoded_peak':peak,
             'join_continuity':continuity,'sampled_frame_times':times,'file_bytes':movie.stat().st_size}
     (out/'validation.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')

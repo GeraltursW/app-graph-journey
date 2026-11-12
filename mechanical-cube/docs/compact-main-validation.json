@@ -28,6 +28,8 @@
   "student_steps_static_psnr_db": 63.90036437349007,
   "student_steps_narration": false,
   "student_summary_to_factors_transition_seconds": 0.7,
+  "analytics_conclusion": "subtitle_only",
+  "ending_green_title_pixels": 0,
   "normal_rate_narration": [
     {
       "start": 0,
@@ -42,7 +44,7 @@
       "time_stretch": 1.0
     }
   ],
-  "aac_mix_correlation": 0.9997832664444335,
+  "aac_mix_correlation": 0.9997832664444359,
   "decoded_peak": 0.8345274925231934,
   "join_continuity": {
     "context_to_mechanical": {
@@ -129,15 +131,21 @@
     55.6,
     56.699999999999996
   ],
-  "file_bytes": 15371640,
+  "file_bytes": 15349544,
+  "version": "v1.14.1",
   "delivery_file": "../videos/application-knowledge-graph-with-mechanical-replay.mp4",
-  "sha256": "8996dc0ca33d62d3e463b78f5639387cae7eb861652142a24297ff83695dd6be",
+  "sha256": "e27df51665230a86c56999b2c2b14146e03a4ff87b261b24c7f10c5ad1387cae",
   "step_label_validation": "docs/step-label-validation.json",
+  "audio_unchanged_from_v1_14_0": true,
+  "aac_payload_sha256": "74193a239993dad9977d4b5b2d6074123278a7fa6b731744e9f84e34a63ca0ac",
+  "subtitle_files_unchanged_from_v1_14_0": true,
   "portable_rebuild": {
-    "status": "passed",
+    "status": "passed_with_validated_v1.14.0_head_and_mechanical_caches",
     "entry_point": "tools/build-compact-full.ps1",
-    "rebuilt_head_from_sources": true,
-    "rebuilt_mechanical_from_sources": true,
+    "cached_input_revisions_checked": true,
+    "rebuilt_head_from_sources_in_this_patch": false,
+    "rebuilt_mechanical_from_sources_in_this_patch": false,
+    "rebuilt_analytics_and_full_assembly": true,
     "delivery_is_rebuild_output": true
   }
 }

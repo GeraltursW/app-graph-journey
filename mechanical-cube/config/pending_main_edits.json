@@ -177,6 +177,15 @@
       "narrate_steps": false,
       "detailed_walkthrough": false,
       "chapter_count": 16
+    },
+    {
+      "id": "analytics_conclusion_subtitle_only",
+      "status": "integrated_in_v1.14.1",
+      "removed_in_picture_text": "数据报表一目了然",
+      "preserve_subtitle": true,
+      "preserve_audio": true,
+      "config": "config/analytics_caption_cleanup.json",
+      "build_script": "scripts/render_analytics_caption_background.py"
     }
   ],
   "latest_full_delivery": {
@@ -193,5 +202,5 @@
     "build_script": "scripts/build_compact_full_film.py",
     "step_count": 16
   },
-  "release_version": "v1.14.0"
+  "release_version": "v1.14.1"
 }

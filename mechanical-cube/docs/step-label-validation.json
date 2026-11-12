@@ -1,5 +1,5 @@
 {
-  "version": "v1.14.0",
+  "version": "v1.14.1",
   "step_count": 16,
   "numbering": "01–16 continuous",
   "coverage_frames": 5316,
@@ -20,5 +20,6 @@
   "student_steps_narration": false,
   "transition_seconds": 0.7,
   "audio_time_stretch": 1.0,
-  "caption_count": 26
+  "caption_count": 26,
+  "analytics_conclusion": "subtitle_only"
 }

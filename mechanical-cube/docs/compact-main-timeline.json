@@ -1,5 +1,5 @@
 {
-  "version": "v1.14.0",
+  "version": "v1.14.1",
   "duration": 88.6,
   "fps": 60,
   "frame_count": 5316,
@@ -742,5 +742,26 @@
       "start_frame": 4716,
       "end_frame": 5316
     }
-  ]
+  ],
+  "analytics_conclusion": "subtitle_only",
+  "analytics_cleanup": {
+    "object": "Conclusion",
+    "text": "数据报表一目了然",
+    "source_scene": "blender/final_analytics_v3.blend",
+    "overlay_asset": "assets/overlays/analytics-conclusion-clean-strip.mkv",
+    "source_resolution": [
+      1280,
+      720
+    ],
+    "rectangle": [
+      480,
+      630,
+      320,
+      60
+    ],
+    "start_frame": 139,
+    "end_frame": 180,
+    "fps": 30,
+    "preserve_subtitle": true
+  }
 }

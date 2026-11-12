@@ -1,13 +1,13 @@
 # App Graph Journey
 
-## 最新视频交付（2026-11-13 · v1.14.0）
+## 最新视频交付（2026-11-13 · v1.14.1）
 
 - [应用知识图谱完整主片 · 88.6 秒](videos/application-knowledge-graph-with-mechanical-replay.mp4)
 - [中文字幕与 STEP 提示](videos/subtitles/)
 - [16 幕完整时间轴](mechanical-cube/docs/compact-main-timeline.json) · [交付验收](mechanical-cube/docs/compact-main-validation.json)
 - [项目交接](mechanical-cube/HANDOFF.md) · [精简同步规则](mechanical-cube/docs/PUBLISHING.md)
 
-完整版为 1920×1080 / 60 fps，16 幕、26 条字幕。大学生用例先由 AI 创建，随后同时展示 5 个操作步骤，静态停留 1.5 秒，不逐步演示、不增加解读旁白，再平滑进入网络、应用状态和负载的时序建模。保留正常语速、“机械手操作”口播、“服务器”铭牌及连续音乐。历史成片通过 Git 标签查看。
+完整版为 1920×1080 / 60 fps，16 幕、26 条字幕。大学生用例先由 AI 创建，随后同时展示 5 个操作步骤，静态停留 1.5 秒，不逐步演示、不增加解读旁白，再平滑进入网络、应用状态和负载的时序建模。保留正常语速、“机械手操作”口播、“服务器”铭牌及连续音乐。结尾“数据报表一目了然”仅保留底部字幕，画面内绿色重复文字已移除。历史成片通过 Git 标签查看。
 
 ## Mechanical CUBE
 

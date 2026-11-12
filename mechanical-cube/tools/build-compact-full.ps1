@@ -35,4 +35,4 @@ if ($RebuildHead -or $RebuildMechanical) {
 Check-Exit 'Complete film assembly'
 & $Python (Join-Path $ProjectRoot 'scripts\validate_compact_full_film.py') --out $OutputDirectory
 Check-Exit 'Complete film validation'
-Write-Host "v1.14.0 complete film: $OutputDirectory"
+Write-Host "v1.14.1 complete film: $OutputDirectory"

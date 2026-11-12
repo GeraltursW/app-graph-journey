@@ -2,7 +2,7 @@
 
 ## 交付状态
 
-2026-11-13 **v1.14.0**：当前主片为 `../videos/application-knowledge-graph-with-mechanical-replay.mp4`，**88.6 秒 / 1920×1080 / 60 fps**，16 幕、26 条烧录中文字幕。旁白保持正常语速，前 30 秒音乐以 0.6 秒交叉淡化循环铺满。
+2026-11-13 **v1.14.1**：当前主片为 `../videos/application-knowledge-graph-with-mechanical-replay.mp4`，**88.6 秒 / 1920×1080 / 60 fps**，16 幕、26 条烧录中文字幕。旁白保持正常语速，前 30 秒音乐以 0.6 秒交叉淡化循环铺满。
 
 大学生示例先用原旁白说明“AI 创建了大学生场景用例”，再同时展示 5 个操作步骤。列表在 55.4–56.9 秒静态停留 1.5 秒，旁白已结束，不逐步高亮、不添加逐步解读；随后以 0.7 秒过渡进入影响因子建模。机械手继续使用“机械手操作”口播，铭牌为“服务器”。
 
@@ -24,6 +24,8 @@
 | 14 / 16 | 01:04.0–01:09.8 | 重建故障上下文 |
 | 15 / 16 | 01:09.8–01:18.6 | AI 控制机械手 |
 | 16 / 16 | 01:18.6–01:28.6 | 数据汇聚与报表 |
+
+结尾已隐藏 Blender 的 `Conclusion` 绿色文字，保留底部字幕与配音。小体积无损背景素材位于 `assets/overlays/analytics-conclusion-clean-strip.mkv`，配置为 `config/analytics_caption_cleanup.json`；需要重新生成时使用 Blender 运行 `scripts/render_analytics_caption_background.py -- --out 输出目录`。默认重建直接使用素材，无需为本次修改安装新依赖。
 
 ## 新电脑重建当前版本
 
@@ -69,7 +71,7 @@ powershell -ExecutionPolicy Bypass -File .\tools\build-compact-full.ps1 -Rebuild
 
 2026-11-08 v1.10.0：159.383 秒，45 条字幕，包含场景库、大学生 A、时序建模和故障上下文。该版合成入口为 `tools/build-integrated-main.ps1`；时间轴与验收见 `docs/main-integration-timeline-v1.10.json` 和 `docs/main-integration-validation-v1.10.json`。
 
-以下入口和时间均属于对应历史版本；当前完整主片以本文件上方 v1.14.0 说明为准。
+以下入口和时间均属于对应历史版本；当前完整主片以本文件上方 v1.14.1 说明为准。
 
 2026-11-05 v1.9.0：最终机械手融合版为 100.033 秒，独立主片 71.4 秒，两者均输出 1920×1080 / 60 fps，字幕已烧录。正常语速机械手使用 Yunyang、`rate=+0%`、音频变速因子 1.0，五步时长共 23.4 秒，章节过渡 6.233 秒。原 88.8 秒与 71.4 秒无字幕版分别归档在 `releases/iterations/14-mechanical-pre-subtitles-v1.8.1.mp4` 和 `13-main-pre-subtitles-v1.8.1.mp4`。
 
