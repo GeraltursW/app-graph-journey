@@ -1,0 +1,88 @@
+{
+  "version": "1.10.0",
+  "head_end": 60.6,
+  "entry_bridge_start": 60.6,
+  "entry_bridge_duration": 0.8,
+  "scenario_start": 61.4,
+  "scenario_duration": 63.38333333333333,
+  "scenario_stages": [
+    {
+      "id": "single",
+      "title": "从一次复现开始",
+      "duration": 4.8,
+      "start": 61.4
+    },
+    {
+      "id": "library",
+      "title": "用例积累，覆盖持续扩展",
+      "duration": 6.5,
+      "start": 66.2
+    },
+    {
+      "id": "extract",
+      "title": "提取典型 UI 操作序列",
+      "duration": 6.2,
+      "start": 72.7
+    },
+    {
+      "id": "student_plan",
+      "title": "AI 为大学生 A 创建场景用例",
+      "duration": 7.683333333333334,
+      "start": 78.9
+    },
+    {
+      "id": "student_feed",
+      "title": "推荐页：上滑 2 次，浏览 3 条视频",
+      "duration": 5.2,
+      "start": 86.58333333333333
+    },
+    {
+      "id": "student_tabs",
+      "title": "点击「我」，再进入「喜欢」",
+      "duration": 5.366666666666666,
+      "start": 91.78333333333333
+    },
+    {
+      "id": "student_likes",
+      "title": "喜欢列表：连续上滑 3 次",
+      "duration": 5.4,
+      "start": 97.15
+    },
+    {
+      "id": "student_open",
+      "title": "打开目标视频，完成场景用例",
+      "duration": 6.816666666666666,
+      "start": 102.55
+    },
+    {
+      "id": "temporal",
+      "title": "为这条场景用例，叠加时序条件",
+      "duration": 8.8,
+      "start": 109.36666666666667
+    },
+    {
+      "id": "context",
+      "title": "重建故障发生时的完整上下文",
+      "duration": 6.616666666666666,
+      "start": 118.16666666666666
+    }
+  ],
+  "exit_bridge_start": 124.78333333333333,
+  "exit_bridge_duration": 1.2,
+  "mechanical_start": 125.98333333333333,
+  "mechanical_duration": 23.4,
+  "outro_start": 149.38333333333333,
+  "duration": 159.38333333333333,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "fps": 60,
+  "audio_time_stretch": 1.0,
+  "subtitle_band": [
+    1008,
+    1080
+  ],
+  "font": "Microsoft YaHei",
+  "caption_count": 45
+}

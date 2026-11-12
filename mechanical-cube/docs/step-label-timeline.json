@@ -1,0 +1,241 @@
+{
+  "step_count": 20,
+  "entries": [
+    {
+      "id": "01",
+      "title": "应用知识图谱",
+      "text": "STEP 01 / 20   应用知识图谱",
+      "start": 0.0,
+      "end": 3.0,
+      "start_frame": 0,
+      "end_frame": 180
+    },
+    {
+      "id": "02",
+      "title": "设备连接",
+      "text": "STEP 02 / 20   设备连接",
+      "start": 3.0,
+      "end": 5.4,
+      "start_frame": 180,
+      "end_frame": 324
+    },
+    {
+      "id": "03",
+      "title": "AI 控件探索",
+      "text": "STEP 03 / 20   AI 控件探索",
+      "start": 5.4,
+      "end": 11.0,
+      "start_frame": 324,
+      "end_frame": 660
+    },
+    {
+      "id": "04",
+      "title": "页面节点沉淀",
+      "text": "STEP 04 / 20   页面节点沉淀",
+      "start": 11.0,
+      "end": 13.8,
+      "start_frame": 660,
+      "end_frame": 828
+    },
+    {
+      "id": "05",
+      "title": "向量化与知识图谱",
+      "text": "STEP 05 / 20   向量化与知识图谱",
+      "start": 13.8,
+      "end": 19.0,
+      "start_frame": 828,
+      "end_frame": 1140
+    },
+    {
+      "id": "06",
+      "title": "探索路径演示",
+      "text": "STEP 06 / 20   探索路径演示",
+      "start": 19.0,
+      "end": 33.0,
+      "start_frame": 1140,
+      "end_frame": 1980
+    },
+    {
+      "id": "07",
+      "title": "固化正确用例",
+      "text": "STEP 07 / 20   固化正确用例",
+      "start": 33.0,
+      "end": 36.4,
+      "start_frame": 1980,
+      "end_frame": 2184
+    },
+    {
+      "id": "08",
+      "title": "实验室手机复现",
+      "text": "STEP 08 / 20   实验室手机复现",
+      "start": 36.4,
+      "end": 41.6,
+      "start_frame": 2184,
+      "end_frame": 2496
+    },
+    {
+      "id": "09",
+      "title": "单场景识别与复现",
+      "text": "STEP 09 / 20   单场景识别与复现",
+      "start": 41.6,
+      "end": 44.0,
+      "start_frame": 2496,
+      "end_frame": 2640
+    },
+    {
+      "id": "10",
+      "title": "建设场景库",
+      "text": "STEP 10 / 20   建设场景库",
+      "start": 44.0,
+      "end": 48.4,
+      "start_frame": 2640,
+      "end_frame": 2904
+    },
+    {
+      "id": "11",
+      "title": "提取典型操作序列",
+      "text": "STEP 11 / 20   提取典型操作序列",
+      "start": 48.4,
+      "end": 52.6,
+      "start_frame": 2904,
+      "end_frame": 3156
+    },
+    {
+      "id": "12",
+      "title": "AI 生成场景用例",
+      "text": "STEP 12 / 20   AI 生成场景用例",
+      "start": 52.6,
+      "end": 57.2,
+      "start_frame": 3156,
+      "end_frame": 3432
+    },
+    {
+      "id": "13",
+      "title": "推荐页浏览",
+      "text": "STEP 13 / 20   推荐页浏览",
+      "start": 57.2,
+      "end": 60.800000000000004,
+      "start_frame": 3432,
+      "end_frame": 3648
+    },
+    {
+      "id": "14",
+      "title": "同级切换与进入喜欢",
+      "text": "STEP 14 / 20   同级切换与进入喜欢",
+      "start": 60.8,
+      "end": 64.0,
+      "start_frame": 3648,
+      "end_frame": 3840
+    },
+    {
+      "id": "15",
+      "title": "喜欢列表滑动",
+      "text": "STEP 15 / 20   喜欢列表滑动",
+      "start": 64.0,
+      "end": 67.4,
+      "start_frame": 3840,
+      "end_frame": 4044
+    },
+    {
+      "id": "16",
+      "title": "打开目标视频",
+      "text": "STEP 16 / 20   打开目标视频",
+      "start": 67.4,
+      "end": 70.80000000000001,
+      "start_frame": 4044,
+      "end_frame": 4248
+    },
+    {
+      "id": "17",
+      "title": "影响因子时序建模",
+      "text": "STEP 17 / 20   影响因子时序建模",
+      "start": 70.8,
+      "end": 77.2,
+      "start_frame": 4248,
+      "end_frame": 4632
+    },
+    {
+      "id": "18",
+      "title": "重建故障上下文",
+      "text": "STEP 18 / 20   重建故障上下文",
+      "start": 77.2,
+      "end": 83.0,
+      "start_frame": 4632,
+      "end_frame": 4980
+    },
+    {
+      "id": "19",
+      "title": "AI 控制机械手",
+      "text": "STEP 19 / 20   AI 控制机械手",
+      "start": 83.0,
+      "end": 91.8,
+      "start_frame": 4980,
+      "end_frame": 5508
+    },
+    {
+      "id": "20",
+      "title": "数据汇聚与报表",
+      "text": "STEP 20 / 20   数据汇聚与报表",
+      "start": 91.8,
+      "end": 101.8,
+      "start_frame": 5508,
+      "end_frame": 6108
+    }
+  ],
+  "legacy_header_masks": [
+    [
+      3,
+      5.4,
+      96,
+      20,
+      600,
+      42,
+      "0x040306"
+    ],
+    [
+      5.4,
+      13.8,
+      96,
+      20,
+      600,
+      58,
+      "0x09090b"
+    ],
+    [
+      13.8,
+      19,
+      96,
+      20,
+      600,
+      42,
+      "0x040306"
+    ],
+    [
+      19,
+      33,
+      96,
+      20,
+      800,
+      58,
+      "0x09090b"
+    ],
+    [
+      33,
+      41.6,
+      64,
+      20,
+      900,
+      58,
+      "0x09090b"
+    ],
+    [
+      41.6,
+      82.55,
+      64,
+      20,
+      700,
+      58,
+      "0x09090b"
+    ]
+  ]
+}

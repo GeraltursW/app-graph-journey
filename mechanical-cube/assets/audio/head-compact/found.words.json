@@ -1,0 +1,22 @@
+[
+  {
+    "offset": 1000000,
+    "duration": 3125000,
+    "text": "找到"
+  },
+  {
+    "offset": 4250000,
+    "duration": 4750000,
+    "text": "喜欢"
+  },
+  {
+    "offset": 10500000,
+    "duration": 4375000,
+    "text": "验证"
+  },
+  {
+    "offset": 15000000,
+    "duration": 4750000,
+    "text": "成功"
+  }
+]

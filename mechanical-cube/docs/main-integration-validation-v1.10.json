@@ -1,0 +1,89 @@
+{
+  "version": "1.10.0",
+  "duration": 159.383333,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "fps": 60,
+  "frames": 9563,
+  "av_duration_delta": 0.0003329999999834854,
+  "full_decode_errors": 0,
+  "caption_count": 45,
+  "max_caption_width": 723.0,
+  "caption_checks": "non-overlap, inside duration and 1740px text width",
+  "audio_decoded_stereo_peak": 0.5901899933815002,
+  "audio_clipped_samples": 0,
+  "voice_checks": [
+    {
+      "id": "single",
+      "correlation": 1.0,
+      "sample_offset": 0,
+      "time_stretch": 1.0
+    },
+    {
+      "id": "library",
+      "correlation": 1.0,
+      "sample_offset": 0,
+      "time_stretch": 1.0
+    },
+    {
+      "id": "extract",
+      "correlation": 0.9999999999999999,
+      "sample_offset": 0,
+      "time_stretch": 1.0
+    },
+    {
+      "id": "student_plan",
+      "correlation": 1.0,
+      "sample_offset": 0,
+      "time_stretch": 1.0
+    },
+    {
+      "id": "student_feed",
+      "correlation": 1.0,
+      "sample_offset": -1,
+      "time_stretch": 1.0
+    },
+    {
+      "id": "student_tabs",
+      "correlation": 1.0,
+      "sample_offset": 0,
+      "time_stretch": 1.0
+    },
+    {
+      "id": "student_likes",
+      "correlation": 1.0,
+      "sample_offset": -1,
+      "time_stretch": 1.0
+    },
+    {
+      "id": "student_open",
+      "correlation": 1.0,
+      "sample_offset": -1,
+      "time_stretch": 1.0
+    },
+    {
+      "id": "temporal",
+      "correlation": 1.0,
+      "sample_offset": 0,
+      "time_stretch": 1.0
+    },
+    {
+      "id": "context",
+      "correlation": 1.0,
+      "sample_offset": 0,
+      "time_stretch": 1.0
+    },
+    {
+      "id": "mechanical",
+      "correlation": 0.9999999999999999,
+      "sample_offset": 0,
+      "time_stretch": 1.0
+    }
+  ],
+  "scenario_ui": "AI-generated illustrative scenario, animated UI rehearsal",
+  "visual_review": "Reviewed title first frame, green-only saved route, both object-matching bridges, student page changes/counts, temporal context, mechanical handoff and analytics ending.",
+  "student_swipes": 5,
+  "student_taps": 3
+}

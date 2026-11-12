@@ -1,0 +1,47 @@
+[
+  {
+    "offset": 1000000,
+    "duration": 3375000,
+    "text": "叠加"
+  },
+  {
+    "offset": 4500000,
+    "duration": 4250000,
+    "text": "网络"
+  },
+  {
+    "offset": 10000000,
+    "duration": 3625000,
+    "text": "应用"
+  },
+  {
+    "offset": 13750000,
+    "duration": 3625000,
+    "text": "状态"
+  },
+  {
+    "offset": 17625000,
+    "duration": 1125000,
+    "text": "和"
+  },
+  {
+    "offset": 18875000,
+    "duration": 4250000,
+    "text": "负载"
+  },
+  {
+    "offset": 24625000,
+    "duration": 8000000,
+    "text": "进行时"
+  },
+  {
+    "offset": 32625000,
+    "duration": 1625000,
+    "text": "序"
+  },
+  {
+    "offset": 34375000,
+    "duration": 4375000,
+    "text": "建模"
+  }
+]

@@ -38,5 +38,5 @@ if (-not $SkipPythonPackages) {
     Write-Host "[OK] Python virtual environment -> $Venv"
 }
 
-Write-Host 'Environment check complete. Next: tools\render-latest.ps1.'
+Write-Host 'Environment check complete. Current full film: tools\build-compact-full.ps1.'
 

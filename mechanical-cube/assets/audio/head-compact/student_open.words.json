@@ -1,0 +1,27 @@
+[
+  {
+    "offset": 1000000,
+    "duration": 3625000,
+    "text": "打开"
+  },
+  {
+    "offset": 4875000,
+    "duration": 3125000,
+    "text": "目标"
+  },
+  {
+    "offset": 8125000,
+    "duration": 4750000,
+    "text": "视频"
+  },
+  {
+    "offset": 13750000,
+    "duration": 4125000,
+    "text": "完成"
+  },
+  {
+    "offset": 18000000,
+    "duration": 4000000,
+    "text": "用例"
+  }
+]

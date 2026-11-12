@@ -1,0 +1,42 @@
+[
+  {
+    "offset": 1000000,
+    "duration": 2375000,
+    "text": "页"
+  },
+  {
+    "offset": 3375000,
+    "duration": 2625000,
+    "text": "面向"
+  },
+  {
+    "offset": 6125000,
+    "duration": 4375000,
+    "text": "量化"
+  },
+  {
+    "offset": 12000000,
+    "duration": 3500000,
+    "text": "写入"
+  },
+  {
+    "offset": 15750000,
+    "duration": 3000000,
+    "text": "向量"
+  },
+  {
+    "offset": 18875000,
+    "duration": 5750000,
+    "text": "数据库"
+  },
+  {
+    "offset": 26125000,
+    "duration": 3875000,
+    "text": "构建"
+  },
+  {
+    "offset": 30125000,
+    "duration": 4875000,
+    "text": "图谱"
+  }
+]

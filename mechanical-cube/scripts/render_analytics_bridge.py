@@ -23,11 +23,16 @@ def main():
     p.add_argument('--out', type=Path, default=ROOT/'output/final-analytics-v3')
     p.add_argument('--font', default='C:/Windows/Fonts/msyh.ttc')
     p.add_argument('--preview', action='store_true')
+    p.add_argument('--native-framed-source', action='store_true', help='Source already has the 1920x1080 subtitle frame')
+    p.add_argument('--native-output', action='store_true', help='Render 1920x1080 with the reserved subtitle band')
+    p.add_argument('--hide-chapter-label', action='store_true', help='The full-film pass supplies the global step label')
     a = p.parse_args()
     a.out.mkdir(parents=True, exist_ok=True)
     still = a.out/'mechanical-last.png'
     subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y','-sseof','-0.05','-i',str(a.source),'-frames:v','1',str(still)],check=True)
-    original = Image.open(still).convert('RGB').resize((W*SCALE,H*SCALE),Image.Resampling.LANCZOS)
+    source_frame = Image.open(still).convert('RGB')
+    picture = source_frame.crop((64,0,1856,1008)) if a.native_framed_source else source_frame
+    original = picture.resize((W*SCALE,H*SCALE),Image.Resampling.LANCZOS)
     robot = original.crop((0,0,780*SCALE,H*SCALE))
     old_text = original.crop((780*SCALE,0,W*SCALE,H*SCALE))
     fonts = {s:ImageFont.truetype(a.font,s*SCALE) for s in (16,19,22,24,30,44)}
@@ -35,6 +40,14 @@ def main():
     d = ImageDraw.Draw(bg)
     for x in range(-450,1550,40):
         d.line([(x*SCALE,H*SCALE),((x+360)*SCALE,0)],fill=(23,29,34),width=SCALE)
+
+    def finish(im):
+        if not a.native_output:
+            return im.resize((W,H),Image.Resampling.LANCZOS)
+        result=Image.new('RGB',(1920,1080),(9,9,11))
+        result.paste(im.resize((1792,1008),Image.Resampling.LANCZOS),(64,0))
+        ImageDraw.Draw(result).line([(0,1008),(1919,1008)],fill=(51,51,59))
+        return result
 
     def frame(t):
         move = smooth(t,.15,1.65)
@@ -47,14 +60,14 @@ def main():
         rh = round(H*rw/(780*SCALE)) * SCALE
         im.paste(robot.resize((rw,rh),Image.Resampling.LANCZOS),(x,y))
         if t == 0:
-            return original.resize((W,H),Image.Resampling.LANCZOS)
+            return source_frame.copy() if a.native_framed_source and a.native_output else finish(original)
 
         layer = Image.new('RGBA',im.size)
         pen = ImageDraw.Draw(layer)
         def text(x,y,body,size,color=(245,247,250),alpha=1):
             pen.text((round(x*SCALE),round(y*SCALE)),body,font=fonts[size],fill=(*color,round(255*alpha)),anchor='lt')
         appear = smooth(t,.65,1.45)
-        text(54,48,'测试完成  /  数据汇聚',19,(174,184,194),appear)
+        if not a.hide_chapter_label:text(54,48,'测试完成  /  数据汇聚',19,(174,184,194),appear)
         pen.line([(54*SCALE,88*SCALE),(1226*SCALE,88*SCALE)],fill=(180,190,200,round(110*appear)),width=SCALE)
         text(718,156,'测试完成后',44,alpha=appear)
         text(720,220,'性能、功耗、热等数据同步汇聚',24,(185,195,207),smooth(t,1.45,2.15))
@@ -95,13 +108,14 @@ def main():
         text(720,607,'生成数据报表',22,(235,240,245),footer)
         text(720,643,'同一测试任务 · 三类数据同步对齐',16,(125,139,153),footer)
         im=Image.alpha_composite(im.convert('RGBA'),layer).convert('RGB')
-        return im.resize((W,H),Image.Resampling.LANCZOS)
+        return finish(im)
 
     for t in (0,1.5,2.7,3.8):
         frame(t).save(a.out/f'bridge-{t:.1f}s.png')
     if a.preview:
         return
-    command=['ffmpeg','-hide_banner','-loglevel','error','-y','-f','rawvideo','-pix_fmt','rgb24','-s',f'{W}x{H}','-r',str(FPS),'-i','-','-an','-c:v','libx264','-preset','medium','-crf','16','-pix_fmt','yuv420p','-movflags','+faststart',str(a.out/'analytics-bridge-clean.mp4')]
+    output_size='1920x1080' if a.native_output else f'{W}x{H}'
+    command=['ffmpeg','-hide_banner','-loglevel','error','-y','-f','rawvideo','-pix_fmt','rgb24','-s',output_size,'-r',str(FPS),'-i','-','-an','-c:v','libx264','-preset','medium','-crf','16','-pix_fmt','yuv420p','-movflags','+faststart',str(a.out/'analytics-bridge-clean.mp4')]
     process=subprocess.Popen(command,stdin=subprocess.PIPE)
     try:
         for n in range(FPS*SECONDS):

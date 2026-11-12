@@ -1,0 +1,149 @@
+{
+  "updated_on": "2026-11-13",
+  "integration_policy": "用户要求各分镜确认后，最后统一合入主视频。",
+  "items": [
+    {
+      "id": "mechanical_compact_v3",
+      "shot": 19,
+      "status": "integrated_in_v1.11.0",
+      "approved_duration_seconds": 8.8,
+      "preview": "releases/latest/compact-mechanical/mechanical-compact-preview.mp4",
+      "clean_master": "releases/latest/compact-mechanical/mechanical-compact-clean.mp4",
+      "narration": "releases/latest/compact-mechanical/narration.wav",
+      "config": "config/mechanical_compact.json",
+      "build_script": "scripts/build_mechanical_compact.py",
+      "requirements": [
+        "摄像头采集图片 → AI识别控件位置 → 坐标转换并回传 → 定位点击",
+        "配音明确读出AI，保持正常语速",
+        "字幕连续衔接",
+        "删除上一版第8至9秒画面，保留最终点击完成",
+        "最终合入时更新前后转场、配乐及全片字幕时间轴"
+      ],
+      "integrated_on": "2026-11-12"
+    },
+    {
+      "id": "shots_01_18_compression",
+      "status": "integrated_in_v1.11.0",
+      "requested_duration_range_seconds": [
+        80,
+        85
+      ],
+      "proposed_duration_seconds": 83,
+      "proposed_groups": [
+        {
+          "shots": [
+            1,
+            5
+          ],
+          "duration_seconds": 19
+        },
+        {
+          "shots": [
+            6,
+            8
+          ],
+          "duration_seconds": 22.6
+        },
+        {
+          "shots": [
+            9,
+            11
+          ],
+          "duration_seconds": 11
+        },
+        {
+          "shots": [
+            12,
+            16
+          ],
+          "duration_seconds": 18.2
+        },
+        {
+          "shots": [
+            17,
+            18
+          ],
+          "duration_seconds": 12.2
+        }
+      ],
+      "note": "83秒前段已合入101.8秒完整版：AI分区探索、黑白页面节点及探索路径演示配音已整合；36.4–41.6秒实验室手机统一使用相同黑白线框、绿色控件高亮、白色点击光标和完成勾选；按我→喜欢→当前视频复现。",
+      "actual_duration_seconds": 83,
+      "clean_master": "releases/latest/compact-head/head-compact-clean.mp4",
+      "narration": "releases/latest/compact-head/narration.wav",
+      "config": "config/head_compact.json",
+      "build_script": "scripts/build_head_compact.py",
+      "timeline": "releases/latest/compact-head/timeline.json",
+      "validation": "releases/latest/compact-head/lab-revision-validation.json",
+      "integrated_on": "2026-11-12"
+    },
+    {
+      "id": "control_exploration_and_intent",
+      "status": "integrated_in_v1.11.0",
+      "integrated_on": "2026-11-12",
+      "exploration_seconds": [
+        5.4,
+        11.0
+      ],
+      "regions": [
+        "顶部Tab",
+        "中间内容",
+        "底部Tab"
+      ],
+      "top_tab_count": 3,
+      "bottom_tab_count": 4,
+      "caption_start": 19.0,
+      "voice_start": 19.05,
+      "new_caption_and_voice": "探索路径演示",
+      "renderer": "scripts/render_control_exploration.py",
+      "validation": "releases/latest/compact-head/revision-validation.json"
+    },
+    {
+      "id": "lab_style_unification",
+      "status": "integrated_in_v1.11.0",
+      "integrated_on": "2026-11-12",
+      "range_seconds": [
+        36.4,
+        41.6
+      ],
+      "preview": "releases/latest/lab-replay-compact-preview.mp4",
+      "renderer": "scripts/render_lab_replay_monochrome.py",
+      "shared_style": "scripts/control_ui_style.py",
+      "route": [
+        "ROOT",
+        "我",
+        "喜欢",
+        "当前视频"
+      ],
+      "validation": "releases/latest/compact-head/lab-revision-validation.json",
+      "user_approved_on": "2026-11-12"
+    },
+    {
+      "id": "correct_global_step_labels",
+      "status": "integrated_in_v1.11.0",
+      "integrated_on": "2026-11-12",
+      "step_count": 20,
+      "format": "STEP NN / 20 + 分镜标题",
+      "lab_step": "08",
+      "mechanical_step": "19",
+      "analytics_step": "20",
+      "config": "config/film_step_labels.json",
+      "build_script": "scripts/film_step_labels.py",
+      "validation": "docs/step-label-validation.json"
+    }
+  ],
+  "latest_full_delivery": {
+    "status": "integrated_and_validated",
+    "video": "../videos/application-knowledge-graph-with-mechanical-replay.mp4",
+    "duration_seconds": 101.8,
+    "resolution": [
+      1920,
+      1080
+    ],
+    "fps": 60,
+    "timeline": "docs/compact-main-timeline.json",
+    "validation": "docs/compact-main-validation.json",
+    "build_script": "scripts/build_compact_full_film.py",
+    "step_count": 20
+  },
+  "release_version": "v1.11.0"
+}

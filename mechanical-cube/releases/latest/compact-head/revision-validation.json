@@ -1,0 +1,77 @@
+{
+  "regions": [
+    "顶部 Tab",
+    "中间内容",
+    "底部 Tab"
+  ],
+  "visits": [
+    {
+      "time": 0.65,
+      "region": "top",
+      "control": "推荐"
+    },
+    {
+      "time": 1.23,
+      "region": "bottom",
+      "control": "朋友"
+    },
+    {
+      "time": 1.81,
+      "region": "top",
+      "control": "同城"
+    },
+    {
+      "time": 2.39,
+      "region": "bottom",
+      "control": "我"
+    },
+    {
+      "time": 2.97,
+      "region": "top",
+      "control": "关注"
+    },
+    {
+      "time": 3.55,
+      "region": "bottom",
+      "control": "消息"
+    },
+    {
+      "time": 4.13,
+      "region": "bottom",
+      "control": "首页"
+    }
+  ],
+  "top_tabs_visited": 3,
+  "bottom_tabs_visited": 4,
+  "intent_text": "探索路径演示。",
+  "intent_caption_start": 19,
+  "intent_voice_start": 19.05,
+  "intent_duration": 1.54,
+  "intent_normal_rate_correlation": 1.0,
+  "unchanged_picture_pieces": [
+    "01-01.mp4",
+    "02-01.mp4",
+    "05-01.mp4",
+    "06-01.mp4",
+    "06-02.mp4",
+    "06-03.mp4",
+    "06-04.mp4",
+    "06-05.mp4",
+    "06-06.mp4",
+    "06-07.mp4",
+    "07-01.mp4",
+    "08-01.mp4",
+    "08-02.mp4",
+    "09-01.mp4",
+    "10-01.mp4",
+    "11-01.mp4",
+    "12-01.mp4",
+    "13-01.mp4",
+    "14-01.mp4",
+    "15-01.mp4",
+    "16-01.mp4",
+    "17-01.mp4",
+    "18-01.mp4",
+    "18-02.mp4"
+  ]
+}

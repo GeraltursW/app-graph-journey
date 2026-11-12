@@ -1,0 +1,27 @@
+[
+  {
+    "offset": 1000000,
+    "duration": 4000000,
+    "text": "点击"
+  },
+  {
+    "offset": 5000000,
+    "duration": 2625000,
+    "text": "我"
+  },
+  {
+    "offset": 9000000,
+    "duration": 2125000,
+    "text": "再"
+  },
+  {
+    "offset": 11125000,
+    "duration": 2000000,
+    "text": "进入"
+  },
+  {
+    "offset": 13250000,
+    "duration": 3500000,
+    "text": "喜欢"
+  }
+]

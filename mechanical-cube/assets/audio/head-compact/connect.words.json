@@ -1,0 +1,22 @@
+[
+  {
+    "offset": 1000000,
+    "duration": 3500000,
+    "text": "连接"
+  },
+  {
+    "offset": 4625000,
+    "duration": 4125000,
+    "text": "设备"
+  },
+  {
+    "offset": 9875000,
+    "duration": 3500000,
+    "text": "开始"
+  },
+  {
+    "offset": 13500000,
+    "duration": 4875000,
+    "text": "探索"
+  }
+]

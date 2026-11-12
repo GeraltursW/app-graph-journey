@@ -1,0 +1,103 @@
+{
+  "duration": 8.8,
+  "fps": 60,
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+0%",
+  "audio_time_stretch": 1.0,
+  "stages": [
+    {
+      "id": "capture",
+      "title": "摄像头采集图片",
+      "lines": [
+        "采集手机当前屏幕",
+        "图像送入 AI 识别"
+      ],
+      "text": "摄像头采集图片。",
+      "source": [
+        0,
+        3.5
+      ],
+      "minimum_duration": 1.7,
+      "slot_frames": 138,
+      "audio_duration": 1.7275,
+      "audio": "assets/audio/mechanical-compact/capture.wav",
+      "words": "assets/audio/mechanical-compact/capture.words.json",
+      "voice_offset": 0.1,
+      "start": 0.0,
+      "duration": 2.3,
+      "frame_count": 138
+    },
+    {
+      "id": "recognition",
+      "title": "AI 识别控件位置",
+      "lines": [
+        "识别目标控件",
+        "得到屏幕像素坐标"
+      ],
+      "text": "AI识别控件位置。",
+      "caption": "AI 识别控件位置",
+      "source": [
+        9.3166666667,
+        14.05
+      ],
+      "minimum_duration": 2.0,
+      "slot_frames": 125,
+      "audio_duration": 1.915,
+      "audio": "assets/audio/mechanical-compact/recognition.wav",
+      "words": "assets/audio/mechanical-compact/recognition.words.json",
+      "voice_offset": 0.1,
+      "start": 2.3,
+      "duration": 2.0833333333333335,
+      "frame_count": 125
+    },
+    {
+      "id": "coordinate",
+      "title": "坐标转换并回传",
+      "lines": [
+        "像素坐标转换为机械坐标",
+        "回传机械移动器"
+      ],
+      "text": "坐标转换后回传。",
+      "source": [
+        14.05,
+        17.75
+      ],
+      "minimum_duration": 2.2,
+      "slot_frames": 143,
+      "audio_duration": 1.84,
+      "audio": "assets/audio/mechanical-compact/coordinate.wav",
+      "words": "assets/audio/mechanical-compact/coordinate.words.json",
+      "voice_offset": 0.1,
+      "start": 4.383333333333334,
+      "duration": 2.3833333333333333,
+      "frame_count": 143
+    },
+    {
+      "id": "execute",
+      "title": "定位并执行点击",
+      "lines": [
+        "X、Y 轴定位",
+        "Z 轴触笔完成点击"
+      ],
+      "text": "完成定位和点击。",
+      "source": [
+        17.75,
+        23.4
+      ],
+      "minimum_duration": 2.0,
+      "slot_frames": 122,
+      "picture_frames_before_cut": 182,
+      "remove_picture_frames": [
+        74,
+        134
+      ],
+      "audio_duration": 1.815,
+      "audio": "assets/audio/mechanical-compact/execute.wav",
+      "words": "assets/audio/mechanical-compact/execute.words.json",
+      "voice_offset": 0.1,
+      "start": 6.766666666666667,
+      "duration": 2.033333333333333,
+      "frame_count": 122
+    }
+  ]
+}

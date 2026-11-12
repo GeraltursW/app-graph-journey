@@ -2,40 +2,70 @@
 
 ## 交付状态
 
-2026-11-08 **v1.10.0**：当前完整主片为 `../videos/application-knowledge-graph-with-mechanical-replay.mp4`，**159.383 秒，1920×1080 / 60 fps**，45 条烧录中文字幕，正常语速旁白。71.4 秒短版保留 v1.9 内容。旧 100.033 秒完整主片归档为 `releases/iterations/15-main-before-scene-library-v1.9.0.mp4`。
+2026-11-13 **v1.11.0**：当前完整主片为 `../videos/application-knowledge-graph-with-mechanical-replay.mp4`，**101.8 秒 / 1920×1080 / 60 fps**，20 幕，30 条烧录中文字幕。语音不做时间拉伸，前 30 秒背景音乐以 0.6 秒交叉淡化循环铺满。旧 159.383 秒 v1.10 主片归档到 `releases/iterations/16-main-before-compact-v1.10.0.mp4`。
 
-| 主片时间 | 内容 |
-| --- | --- |
-| 00:00–01:00.600 | 已确认的探索、绿色用例固化和实验室手机复现 |
-| 01:00.600–01:01.400 | 手机位置匹配，进入场景库 |
-| 01:01.400–01:18.900 | 单场景复现、场景库积累、典型操作序列提取 |
-| 01:18.900–01:49.367 | AI 生成大学生 A 的抖音场景用例并展示操作 |
-| 01:49.367–02:04.783 | 叠加影响因子的时序建模、重建故障上下文 |
-| 02:04.783–02:05.983 | 上下文卡片中的机械盒子放大至操作画面 |
-| 02:05.983–02:29.383 | 机械手 AI 复现五步，保持原速 23.4 秒 |
-| 02:29.383–02:39.383 | 测试完成、性能/功耗/热汇聚与数据报表 |
+| STEP | 主片时间 | 内容 |
+| --- | --- | --- |
+| 01 / 20 | 00:00.0–00:03.0 | 应用知识图谱 |
+| 02 / 20 | 00:03.0–00:05.4 | 设备连接 |
+| 03 / 20 | 00:05.4–00:11.0 | AI 控件探索 |
+| 04 / 20 | 00:11.0–00:13.8 | 页面节点沉淀 |
+| 05 / 20 | 00:13.8–00:19.0 | 向量化与知识图谱 |
+| 06 / 20 | 00:19.0–00:33.0 | 探索路径演示 |
+| 07 / 20 | 00:33.0–00:36.4 | 固化正确用例 |
+| 08 / 20 | 00:36.4–00:41.6 | 实验室手机复现 |
+| 09 / 20 | 00:41.6–00:44.0 | 单场景识别与复现 |
+| 10 / 20 | 00:44.0–00:48.4 | 建设场景库 |
+| 11 / 20 | 00:48.4–00:52.6 | 提取典型操作序列 |
+| 12 / 20 | 00:52.6–00:57.2 | AI 生成场景用例 |
+| 13 / 20 | 00:57.2–01:00.8 | 推荐页浏览 |
+| 14 / 20 | 01:00.8–01:04.0 | 同级切换与进入喜欢 |
+| 15 / 20 | 01:04.0–01:07.4 | 喜欢列表滑动 |
+| 16 / 20 | 01:07.4–01:10.8 | 打开目标视频 |
+| 17 / 20 | 01:10.8–01:17.2 | 影响因子时序建模 |
+| 18 / 20 | 01:17.2–01:23.0 | 重建故障上下文 |
+| 19 / 20 | 01:23.0–01:31.8 | AI 控制机械手 |
+| 20 / 20 | 01:31.8–01:41.8 | 数据汇聚与报表 |
 
-新电脑安装依赖后，从 `mechanical-cube` 目录执行：
+## 新电脑重建当前版本
+
+安装 Git、Python 3.11+、FFmpeg 后克隆仓库，进入 `mechanical-cube`：
 
 ```powershell
-pwsh -File .\tools\build-integrated-main.ps1
-# 修改场景库/学生用例画面后，同时重绘新分镜：
-pwsh -File .\tools\build-integrated-main.ps1 -RebuildScenario
-# 验证成片、字幕边界、语音原速对齐并导出关键帧：
-.\.venv\Scripts\python.exe .\scripts\validate_integrated_main.py --out .\output\integrated-main-v1.10
+powershell -ExecutionPolicy Bypass -File .\tools\setup.ps1
+powershell -ExecutionPolicy Bypass -File .\tools\build-compact-full.ps1
+# 修改前 18 幕画面或文案后：
+powershell -ExecutionPolicy Bypass -File .\tools\build-compact-full.ps1 -RebuildHead
+# 修改机械手后，同时重建匹配的前段转场：
+powershell -ExecutionPolicy Bypass -File .\tools\build-compact-full.ps1 -RebuildMechanical
 ```
 
-默认输出到 `output/integrated-main-v1.10/`，含完整成片、干净母版、SRT/ASS、时间轴及旁白/音乐分轨。默认合成可离线运行，不依赖 Blender；`-RebuildScenario` 使用 Pillow 重绘新分镜，语音文案未改变时复用仓库缓存。修改语音文案后需要联网重新合成。当前渲染依赖 Windows 微软雅黑字体 `C:/Windows/Fonts/msyh.ttc` 和 `msyhbd.ttc`，Python 依赖见 `requirements.txt`。
+默认输出目录是 `output/compact-full-v1.11/`。默认合成仅使用仓库素材，可离线运行；重绘前段或机械手会复用配音缓存，文案变化时才联网合成。Windows 字体为 `C:/Windows/Fonts/msyh.ttc` 与 `msyhbd.ttc`，依赖见 `requirements.txt`。Blender 用于历史机械结构源文件编辑，当前黑白控件镜头通过 Pillow / FFmpeg 生成。
 
-配置入口：`config/scenario_context.json` 管理十阶段文案与最低时长；`config/student_a_case.json` 管理大学生 A 的动作和计数；`config/main_scene_integration.json` 管理主片拼接、转场、字幕和配乐；`scripts/render_student_case.py` 管理演示手机 UI。大学生 A 是明确标注的 AI 生成示例：推荐页上滑 2 次浏览 3 条视频，点击我、喜欢，上滑 3 次，再打开视频 14，共 5 次滑动和 3 次点击。手机 UI 为动画演示，不代表真实设备执行记录；弱网、后台和高负载组合是示例故障情境。
+| 修改内容 | 入口 |
+| --- | --- |
+| 83 秒前段时长与语音 | `config/head_compact.json`、`scripts/build_head_compact.py` |
+| 顶部与底部 Tab 控件探索 | `scripts/render_control_exploration.py` |
+| 黑白页面节点 | `scripts/render_page_nodes_monochrome.py` |
+| 实验室复现与手机转场 | `scripts/render_lab_replay_monochrome.py` |
+| 两个手机镜头的共用样式 | `scripts/control_ui_style.py` |
+| 8.8 秒机械手画面与语音 | `config/mechanical_compact.json`、`scripts/build_mechanical_compact.py` |
+| 全片 STEP 编号与标题 | `config/film_step_labels.json`、`scripts/film_step_labels.py` |
+| 最终合成、连续配乐与字幕 | `scripts/build_compact_full_film.py` |
 
-完整合成从干净母版开始，不将带字幕/音乐的预览重复叠加。新增画面原生 1080p；旧 720p 动画保留完整画幅并放大到 1792×1008，统一置于 1080p 画布，底部 72 px 为字幕区。全片使用一条连续音乐轨，将原前 30 秒音乐以 0.6 秒交叉淡化循环至结尾。原机械手章节说明卡已由上下文下发和盒子放大转场替代，机械手五步语音不变速。
+重建输入均在仓库内：`releases/latest/compact-head/`、`releases/latest/compact-mechanical/`、`assets/audio/head-compact/`、`assets/audio/mechanical-compact/`、`assets/audio/music-first-30s.flac`。前段重绘所需的历史干净画面为 `releases/iterations/16-source-main-v1.10-clean.mp4`。默认合成不读取原开发电脑的外部目录。
 
-当前时间轴和验收记录分别为 `docs/main-integration-timeline.json`、`docs/main-integration-validation.json`。9563 帧完整解码通过，音画时长差小于 1 ms，45 条字幕无重叠且在版面内，10 段新增语音及机械手原速 WAV 与旁白轨相关系数接近 1.0，AAC 解码峰值约 0.5902，无削波。关键画面与两处转场已人工检查。
+干净素材不含最终全片 STEP 覆盖层或底部字幕；旧母版中已有的章节标题会在最后一次合成时清理并统一编号。不要将正式带字幕视频重新用作干净输入。输出 `film-step-labels.ass` 负责 20 幕全片提示，`*.zh-CN.ass` / `*.srt` 负责 30 条口播字幕；机械手内部四步、实验室内部五步是操作进度，保留各自编号。
+
+当前画面约束：AI 分区寻找控件；朋友与我为底部同级 Tab，不包含返回；只固化 ROOT → 我 → 喜欢 → 视频的绿色正确路径；实验室按三个正确点击复现；机械手保留摄像头、AI 控件识别、坐标转换回传及点击完成。大学生 A 的五次滑动、三次点击仍为示例用例。新增控件镜头原生 1080p，历史 720p 动画保留完整画幅后放大，底部 72 px 为字幕区。
+
+验收记录在 `docs/compact-main-validation.json`、`docs/step-label-validation.json`。6108 帧完整解码通过，音画时长一致，30 条字幕无重叠；20 幕编号覆盖全片且没有空档。STEP 修订前后的音频比特流和口播字幕完全一致，机械手与手机边框已检查。使用仓库内缓存通过 `tools/build-compact-full.ps1` 重建，输出与发布视频的 SHA-256 完全一致。
 
 ## 历史交付记录
 
-以下入口和时间均属于对应历史版本；当前完整主片以本文件上方 v1.10.0 说明为准。
+2026-11-08 v1.10.0：159.383 秒，45 条字幕，包含场景库、大学生 A、时序建模和故障上下文。该版合成入口为 `tools/build-integrated-main.ps1`；时间轴与验收见 `docs/main-integration-timeline-v1.10.json` 和 `docs/main-integration-validation-v1.10.json`。
+
+以下入口和时间均属于对应历史版本；当前完整主片以本文件上方 v1.11.0 说明为准。
 
 2026-11-05 v1.9.0：最终机械手融合版为 100.033 秒，独立主片 71.4 秒，两者均输出 1920×1080 / 60 fps，字幕已烧录。正常语速机械手使用 Yunyang、`rate=+0%`、音频变速因子 1.0，五步时长共 23.4 秒，章节过渡 6.233 秒。原 88.8 秒与 71.4 秒无字幕版分别归档在 `releases/iterations/14-mechanical-pre-subtitles-v1.8.1.mp4` 和 `13-main-pre-subtitles-v1.8.1.mp4`。
 
@@ -102,8 +132,8 @@ Blender 使用 Workbench 渲染 PNG 帧。这个选择是有意的：测试中 E
 3. 运行 `tools/setup.ps1`，确认所有命令可用并创建 `.venv`。
 4. 先播放 `../videos/application-knowledge-graph-with-mechanical-replay.mp4`，确认完整主片目标效果。
 5. 打开 `blender/mechanical_cube_xray_intro.blend` 和 `blender/mechanical_cube_ai_control_loop.blend`，检查字体、材质和相机视图。
-6. 使用 `tools/build-integrated-main.ps1` 合成当前主片；修改新场景时加 `-RebuildScenario`。`tools/render-latest.ps1` 仅用于早期机械结构介绍。
-7. 对照 `SHA256SUMS.txt` 验证交付文件没有损坏。
+6. 使用 `tools/build-compact-full.ps1` 合成当前主片；修改前段时加 `-RebuildHead`，修改机械手时加 `-RebuildMechanical`。`tools/render-latest.ps1` 仅用于早期机械结构介绍。
+7. 对照 `SHA256SUMS.txt` 验证交付视频、音频、图片与 Blender 素材没有损坏；源码与文档由 Git 记录。
 
 若只需重新融合现有 AI 分镜，运行 `tools/integrate-ai-storyboard.ps1`。旁白时间轴位于 `config/mechanical_cube_integrated_voiceover.json`。
 

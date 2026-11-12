@@ -1,0 +1,22 @@
+[
+  {
+    "offset": 1000000,
+    "duration": 4625000,
+    "text": "坐标"
+  },
+  {
+    "offset": 5750000,
+    "duration": 3625000,
+    "text": "转换"
+  },
+  {
+    "offset": 9375000,
+    "duration": 1500000,
+    "text": "后"
+  },
+  {
+    "offset": 11000000,
+    "duration": 5000000,
+    "text": "回传"
+  }
+]

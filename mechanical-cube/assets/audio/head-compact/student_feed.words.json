@@ -1,0 +1,32 @@
+[
+  {
+    "offset": 1000000,
+    "duration": 4250000,
+    "text": "上滑"
+  },
+  {
+    "offset": 5375000,
+    "duration": 4875000,
+    "text": "两次"
+  },
+  {
+    "offset": 11750000,
+    "duration": 3625000,
+    "text": "浏览"
+  },
+  {
+    "offset": 15625000,
+    "duration": 2125000,
+    "text": "三"
+  },
+  {
+    "offset": 17750000,
+    "duration": 1625000,
+    "text": "条"
+  },
+  {
+    "offset": 19500000,
+    "duration": 5000000,
+    "text": "视频"
+  }
+]

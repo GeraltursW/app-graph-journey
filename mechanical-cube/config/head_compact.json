@@ -1,0 +1,44 @@
+{
+  "duration": 83.0,
+  "fps": 60,
+  "voice": "zh-CN-YunyangNeural",
+  "pitch": "-2Hz",
+  "rate": "+0%",
+  "font_family": "Microsoft YaHei",
+  "subtitle_size": 36,
+  "shots": [
+    {"id":"01","title":"应用知识图谱","duration":3,"source":[0,3],"voices":[{"id":"title","offset":0.2,"text":"应用知识图谱。"}]},
+    {"id":"02","title":"设备连接","duration":2.4,"source":[3,6],"voices":[{"id":"connect","offset":0.1,"text":"连接设备，开始探索。"}]},
+    {"id":"03","title":"AI 分区寻找控件并遍历 Tab","duration":5.6,"source":[6,14],"renderer":"control_exploration","voices":[{"id":"explore","offset":0.2,"text":"AI持续探索页面，理解页面层级。"}]},
+    {"id":"04","title":"页面节点沉淀","duration":2.8,"source":[14,18],"renderer":"page_nodes_monochrome","voices":[{"id":"nodes","offset":0.1,"text":"沉淀为可复用节点。"}]},
+    {"id":"05","title":"向量化与知识图谱","duration":5.2,"source":[18,25.2],"voices":[{"id":"vectors","offset":0.1,"text":"页面向量化，写入向量数据库，构建图谱。"}]},
+    {"id":"06","title":"问题场景与同级寻路","duration":14,"pieces":[
+      {"source":[25.2,27.8],"duration":1.8},
+      {"source":[27.8,30.8],"duration":2.1},
+      {"source":[30.8,36],"duration":3.6},
+      {"source":[36,38.2],"duration":1.2},
+      {"source":[38.2,40.4],"duration":1.6},
+      {"source":[40.4,43.4],"duration":2.1},
+      {"source":[43.4,47],"duration":1.6}
+    ],"voices":[
+      {"id":"intent","offset":0.05,"window":1.75,"text":"探索路径演示。"},
+      {"id":"recall","offset":1.85,"window":2.0,"text":"向量召回相似页面。"},
+      {"id":"friends","offset":4.0,"window":3.4,"text":"朋友页滑动查找。"},
+      {"id":"miss","offset":7.5,"window":1.2,"text":"没有找到。"},
+      {"id":"switch","offset":8.7,"window":2.1,"text":"点击我，同级切换。"},
+      {"id":"found","offset":10.9,"window":3.0,"text":"找到喜欢，验证成功。"}
+    ]},
+    {"id":"07","title":"固化绿色正确用例","duration":3.4,"source":[47,52],"voices":[{"id":"save_case","offset":0.1,"text":"正确路径固化为测试用例。"}]},
+    {"id":"08","title":"实验室手机复现","duration":5.2,"pieces":[{"renderer":"lab_replay_monochrome","duration":4.6},{"type":"lab_context_bridge","duration":0.6}],"voices":[{"id":"replay","offset":0.1,"window":4.45,"text":"下发实验室手机，逐步复现并验证。"}]},
+    {"id":"09","title":"从单个场景出发","duration":2.4,"source":[61.4,66.2],"voices":[{"id":"single","offset":0.1,"text":"从单个场景出发。"}]},
+    {"id":"10","title":"场景库积累","duration":4.4,"source":[66.2,72.7],"voices":[{"id":"library","offset":0.15,"text":"用例积累，逐步建设场景库。"}]},
+    {"id":"11","title":"提取典型操作序列","duration":4.2,"source":[72.7,78.9],"voices":[{"id":"extract","offset":0.15,"text":"结合大数据与图谱，提取操作序列。"}]},
+    {"id":"12","title":"AI 生成大学生 A 用例","duration":4.6,"source":[78.9,86.5833333333],"voices":[{"id":"student_plan","offset":0.15,"text":"AI为大学生A，创建抖音场景用例。"}]},
+    {"id":"13","title":"上滑两次浏览三条视频","duration":3.6,"source":[86.5833333333,91.7833333333],"voices":[{"id":"student_feed","offset":0.1,"text":"上滑两次，浏览三条视频。"}]},
+    {"id":"14","title":"点击我并进入喜欢","duration":3.2,"source":[91.7833333333,97.15],"voices":[{"id":"student_tabs","offset":0.1,"text":"点击我，再进入喜欢。"}]},
+    {"id":"15","title":"喜欢列表上滑三次","duration":3.4,"source":[97.15,102.55],"voices":[{"id":"student_likes","offset":0.1,"text":"喜欢列表上滑三次。"}]},
+    {"id":"16","title":"打开目标视频完成用例","duration":3.4,"source":[102.55,109.3666666667],"voices":[{"id":"student_open","offset":0.1,"text":"打开目标视频，完成用例。"}]},
+    {"id":"17","title":"影响因子时序建模","duration":6.4,"source":[109.3666666667,118.1666666667],"voices":[{"id":"temporal","offset":0.15,"text":"叠加网络、应用状态和负载，进行时序建模。"}]},
+    {"id":"18","title":"故障上下文与设备下发","duration":5.8,"pieces":[{"source":[118.1666666667,124.7833333333],"duration":4.8},{"type":"mechanical_bridge","duration":1.0}],"voices":[{"id":"context","offset":0.15,"window":4.5,"text":"重建故障上下文，下发设备复现。"}]}
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "duration": 5.6,
+  "regions": [
+    "顶部 Tab",
+    "中间内容",
+    "底部 Tab"
+  ],
+  "events": [
+    {
+      "time": 0.65,
+      "region": "top",
+      "control": "推荐"
+    },
+    {
+      "time": 1.23,
+      "region": "bottom",
+      "control": "朋友"
+    },
+    {
+      "time": 1.81,
+      "region": "top",
+      "control": "同城"
+    },
+    {
+      "time": 2.39,
+      "region": "bottom",
+      "control": "我"
+    },
+    {
+      "time": 2.97,
+      "region": "top",
+      "control": "关注"
+    },
+    {
+      "time": 3.55,
+      "region": "bottom",
+      "control": "消息"
+    },
+    {
+      "time": 4.13,
+      "region": "bottom",
+      "control": "首页"
+    }
+  ],
+  "top_coverage": 3,
+  "bottom_coverage": 4
+}

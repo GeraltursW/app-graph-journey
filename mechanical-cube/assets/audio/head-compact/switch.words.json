@@ -1,0 +1,22 @@
+[
+  {
+    "offset": 1000000,
+    "duration": 3500000,
+    "text": "点击"
+  },
+  {
+    "offset": 4500000,
+    "duration": 2875000,
+    "text": "我"
+  },
+  {
+    "offset": 8500000,
+    "duration": 4000000,
+    "text": "同级"
+  },
+  {
+    "offset": 12625000,
+    "duration": 4375000,
+    "text": "切换"
+  }
+]

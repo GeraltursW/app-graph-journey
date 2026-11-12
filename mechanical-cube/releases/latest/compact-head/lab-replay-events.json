@@ -1,0 +1,62 @@
+{
+  "duration": 4.6,
+  "route": [
+    "ROOT",
+    "我",
+    "喜欢",
+    "当前视频"
+  ],
+  "click_count": 3,
+  "events": [
+    {
+      "target": "我",
+      "begin": 0.9,
+      "click": 1.15,
+      "page_change": 1.32,
+      "box": [
+        305,
+        568,
+        391,
+        632
+      ]
+    },
+    {
+      "target": "喜欢",
+      "begin": 1.85,
+      "click": 2.1,
+      "page_change": 2.27,
+      "box": [
+        273,
+        226,
+        384,
+        278
+      ]
+    },
+    {
+      "target": "当前视频",
+      "begin": 2.8,
+      "click": 3.05,
+      "page_change": 3.22,
+      "box": [
+        47,
+        320,
+        143,
+        420
+      ]
+    }
+  ],
+  "completed_step_times": [
+    0.65,
+    1.32,
+    2.27,
+    3.22,
+    3.85
+  ],
+  "phone_box": [
+    390,
+    260,
+    810,
+    960
+  ],
+  "style_source": "control_ui_style.py"
+}

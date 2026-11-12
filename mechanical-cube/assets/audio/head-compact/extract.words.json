@@ -1,0 +1,37 @@
+[
+  {
+    "offset": 1000000,
+    "duration": 4250000,
+    "text": "结合"
+  },
+  {
+    "offset": 5500000,
+    "duration": 5125000,
+    "text": "大数据"
+  },
+  {
+    "offset": 10875000,
+    "duration": 1375000,
+    "text": "与"
+  },
+  {
+    "offset": 12375000,
+    "duration": 5000000,
+    "text": "图谱"
+  },
+  {
+    "offset": 18625000,
+    "duration": 4500000,
+    "text": "提取"
+  },
+  {
+    "offset": 23375000,
+    "duration": 3500000,
+    "text": "操作"
+  },
+  {
+    "offset": 27000000,
+    "duration": 3875000,
+    "text": "序列"
+  }
+]

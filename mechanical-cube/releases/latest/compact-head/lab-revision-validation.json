@@ -1,0 +1,79 @@
+{
+  "revised_range_seconds": [
+    36.4,
+    41.6
+  ],
+  "route": [
+    "ROOT",
+    "我",
+    "喜欢",
+    "当前视频"
+  ],
+  "clicks": [
+    {
+      "target": "我",
+      "begin": 0.9,
+      "click": 1.15,
+      "page_change": 1.32,
+      "box": [
+        305,
+        568,
+        391,
+        632
+      ]
+    },
+    {
+      "target": "喜欢",
+      "begin": 1.85,
+      "click": 2.1,
+      "page_change": 2.27,
+      "box": [
+        273,
+        226,
+        384,
+        278
+      ]
+    },
+    {
+      "target": "当前视频",
+      "begin": 2.8,
+      "click": 3.05,
+      "page_change": 3.22,
+      "box": [
+        47,
+        320,
+        143,
+        420
+      ]
+    }
+  ],
+  "style_source": "control_ui_style.py",
+  "original_narration_preserved": true,
+  "original_captions_preserved": true,
+  "other_picture_pieces_unchanged": [
+    "01-01.mp4",
+    "02-01.mp4",
+    "03-01.mp4",
+    "04-01.mp4",
+    "05-01.mp4",
+    "06-01.mp4",
+    "06-02.mp4",
+    "06-03.mp4",
+    "06-04.mp4",
+    "06-05.mp4",
+    "06-06.mp4",
+    "06-07.mp4",
+    "07-01.mp4",
+    "09-01.mp4",
+    "10-01.mp4",
+    "11-01.mp4",
+    "12-01.mp4",
+    "13-01.mp4",
+    "14-01.mp4",
+    "15-01.mp4",
+    "16-01.mp4",
+    "17-01.mp4",
+    "18-01.mp4",
+    "18-02.mp4"
+  ]
+}

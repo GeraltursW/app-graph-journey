@@ -4,34 +4,18 @@
 
 ![机械 CUBE 预览](docs/mechanical-cube-preview.png)
 
-## 当前交付
+## 当前交付（v1.11.0 · 2026-11-13）
 
-- v1.10.0：完整主片 **159.383 秒 / 1920×1080 / 60 fps**，实验室手机复现之后合入场景库、典型操作序列、大学生 A 用例、时序建模与故障上下文，再接入机械手和数据报表。
-- 新分镜 63.383 秒，原生 1080p；入口 0.8 秒手机位置匹配，出口 1.2 秒机械盒子放大。上下文下发画面替代原有 6.23 秒机械手说明卡。
-- [新增段落连续预览](releases/latest/scenario-context-preview.mp4)；[大学生 A 独立预览](releases/latest/student-a-case-preview.mp4)；[完整时间轴](docs/main-integration-timeline.json)；[验收记录](docs/main-integration-validation.json)。
-- 大学生 A 用例：推荐页上滑 2 次、浏览 3 条视频 → 底部“我” → “喜欢” → 上滑 3 次 → 打开视频 14。合计 5 次滑动、3 次点击，页面、操作、次数同步展示；属于 AI 生成的动画示例。
-- 机械手旁白保持 `+0%` 正常语速，无音频变速，五步演示 23.4 秒。全片 45 条字幕，统一 Microsoft YaHei，底部独立字幕区保留完整手机与图表。
-- 字幕源文件：[`../videos/subtitles/`](../videos/subtitles/)（SRT / ASS）；正常语速机械手段：[`releases/latest/mechanical-natural-voiceover.mp4`](releases/latest/mechanical-natural-voiceover.mp4)。
-- [机械手章节带字幕预览](releases/latest/mechanical-natural-preview.mp4)；[v1.9 时间轴](docs/final-delivery-timeline.json)；[v1.9 检查记录](docs/final-delivery-validation.json)。旧完整主片归档于 `releases/iterations/15-main-before-scene-library-v1.9.0.mp4`。
-- 固化用例时只保留绿色正确路径：ROOT → 我的页面 → 我的喜欢 → 视频详情。“朋友页查找未命中”只用于展示探索过程，不进入保存的用例。
-- 第五幕示例更新：点击底部“朋友”→滑动查找未命中→直接点击底部“我”→找到“我的喜欢”→打开视频。朋友与我为同级 Tab，水平连接，不包含返回操作。
-- 第二幕（00:06–00:14）的画面文案和配音统一为“人工智能持续探索页面，理解页面层级。”，已同步两版完整主片。
-- 第二幕含配乐预览：[`releases/latest/page-exploration-preview.mp4`](releases/latest/page-exploration-preview.mp4)；独立可编辑工程：[`blender/page-exploration.blend`](blender/page-exploration.blend)。
-- 159.38 秒完整主片：[`../videos/application-knowledge-graph-with-mechanical-replay.mp4`](../videos/application-knowledge-graph-with-mechanical-replay.mp4)
-- 71.4 秒独立主片也已同步第五幕修改，保留其连续配乐：[`../videos/application-knowledge-graph-and-data.mp4`](../videos/application-knowledge-graph-and-data.mp4)。
-- 第五幕已完整合入主片：1.2 秒柔和推进进入，1.4 秒保持节点位置接入用例卡片，文字错开淡入淡出。
-- 当前主片第一帧直接显示“应用知识图谱”；原片前 30 秒背景音乐循环铺满全片，独立旁白保留。
-- 第五幕输入仍为“疑似问题场景”；AI 从 ROOT 探索到朋友页，查找未命中后发现并补全“朋友 → 我”的同级切换关联，再将实际路径固化为用例。
-- 第五幕带配音和音乐的衔接预览：[`releases/latest/scenario-path-preview.mp4`](releases/latest/scenario-path-preview.mp4)。
-- 早期结构介绍与 AI 演示合成：[`releases/latest/mechanical-cube-main-ai-integrated-voiceover.mp4`](releases/latest/mechanical-cube-main-ai-integrated-voiceover.mp4)（保留历史配音速度）
-- 早期融合无声成片：[`releases/latest/mechanical-cube-main-ai-integrated-clean.mp4`](releases/latest/mechanical-cube-main-ai-integrated-clean.mp4)
-- AI 操作分镜源片：[`releases/latest/c159cc4d19a03485a4677970789f6f1a.mp4`](releases/latest/c159cc4d19a03485a4677970789f6f1a.mp4)
-- 最新结尾（测试完成 → 数据汇聚 → 报表，统一字体、含旁白）：[`releases/latest/analytics-outro-typography-voiceover.mp4`](releases/latest/analytics-outro-typography-voiceover.mp4)
-- 最新分析镜头 Blender 源文件：[`blender/final_analytics_v3.blend`](blender/final_analytics_v3.blend)
-- 上一版配音成片：[`releases/latest/mechanical-cube-ai-control-voiceover.mp4`](releases/latest/mechanical-cube-ai-control-voiceover.mp4)
-- 当前基础模型：[`blender/robot_base_stage01_professional.blend`](blender/robot_base_stage01_professional.blend)
-- 透视介绍镜头：[`blender/mechanical_cube_xray_intro.blend`](blender/mechanical_cube_xray_intro.blend)
-- AI 控制闭环镜头：[`blender/mechanical_cube_ai_control_loop.blend`](blender/mechanical_cube_ai_control_loop.blend)
+- [完整主片](../videos/application-knowledge-graph-with-mechanical-replay.mp4)：**101.8 秒 / 1920×1080 / 60 fps**，20 幕，30 条中文字幕。
+- 前 18 幕共 83 秒；AI 探索按顶部 Tab、中间内容、底部 Tab 分区，交错遍历 3 个顶部与 4 个底部控件；路径演示字幕和旁白改为“探索路径演示”。
+- 页面节点和实验室手机采用统一黑白线框、绿色细框高亮、白色点击光标与完成勾选。实验室按“我 → 喜欢 → 当前视频”执行三个正确点击，并验证目标页面。
+- [8.8 秒机械手预览](releases/latest/compact-mechanical/mechanical-compact-preview.mp4)：摄像头采集图片 → AI 识别控件位置 → 坐标转换并回传 → 完成定位点击。配音明确读出 AI，保持正常语速。
+- [实验室手机局部预览](releases/latest/lab-replay-compact-preview.mp4)包含主片 33–44 秒及前后转场。
+- 左上角统一为 STEP 01 / 20 至 STEP 20 / 20；实验室手机为 08，机械手为 19，数据汇聚为 20。配置入口为 `config/film_step_labels.json`。
+- [SRT / ASS 与 STEP 提示](../videos/subtitles/)；[完整时间轴](docs/compact-main-timeline.json)；[画面与音轨验收](docs/compact-main-validation.json)；[编号检查](docs/step-label-validation.json)。
+- [83 秒干净前段与旁白缓存](releases/latest/compact-head/)和[机械手干净母版](releases/latest/compact-mechanical/)用于重建；`releases/latest/compact-main-clean.mp4`为最终合成前的干净画面，正式 STEP 与字幕在最终输出时统一生成。
+- [v1.10 的 159.38 秒主片](releases/iterations/16-main-before-compact-v1.10.0.mp4)已归档。71.4 秒短版与此前的 Blender 结构、动画、截图和独立预览继续保留。
+- 大学生 A 为动画示例：上滑 2 次浏览 3 条视频，点击我及喜欢，喜欢列表上滑 3 次，打开视频 14。固化用例只保留绿色正确路径；条件建模及图表数据为演示内容。
 
 ## 结构与运动关系
 
@@ -49,17 +33,14 @@
 git clone https://github.com/GeraltursW/app-graph-journey.git
 cd app-graph-journey\mechanical-cube
 powershell -ExecutionPolicy Bypass -File .\tools\setup.ps1
+powershell -ExecutionPolicy Bypass -File .\tools\build-compact-full.ps1
 ```
 
-安装 Python 3.11+、FFmpeg 和依赖后，重建当前带字幕交付版：
+默认输出到 `output/compact-full-v1.11/`，包含完整 MP4、干净画面、语音与混音分轨、SRT/ASS、STEP 时间轴和验收记录。默认流程使用仓库缓存，可离线运行，不需要 Blender。依赖 Python 3.11+、FFmpeg、Pillow、NumPy 和 Windows 微软雅黑；修改配音文案后才需要联网调用 edge-tts。
 
-```powershell
-pwsh -File .\tools\build-integrated-main.ps1
-```
+修改 `config/head_compact.json` 或前段渲染脚本后，运行 `tools/build-compact-full.ps1 -RebuildHead`。修改 `config/mechanical_compact.json` 后，运行 `tools/build-compact-full.ps1 -RebuildMechanical`；该选项也重建前段，保证进入机械手的转场匹配。修改 `config/film_step_labels.json` 后默认重建即可。旧 `build-integrated-main.ps1` 属于 v1.10，旧 `build-final-delivery.ps1` 属于 v1.9。完整交接见 [HANDOFF.md](HANDOFF.md)。
 
-加 `-RebuildScenario` 可重绘场景库、大学生 A 和时序建模；语音已缓存，文案未变时无需联网合成。新的动画与旁白配置为 `config/scenario_context.json`，动作参数为 `config/student_a_case.json`，合成参数为 `config/main_scene_integration.json`。旧 `build-final-delivery.ps1 -ReuseRenders` 重建 v1.9 的 100.03 秒完整片和 71.4 秒短片；`render-latest.ps1` 重建早期机械结构介绍。安装 Blender 5.4 Alpha 后可直接编辑 `blender/`。完整流程见 [HANDOFF.md](HANDOFF.md)。
-
-以下为历史机械分镜和 88.8 秒基片的生成入口，不直接生成当前 159.38 秒主片。将新的 AI 操作分镜融合进早期结构介绍：
+以下为历史机械分镜和 88.8 秒基片的生成入口，不直接生成当前 101.8 秒主片。将新的 AI 操作分镜融合进早期结构介绍：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\tools\integrate-ai-storyboard.ps1

@@ -1,0 +1,32 @@
+[
+  {
+    "offset": 1000000,
+    "duration": 4625000,
+    "text": "重建"
+  },
+  {
+    "offset": 5750000,
+    "duration": 3625000,
+    "text": "故障"
+  },
+  {
+    "offset": 9625000,
+    "duration": 6250000,
+    "text": "上下文"
+  },
+  {
+    "offset": 17125000,
+    "duration": 4125000,
+    "text": "下发"
+  },
+  {
+    "offset": 21375000,
+    "duration": 2875000,
+    "text": "设备"
+  },
+  {
+    "offset": 24375000,
+    "duration": 3750000,
+    "text": "复现"
+  }
+]

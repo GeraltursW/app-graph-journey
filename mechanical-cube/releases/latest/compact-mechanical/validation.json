@@ -1,0 +1,40 @@
+{
+  "duration": 8.8,
+  "frames": 528,
+  "full_decode_errors": 0,
+  "caption_gaps": 0,
+  "spoken_AI_present": true,
+  "AI_voice_rms": 0.11129307746887207,
+  "normal_rate_voice_checks": [
+    {
+      "stage": "capture",
+      "normal_rate_correlation": 1.0,
+      "speech_end_in_stage": 1.5875000000000001,
+      "stage_duration": 2.3
+    },
+    {
+      "stage": "recognition",
+      "normal_rate_correlation": 1.0,
+      "speech_end_in_stage": 1.7750000000000001,
+      "stage_duration": 2.0833333333333335
+    },
+    {
+      "stage": "coordinate",
+      "normal_rate_correlation": 1.0,
+      "speech_end_in_stage": 1.7000000000000002,
+      "stage_duration": 2.3833333333333333
+    },
+    {
+      "stage": "execute",
+      "normal_rate_correlation": 0.9999999999999998,
+      "speech_end_in_stage": 1.675,
+      "stage_duration": 2.033333333333333
+    }
+  ],
+  "removed_picture_interval_from_previous_preview": [
+    8,
+    9
+  ],
+  "stereo_peak": 0.5488961338996887,
+  "visual_review": "Reviewed AI-stage caption, edit at 8.0 seconds, retained contact ring at 8.3 seconds and final frame."
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "offset": 1000000,
+    "duration": 4500000,
+    "text": "AI"
+  },
+  {
+    "offset": 5500000,
+    "duration": 1500000,
+    "text": "为"
+  },
+  {
+    "offset": 7125000,
+    "duration": 5000000,
+    "text": "大学生"
+  },
+  {
+    "offset": 12125000,
+    "duration": 2875000,
+    "text": "A"
+  },
+  {
+    "offset": 15875000,
+    "duration": 4875000,
+    "text": "创建"
+  },
+  {
+    "offset": 21000000,
+    "duration": 3250000,
+    "text": "抖音"
+  },
+  {
+    "offset": 24375000,
+    "duration": 3875000,
+    "text": "场景"
+  },
+  {
+    "offset": 28375000,
+    "duration": 4000000,
+    "text": "用例"
+  }
+]

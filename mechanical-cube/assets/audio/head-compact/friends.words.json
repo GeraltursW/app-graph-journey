@@ -1,0 +1,22 @@
+[
+  {
+    "offset": 1000000,
+    "duration": 3000000,
+    "text": "朋友"
+  },
+  {
+    "offset": 4000000,
+    "duration": 2125000,
+    "text": "页"
+  },
+  {
+    "offset": 6375000,
+    "duration": 3250000,
+    "text": "滑动"
+  },
+  {
+    "offset": 9750000,
+    "duration": 4750000,
+    "text": "查找"
+  }
+]

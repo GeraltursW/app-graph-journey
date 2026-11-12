@@ -1,0 +1,27 @@
+[
+  {
+    "offset": 1000000,
+    "duration": 3750000,
+    "text": "用例"
+  },
+  {
+    "offset": 4875000,
+    "duration": 4125000,
+    "text": "积累"
+  },
+  {
+    "offset": 10375000,
+    "duration": 3625000,
+    "text": "逐步"
+  },
+  {
+    "offset": 14125000,
+    "duration": 3500000,
+    "text": "建设"
+  },
+  {
+    "offset": 17875000,
+    "duration": 6500000,
+    "text": "场景库"
+  }
+]
