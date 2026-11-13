@@ -1,26 +1,36 @@
 [
   {
     "offset": 1000000,
-    "duration": 3750000,
+    "duration": 3250000,
+    "text": "单个"
+  },
+  {
+    "offset": 4375000,
+    "duration": 3875000,
     "text": "用例"
   },
   {
-    "offset": 4875000,
+    "offset": 8500000,
+    "duration": 3250000,
+    "text": "扩展"
+  },
+  {
+    "offset": 11750000,
+    "duration": 1625000,
+    "text": "为"
+  },
+  {
+    "offset": 13500000,
     "duration": 4125000,
-    "text": "积累"
+    "text": "多个"
   },
   {
-    "offset": 10375000,
-    "duration": 3625000,
-    "text": "逐步"
+    "offset": 19125000,
+    "duration": 3875000,
+    "text": "形成"
   },
   {
-    "offset": 14125000,
-    "duration": 3500000,
-    "text": "建设"
-  },
-  {
-    "offset": 17875000,
+    "offset": 23250000,
     "duration": 6500000,
     "text": "场景库"
   }

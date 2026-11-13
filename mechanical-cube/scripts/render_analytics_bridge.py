@@ -4,6 +4,7 @@ Requires Pillow and FFmpeg. Starts on the exact last decoded mechanical frame.
 The following dashboard overlaps the final second using an ordinary dissolve.
 """
 from pathlib import Path
+from video_fonts import chinese_font
 import argparse
 import math
 import subprocess
@@ -21,7 +22,7 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--source', type=Path, default=ROOT/'releases/latest/c159cc4d19a03485a4677970789f6f1a.mp4')
     p.add_argument('--out', type=Path, default=ROOT/'output/final-analytics-v3')
-    p.add_argument('--font', default='C:/Windows/Fonts/msyh.ttc')
+    p.add_argument('--font', default=chinese_font())
     p.add_argument('--preview', action='store_true')
     p.add_argument('--native-framed-source', action='store_true', help='Source already has the 1920x1080 subtitle frame')
     p.add_argument('--native-output', action='store_true', help='Render 1920x1080 with the reserved subtitle band')
@@ -36,6 +37,7 @@ def main():
     robot = original.crop((0,0,780*SCALE,H*SCALE))
     old_text = original.crop((780*SCALE,0,W*SCALE,H*SCALE))
     fonts = {s:ImageFont.truetype(a.font,s*SCALE) for s in (16,19,22,24,30,44)}
+    completion_font=ImageFont.truetype(a.font,22*SCALE,index=1 if Path(a.font).name.startswith('STHeiti') else 0)
     bg = Image.new('RGB',(W*SCALE,H*SCALE),(2,5,9))
     d = ImageDraw.Draw(bg)
     for x in range(-450,1550,40):
@@ -72,7 +74,7 @@ def main():
         text(718,156,'测试完成后',44,alpha=appear)
         text(720,220,'性能、功耗、热等数据同步汇聚',24,(185,195,207),smooth(t,1.45,2.15))
         label_alpha = smooth(t,1.3,2.0)
-        text(88,641,'机械手用例复现完成',22,(220,228,235),label_alpha)
+        pen.text((88*SCALE,641*SCALE),'用例通过机械手测试完成',font=completion_font,fill=(220,228,235,round(255*label_alpha)),anchor='lt')
         pen.ellipse((54*SCALE,644*SCALE,73*SCALE,663*SCALE),fill=(74,222,128,round(255*label_alpha)))
         # Three curved telemetry channels originate at the tested phone.
         for i,(label,color) in enumerate(zip(('性能','功耗','热'),COLORS)):

@@ -32,9 +32,9 @@ def prepare_step_labels(out,head,mechanical_duration):
     # Erase only legacy left-header glyphs, retaining phone silhouettes and
     # body motion. The late context-to-cube bridge has already faded its old
     # heading before the cube reaches this area, so the mask stops there.
-    masks=[(3,5.4,96,20,600,42,'0x040306'),
+    masks=[(3,5.4,96,20,600,58,'0x09090b'),
            (5.4,13.8,96,20,600,58,'0x09090b'),
-           (13.8,19,96,20,600,42,'0x040306'),
+           (13.8,19,96,20,600,42,'0x09090b'),
            (19,33,96,20,800,58,'0x09090b'),
            (33,41.6,64,20,900,58,'0x09090b'),
            (41.6,head['duration']-.45,64,20,700,58,'0x09090b')]

@@ -1,0 +1,8 @@
+{
+  "music_duration": 83.6,
+  "gain": 0.7,
+  "picture_stream": "identical",
+  "minimum_one_second_rms_db": -26.206523817705097,
+  "music_loop_crossfade_seconds": 0.6,
+  "fade_out_seconds": 1.5
+}

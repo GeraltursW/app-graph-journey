@@ -1,151 +1,142 @@
 {
-  "duration": 88.6,
+  "duration": 83.6,
   "resolution": [
     1920,
     1080
   ],
   "fps": 60,
-  "frames": 5316,
+  "frames": 5016,
   "decode": "passed",
   "av_duration_difference_seconds": 0.0,
   "caption_count": 26,
-  "step_count": 16,
+  "step_count": 15,
   "step_coverage": "continuous",
   "controller_label": "服务器",
   "mechanical_narration": "机械手操作",
-  "maximum_caption_width_px": 684.0,
+  "maximum_caption_width_px": 792.0,
   "font": "Microsoft YaHei",
-  "student_case": "creation_then_silent_step_list",
-  "student_summary_range": [
-    52.6,
-    57.6
+  "case_progression": [
+    "single_case",
+    "multiple_cases",
+    "scenario_library",
+    "typical_sequence",
+    "temporal_model"
   ],
-  "student_steps_static_range": [
-    55.4,
-    56.9
-  ],
-  "student_steps_static_seconds": 1.5,
-  "student_steps_static_psnr_db": 63.90036437349007,
-  "student_steps_narration": false,
-  "student_summary_to_factors_transition_seconds": 0.7,
+  "sequence_to_factors_transition_seconds": 0.5,
   "analytics_conclusion": "subtitle_only",
   "ending_green_title_pixels": 0,
+  "background_music": {
+    "duration": 83.6,
+    "coverage": "continuous",
+    "minimum_one_second_rms_db": -26.206523817705097
+  },
   "normal_rate_narration": [
     {
       "start": 0,
-      "duration": 69.8,
+      "duration": 64.8,
       "source_correlation": 1.0,
       "time_stretch": 1.0
     },
     {
-      "start": 69.8,
+      "start": 64.8,
       "duration": 8.8,
       "source_correlation": 1.0,
       "time_stretch": 1.0
     }
   ],
-  "aac_mix_correlation": 0.9997832664444359,
-  "decoded_peak": 0.8345274925231934,
+  "aac_mix_correlation": 0.9997056120947371,
+  "decoded_peak": 0.7529510855674744,
   "join_continuity": {
-    "context_to_mechanical": {
-      "psnr_db": 40.06360540633406,
-      "mean_absolute_pixel_difference": 1.4057855606079102
-    },
-    "mechanical_to_analytics": {
-      "psnr_db": 46.54094806359505,
-      "mean_absolute_pixel_difference": 0.6923694014549255
-    },
     "connection_to_exploration": {
-      "psnr_db": 47.59904708814289,
-      "mean_absolute_pixel_difference": 0.7256455421447754
+      "psnr_db": 44.07362739937718,
+      "mean_absolute_pixel_difference": 1.461455225944519
     },
     "exploration_to_nodes": {
-      "psnr_db": 47.30225582339219,
-      "mean_absolute_pixel_difference": 0.9983417987823486
+      "psnr_db": 43.6711899129631,
+      "mean_absolute_pixel_difference": 1.496246337890625
+    },
+    "nodes_to_vectorization": {
+      "psnr_db": 47.03231272054131,
+      "mean_absolute_pixel_difference": 1.0555373430252075
+    },
+    "vectorization_to_path": {
+      "psnr_db": 43.49474031786862,
+      "mean_absolute_pixel_difference": 1.6002557277679443
     },
     "saved_case_to_lab": {
-      "psnr_db": 47.801107407304535,
-      "mean_absolute_pixel_difference": 0.26004236936569214
+      "psnr_db": 41.624589116890434,
+      "mean_absolute_pixel_difference": 1.5216865539550781
     },
     "lab_to_bridge": {
-      "psnr_db": 47.03530959122506,
-      "mean_absolute_pixel_difference": 1.0255101919174194
+      "psnr_db": 47.50600643409239,
+      "mean_absolute_pixel_difference": 0.955740749835968
     },
-    "lab_bridge_to_context": {
-      "psnr_db": 44.31397736476918,
-      "mean_absolute_pixel_difference": 1.1136879920959473
+    "lab_bridge_to_case": {
+      "psnr_db": 42.87388204244715,
+      "mean_absolute_pixel_difference": 1.6747349500656128
     },
-    "sequence_to_student_summary": {
-      "psnr_db": 42.614029819132256,
-      "mean_absolute_pixel_difference": 1.322454810142517
+    "single_to_library": {
+      "psnr_db": 43.107484830359404,
+      "mean_absolute_pixel_difference": 1.6609572172164917
     },
-    "student_summary_to_factors": {
-      "psnr_db": 41.056132211153404,
-      "mean_absolute_pixel_difference": 1.389331579208374
+    "library_to_sequence": {
+      "psnr_db": 42.637643030979035,
+      "mean_absolute_pixel_difference": 1.686920166015625
+    },
+    "sequence_to_factors": {
+      "psnr_db": 43.147083951116926,
+      "mean_absolute_pixel_difference": 1.585544228553772
+    },
+    "factors_to_context": {
+      "psnr_db": 41.71748576060652,
+      "mean_absolute_pixel_difference": 1.7955892086029053
+    },
+    "context_to_mechanical": {
+      "psnr_db": 45.21789367141654,
+      "mean_absolute_pixel_difference": 1.0367697477340698
+    },
+    "mechanical_to_analytics": {
+      "psnr_db": 44.81127316110181,
+      "mean_absolute_pixel_difference": 1.103814959526062
     }
   },
   "sampled_frame_times": [
     0,
     12,
     33.3,
+    43,
+    46,
+    50,
     55,
-    69.78333333333333,
-    69.8,
-    72.6,
-    77.3,
-    78.58333333333333,
-    78.6,
-    79.1,
-    80.1,
-    82.39999999999999,
-    83.6,
-    85.8,
-    88.5,
-    5.383333,
+    58,
+    61,
+    83.5,
+    5.383333333333334,
     5.4,
-    6.8,
-    7.5,
-    9,
-    10.983333,
+    10.983333333333333,
     11,
-    19.4,
-    36.383333,
+    13.783333333333333,
+    13.8,
+    18.983333333333334,
+    19,
+    36.38333333333333,
     36.4,
-    37.62,
-    38.57,
-    39.52,
-    40.35,
-    40.983333,
+    40.983333333333334,
     41,
-    41.583333,
+    41.583333333333336,
     41.6,
+    43.983333333333334,
+    44,
+    48.38333333333333,
+    48.4,
     52.583333333333336,
     52.6,
-    57.583333333333336,
-    57.6,
-    57.85,
-    58.6,
-    54.4,
-    56.1,
-    57.25,
-    55.6,
-    56.699999999999996
+    58.983333333333334,
+    59,
+    64.78333333333333,
+    64.8,
+    73.58333333333333,
+    73.6
   ],
-  "file_bytes": 15349544,
-  "version": "v1.14.1",
-  "delivery_file": "../videos/application-knowledge-graph-with-mechanical-replay.mp4",
-  "sha256": "e27df51665230a86c56999b2c2b14146e03a4ff87b261b24c7f10c5ad1387cae",
-  "step_label_validation": "docs/step-label-validation.json",
-  "audio_unchanged_from_v1_14_0": true,
-  "aac_payload_sha256": "74193a239993dad9977d4b5b2d6074123278a7fa6b731744e9f84e34a63ca0ac",
-  "subtitle_files_unchanged_from_v1_14_0": true,
-  "portable_rebuild": {
-    "status": "passed_with_validated_v1.14.0_head_and_mechanical_caches",
-    "entry_point": "tools/build-compact-full.ps1",
-    "cached_input_revisions_checked": true,
-    "rebuilt_head_from_sources_in_this_patch": false,
-    "rebuilt_mechanical_from_sources_in_this_patch": false,
-    "rebuilt_analytics_and_full_assembly": true,
-    "delivery_is_rebuild_output": true
-  }
+  "file_bytes": 13623625
 }

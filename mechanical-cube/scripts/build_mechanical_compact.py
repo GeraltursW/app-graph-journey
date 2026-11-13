@@ -6,6 +6,7 @@ import json
 import math
 import subprocess
 from pathlib import Path
+from video_fonts import chinese_font
 from PIL import Image, ImageDraw, ImageFont
 from prepare_natural_mechanical import synthesize, duration
 from finalize_subtitled_films import stamp, write_captions
@@ -27,7 +28,8 @@ async def prepare(cfg):
         words = raw.with_suffix('.words.json')
         cache = raw.with_suffix('.cache.json')
         signature = hashlib.sha256(json.dumps([cfg['voice'], '+0%', cfg['pitch'], s['text']], ensure_ascii=False).encode()).hexdigest()
-        if not (raw.exists() and words.exists() and cache.exists() and json.loads(cache.read_text())['signature'] == signature):
+        regenerate=not (raw.exists() and words.exists() and cache.exists() and json.loads(cache.read_text())['signature'] == signature)
+        if regenerate:
             await synthesize(s['text'], cfg, raw, words)
             cache.write_text(json.dumps({'signature': signature}), encoding='utf-8')
         audio_filter = 'highpass=f=75,lowpass=f=11500,acompressor=threshold=0.16:ratio=2.2:attack=18:release=120:makeup=1.7,loudnorm=I=-16:LRA=6:TP=-1.5,aresample=48000,asetpts=N/SR/TB'
@@ -36,7 +38,7 @@ async def prepare(cfg):
             speech_end = max((w['offset']+w['duration'])/1e7 for w in word_info)
             # Remove only trailing TTS padding; preserve every spoken word at +0%.
             audio_filter += f',atrim=end={speech_end+cfg["tail_padding_after_last_word"]}'
-        run(['-i', raw, '-af', audio_filter, '-ac', '2', '-c:a', 'pcm_s16le', wav])
+        if regenerate or not wav.exists():run(['-i', raw, '-af', audio_filter, '-ac', '2', '-c:a', 'pcm_s16le', wav])
         return {**s, 'audio_duration': duration(wav), 'audio': wav.relative_to(ROOT).as_posix(), 'words': words.relative_to(ROOT).as_posix(), 'voice_offset': .10}
     stages = await asyncio.gather(*(voice(s) for s in cfg['stages']))
     frames = [s.get('slot_frames', math.ceil(max(s['minimum_duration'], s['audio_duration'] + .22) * cfg['fps'])) for s in stages]
@@ -60,8 +62,8 @@ async def prepare(cfg):
 
 
 def panels(out, manifest):
-    regular = {n: ImageFont.truetype('C:/Windows/Fonts/msyh.ttc', n) for n in [22,24,26,28,30,32,36,40,42]}
-    bold = ImageFont.truetype('C:/Windows/Fonts/msyhbd.ttc', 40)
+    regular = {n: ImageFont.truetype(chinese_font(), n) for n in [22,24,26,28,30,32,36,40,42]}
+    bold = ImageFont.truetype(chinese_font(True), 40)
     white, muted, green, cyan = '#f4f4f5', '#a1a1aa', '#4ade80', '#67e8f9'
     for i, s in enumerate(manifest['stages']):
         im = Image.new('RGBA', (1920,1080)); d = ImageDraw.Draw(im)

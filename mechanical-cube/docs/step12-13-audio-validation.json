@@ -1,0 +1,40 @@
+{
+  "picture_stream": "identical",
+  "audio_outside_step12_13_max_difference": 0.0,
+  "music_half_second_levels_db": {
+    "before": [
+      -21.18,
+      -22.44,
+      -21.79,
+      -23.11,
+      -22.28,
+      -22.46
+    ],
+    "after": [
+      -21.59,
+      -22.43,
+      -21.48,
+      -22.54,
+      -21.53,
+      -22.17
+    ]
+  },
+  "speech_levels": {
+    "temporal": {
+      "lufs": -18.01,
+      "duration_unchanged": true,
+      "waveform_correlation": 0.9999999981024017
+    },
+    "context": {
+      "lufs": -18.0,
+      "duration_unchanged": true,
+      "waveform_correlation": 0.9999999984576542
+    },
+    "device_dispatch": {
+      "lufs": -17.98,
+      "duration_unchanged": true,
+      "waveform_correlation": 0.9999999980176545
+    }
+  },
+  "speech_rate": "unchanged"
+}

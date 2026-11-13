@@ -1,32 +1,47 @@
 [
   {
     "offset": 1000000,
-    "duration": 4625000,
-    "text": "重建"
+    "duration": 4500000,
+    "text": "形成"
   },
   {
     "offset": 5750000,
-    "duration": 3625000,
+    "duration": 2875000,
+    "text": "测试"
+  },
+  {
+    "offset": 8750000,
+    "duration": 4750000,
+    "text": "模型"
+  },
+  {
+    "offset": 15000000,
+    "duration": 4625000,
+    "text": "检测"
+  },
+  {
+    "offset": 19875000,
+    "duration": 3000000,
+    "text": "过程"
+  },
+  {
+    "offset": 23000000,
+    "duration": 4000000,
     "text": "故障"
   },
   {
-    "offset": 9625000,
-    "duration": 6250000,
-    "text": "上下文"
+    "offset": 28500000,
+    "duration": 4000000,
+    "text": "得出"
   },
   {
-    "offset": 17125000,
-    "duration": 4125000,
-    "text": "下发"
+    "offset": 32750000,
+    "duration": 3625000,
+    "text": "测试"
   },
   {
-    "offset": 21375000,
-    "duration": 2875000,
-    "text": "设备"
-  },
-  {
-    "offset": 24375000,
-    "duration": 3750000,
-    "text": "复现"
+    "offset": 36500000,
+    "duration": 4500000,
+    "text": "指标"
   }
 ]

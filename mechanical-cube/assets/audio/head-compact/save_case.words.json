@@ -1,31 +1,31 @@
 [
   {
     "offset": 1000000,
-    "duration": 3625000,
-    "text": "正确"
+    "duration": 3500000,
+    "text": "目标"
   },
   {
-    "offset": 4750000,
-    "duration": 4125000,
+    "offset": 4625000,
+    "duration": 3875000,
     "text": "路径"
   },
   {
-    "offset": 9750000,
-    "duration": 3125000,
-    "text": "固化"
+    "offset": 8750000,
+    "duration": 2750000,
+    "text": "提取"
   },
   {
-    "offset": 12875000,
+    "offset": 11500000,
     "duration": 1875000,
     "text": "为"
   },
   {
-    "offset": 15000000,
-    "duration": 3625000,
+    "offset": 13625000,
+    "duration": 3500000,
     "text": "测试"
   },
   {
-    "offset": 18750000,
+    "offset": 17250000,
     "duration": 3750000,
     "text": "用例"
   }

@@ -5,7 +5,7 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $ProjectRoot = Split-Path -Parent $PSScriptRoot
-if (-not $OutputDirectory) { $OutputDirectory = Join-Path $ProjectRoot 'output\compact-full-v1.14' }
+if (-not $OutputDirectory) { $OutputDirectory = Join-Path $ProjectRoot 'output\compact-full-v1.15' }
 New-Item -ItemType Directory -Force -Path $OutputDirectory | Out-Null
 $OutputDirectory = (Resolve-Path -LiteralPath $OutputDirectory).Path
 $Python = Join-Path $ProjectRoot '.venv\Scripts\python.exe'
@@ -35,4 +35,4 @@ if ($RebuildHead -or $RebuildMechanical) {
 Check-Exit 'Complete film assembly'
 & $Python (Join-Path $ProjectRoot 'scripts\validate_compact_full_film.py') --out $OutputDirectory
 Check-Exit 'Complete film validation'
-Write-Host "v1.14.1 complete film: $OutputDirectory"
+Write-Host "v1.15.0 complete film: $OutputDirectory"

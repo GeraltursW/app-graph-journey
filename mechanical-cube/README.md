@@ -6,13 +6,13 @@
 
 ## 当前交付
 
-2026-11-13 **v1.14.1**：完整主片 **88.6 秒 / 1920×1080 / 60 fps**，16 幕、26 条中文字幕。
+2026-11-13 **v1.15.0**：完整主片 **83.6 秒 / 1920×1080 / 60 fps**，15 幕、26 条中文字幕。
 
 - 结尾“数据报表一目了然”仅保留底部字幕，绿色重复文字移除，配音不变。
 - 正式视频：`../videos/application-knowledge-graph-with-mechanical-replay.mp4`。
-- 大学生用例先展示 AI 创建结果，随后同时呈现 5 个步骤：推荐页上滑 2 次、点击我、点击喜欢 Tab、喜欢列表上滑 3 次、打开目标视频 14。
-- 步骤列表在 55.4–56.9 秒静态停留 1.5 秒，旁白已经结束，不逐步高亮或朗读。
-- 57.6 秒进入影响因子建模；机械手为第 15 幕，数据报表为第 16 幕。
+- 删除原 STEP 12 大学生示例；单个用例扩展为多个用例，形成场景库。
+- 提取典型操作序列后，以 0.5 秒淡化直接进入影响因子时序建模，旁白同步调整。
+- 52.6 秒进入建模，59 秒形成测试模型；机械手为第 14 幕，数据报表为第 15 幕。
 - 当前时间轴、验收与交接见 `docs/compact-main-timeline.json`、`docs/compact-main-validation.json`、`HANDOFF.md`。
 - 既有 `releases/latest/compact-*` 为历史缓存，脚本会重绘过期素材到本地 `output/`。
 
@@ -35,11 +35,11 @@ powershell -ExecutionPolicy Bypass -File .\tools\setup.ps1
 powershell -ExecutionPolicy Bypass -File .\tools\build-compact-full.ps1
 ```
 
-默认输出到 `output/compact-full-v1.14/`，包含完整 MP4、干净画面、语音与混音分轨、SRT/ASS、STEP 时间轴和验收记录。默认流程使用仓库缓存，可离线运行，不需要 Blender。依赖 Python 3.11+、FFmpeg、Pillow、NumPy 和 Windows 微软雅黑；修改配音文案后才需要联网调用 edge-tts。
+默认输出到 `output/compact-full-v1.15/`，包含完整 MP4、干净画面、语音与混音分轨、SRT/ASS、STEP 时间轴和验收记录。默认流程使用仓库缓存，可离线运行，不需要 Blender。依赖 Python 3.11+、FFmpeg、Pillow、NumPy；字体使用 Windows 微软雅黑，macOS 自动使用黑体；修改配音文案后才需要联网调用 edge-tts。
 
 修改 `config/head_compact.json` 或前段渲染脚本后，运行 `tools/build-compact-full.ps1 -RebuildHead`。修改 `config/mechanical_compact.json` 后，运行 `tools/build-compact-full.ps1 -RebuildMechanical`；该选项也重建前段，保证进入机械手的转场匹配。修改 `config/film_step_labels.json` 后默认重建即可。旧 `build-integrated-main.ps1` 属于 v1.10，旧 `build-final-delivery.ps1` 属于 v1.9。完整交接见 [HANDOFF.md](HANDOFF.md)。
 
-以下为历史机械分镜和 88.8 秒基片的生成入口，不直接生成当前 88.6 秒主片。将新的 AI 操作分镜融合进早期结构介绍：
+以下为历史机械分镜和 88.8 秒基片的生成入口，不直接生成当前 83.6 秒主片。将新的 AI 操作分镜融合进早期结构介绍：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\tools\integrate-ai-storyboard.ps1

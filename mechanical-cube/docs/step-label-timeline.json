@@ -1,10 +1,10 @@
 {
-  "step_count": 16,
+  "step_count": 15,
   "entries": [
     {
       "id": "01",
       "title": "应用知识图谱",
-      "text": "STEP 01 / 16   应用知识图谱",
+      "text": "STEP 01 / 15   应用知识图谱",
       "start": 0.0,
       "end": 3.0,
       "start_frame": 0,
@@ -13,7 +13,7 @@
     {
       "id": "02",
       "title": "设备连接",
-      "text": "STEP 02 / 16   设备连接",
+      "text": "STEP 02 / 15   设备连接",
       "start": 3.0,
       "end": 5.4,
       "start_frame": 180,
@@ -22,7 +22,7 @@
     {
       "id": "03",
       "title": "AI 控件探索",
-      "text": "STEP 03 / 16   AI 控件探索",
+      "text": "STEP 03 / 15   AI 控件探索",
       "start": 5.4,
       "end": 11.0,
       "start_frame": 324,
@@ -31,7 +31,7 @@
     {
       "id": "04",
       "title": "页面节点沉淀",
-      "text": "STEP 04 / 16   页面节点沉淀",
+      "text": "STEP 04 / 15   页面节点沉淀",
       "start": 11.0,
       "end": 13.8,
       "start_frame": 660,
@@ -40,7 +40,7 @@
     {
       "id": "05",
       "title": "向量化与知识图谱",
-      "text": "STEP 05 / 16   向量化与知识图谱",
+      "text": "STEP 05 / 15   向量化与知识图谱",
       "start": 13.8,
       "end": 19.0,
       "start_frame": 828,
@@ -49,7 +49,7 @@
     {
       "id": "06",
       "title": "探索路径演示",
-      "text": "STEP 06 / 16   探索路径演示",
+      "text": "STEP 06 / 15   探索路径演示",
       "start": 19.0,
       "end": 33.0,
       "start_frame": 1140,
@@ -57,8 +57,8 @@
     },
     {
       "id": "07",
-      "title": "固化正确用例",
-      "text": "STEP 07 / 16   固化正确用例",
+      "title": "目标路径提取为测试用例",
+      "text": "STEP 07 / 15   目标路径提取为测试用例",
       "start": 33.0,
       "end": 36.4,
       "start_frame": 1980,
@@ -66,8 +66,8 @@
     },
     {
       "id": "08",
-      "title": "实验室手机复现",
-      "text": "STEP 08 / 16   实验室手机复现",
+      "title": "实验室手机执行",
+      "text": "STEP 08 / 15   实验室手机执行",
       "start": 36.4,
       "end": 41.6,
       "start_frame": 2184,
@@ -75,8 +75,8 @@
     },
     {
       "id": "09",
-      "title": "单场景识别与复现",
-      "text": "STEP 09 / 16   单场景识别与复现",
+      "title": "创建单个用例",
+      "text": "STEP 09 / 15   创建单个用例",
       "start": 41.6,
       "end": 44.0,
       "start_frame": 2496,
@@ -84,8 +84,8 @@
     },
     {
       "id": "10",
-      "title": "建设场景库",
-      "text": "STEP 10 / 16   建设场景库",
+      "title": "多个用例形成场景库",
+      "text": "STEP 10 / 15   多个用例形成场景库",
       "start": 44.0,
       "end": 48.4,
       "start_frame": 2640,
@@ -94,7 +94,7 @@
     {
       "id": "11",
       "title": "提取典型操作序列",
-      "text": "STEP 11 / 16   提取典型操作序列",
+      "text": "STEP 11 / 15   提取典型操作序列",
       "start": 48.4,
       "end": 52.6,
       "start_frame": 2904,
@@ -102,48 +102,39 @@
     },
     {
       "id": "12",
-      "title": "AI 创建大学生用例",
-      "text": "STEP 12 / 16   AI 创建大学生用例",
+      "title": "影响因子时序建模",
+      "text": "STEP 12 / 15   影响因子时序建模",
       "start": 52.6,
-      "end": 57.6,
+      "end": 59.0,
       "start_frame": 3156,
-      "end_frame": 3456
+      "end_frame": 3540
     },
     {
       "id": "13",
-      "title": "影响因子时序建模",
-      "text": "STEP 13 / 16   影响因子时序建模",
-      "start": 57.6,
-      "end": 64.0,
-      "start_frame": 3456,
-      "end_frame": 3840
+      "title": "形成测试模型",
+      "text": "STEP 13 / 15   形成测试模型",
+      "start": 59.0,
+      "end": 64.8,
+      "start_frame": 3540,
+      "end_frame": 3888
     },
     {
       "id": "14",
-      "title": "重建故障上下文",
-      "text": "STEP 14 / 16   重建故障上下文",
-      "start": 64.0,
-      "end": 69.8,
-      "start_frame": 3840,
-      "end_frame": 4188
+      "title": "AI 控制机械手",
+      "text": "STEP 14 / 15   AI 控制机械手",
+      "start": 64.8,
+      "end": 73.6,
+      "start_frame": 3888,
+      "end_frame": 4416
     },
     {
       "id": "15",
-      "title": "AI 控制机械手",
-      "text": "STEP 15 / 16   AI 控制机械手",
-      "start": 69.8,
-      "end": 78.6,
-      "start_frame": 4188,
-      "end_frame": 4716
-    },
-    {
-      "id": "16",
       "title": "数据汇聚与报表",
-      "text": "STEP 16 / 16   数据汇聚与报表",
-      "start": 78.6,
-      "end": 88.6,
-      "start_frame": 4716,
-      "end_frame": 5316
+      "text": "STEP 15 / 15   数据汇聚与报表",
+      "start": 73.6,
+      "end": 83.6,
+      "start_frame": 4416,
+      "end_frame": 5016
     }
   ],
   "legacy_header_masks": [
@@ -153,8 +144,8 @@
       96,
       20,
       600,
-      42,
-      "0x040306"
+      58,
+      "0x09090b"
     ],
     [
       5.4,
@@ -172,7 +163,7 @@
       20,
       600,
       42,
-      "0x040306"
+      "0x09090b"
     ],
     [
       19,
@@ -194,7 +185,7 @@
     ],
     [
       41.6,
-      69.35,
+      64.35,
       64,
       20,
       700,

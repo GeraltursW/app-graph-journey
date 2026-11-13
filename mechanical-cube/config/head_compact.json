@@ -1,5 +1,5 @@
 {
-  "duration": 69.8,
+  "duration": 64.8,
   "fps": 60,
   "voice": "zh-CN-YunyangNeural",
   "pitch": "-2Hz",
@@ -21,7 +21,8 @@
           "offset": 0.2,
           "text": "应用知识图谱。"
         }
-      ]
+      ],
+      "renderer": "opening_native"
     },
     {
       "id": "02",
@@ -37,7 +38,8 @@
           "offset": 0.1,
           "text": "连接设备，开始探索。"
         }
-      ]
+      ],
+      "renderer": "connection_native"
     },
     {
       "id": "03",
@@ -87,7 +89,8 @@
           "offset": 0.1,
           "text": "页面向量化，写入向量数据库，构建图谱。"
         }
-      ]
+      ],
+      "renderer": "vectorization_native"
     },
     {
       "id": "06",
@@ -181,11 +184,13 @@
           "window": 3.0,
           "text": "找到喜欢，验证成功。"
         }
-      ]
+      ],
+      "hide_ai_completion_label": true,
+      "remove_legacy_graph_entry": true
     },
     {
       "id": "07",
-      "title": "固化绿色正确用例",
+      "title": "目标路径提取为测试用例",
       "duration": 3.4,
       "source": [
         47,
@@ -195,13 +200,18 @@
         {
           "id": "save_case",
           "offset": 0.1,
-          "text": "正确路径固化为测试用例。"
+          "text": "目标路径提取为测试用例。"
         }
-      ]
+      ],
+      "page_copy": {
+        "heading": "目标路径提取为测试用例",
+        "status": "目标路径已提取",
+        "footer": "提取目标路径 · 点击「我」→「喜欢」→ 视频"
+      }
     },
     {
       "id": "08",
-      "title": "实验室手机复现",
+      "title": "实验室手机执行",
       "duration": 5.2,
       "pieces": [
         {
@@ -218,107 +228,88 @@
           "id": "replay",
           "offset": 0.1,
           "window": 4.45,
-          "text": "下发实验室手机，逐步复现并验证。"
+          "text": "下发实验室手机，按用例步骤依次执行。"
         }
       ]
     },
     {
       "id": "09",
-      "title": "从单个场景出发",
+      "title": "创建单个用例",
       "duration": 2.4,
-      "source": [
-        61.4,
-        66.2
-      ],
       "voices": [
         {
           "id": "single",
           "offset": 0.1,
-          "text": "从单个场景出发。"
+          "text": "创建单个测试用例。"
         }
-      ]
+      ],
+      "renderer": "case_library",
+      "case_stage": "single",
+      "transition_to_next": 0.5
     },
     {
       "id": "10",
-      "title": "场景库积累",
+      "title": "从多个用例形成场景库",
       "duration": 4.4,
-      "source": [
-        66.2,
-        72.7
-      ],
       "voices": [
         {
           "id": "library",
           "offset": 0.15,
-          "text": "用例积累，逐步建设场景库。"
+          "text": "单个用例扩展为多个，形成场景库。"
         }
-      ]
+      ],
+      "renderer": "case_library",
+      "case_stage": "library",
+      "transition_to_next": 0.5
     },
     {
       "id": "11",
       "title": "提取典型操作序列",
       "duration": 4.2,
-      "source": [
-        72.7,
-        78.9
-      ],
       "voices": [
         {
           "id": "extract",
           "offset": 0.15,
           "text": "结合大数据与图谱，提取操作序列。"
         }
-      ]
+      ],
+      "renderer": "case_library",
+      "case_stage": "extract",
+      "transition_to_next": 0.5
     },
     {
       "id": "12",
-      "title": "AI 创建大学生场景用例",
-      "duration": 5.0,
-      "voices": [
-        {
-          "id": "student_plan",
-          "offset": 0.15,
-          "text": "AI创建了大学生场景用例。"
-        }
-      ],
-      "renderer": "student_summary",
-      "transition_to_next": 0.7,
-      "step_preview": {
-        "source": "config/student_a_case.json",
-        "show_start": 2.8,
-        "hold_duration": 1.5,
-        "fade_in": 0.2,
-        "narrate_steps": false
-      }
-    },
-    {
-      "id": "13",
       "title": "影响因子时序建模",
       "duration": 6.4,
-      "source": [
-        110.1666666667,
-        118.1666666667
-      ],
       "voices": [
         {
           "id": "temporal",
           "offset": 0.15,
-          "text": "叠加网络、应用状态和负载，进行时序建模。"
+          "text": "场景库叠加网络、应用状态和负载，进行时序建模。",
+          "target_lufs": -18
         }
-      ]
+      ],
+      "renderer": "case_library",
+      "case_stage": "temporal",
+      "transition_to_next": 0.5
     },
     {
-      "id": "14",
-      "title": "故障上下文与设备下发",
+      "id": "13",
+      "title": "形成测试模型",
       "duration": 5.8,
       "pieces": [
         {
-          "source": [
-            118.1666666667,
-            124.7833333333
-          ],
+          "renderer": "case_library",
+          "case_stage": "context",
+          "title": "形成测试模型",
           "duration": 4.8,
-          "replace_mechanical_thumbnail": true
+          "model_copy": {
+            "card_title": "测试模型",
+            "status": "模型已形成",
+            "goal": "检测过程故障，得出测试指标",
+            "footer": "形成测试模型",
+            "header": "SCENARIO → TEST MODEL"
+          }
         },
         {
           "type": "mechanical_bridge",
@@ -330,10 +321,25 @@
           "id": "context",
           "offset": 0.15,
           "window": 4.5,
-          "text": "重建故障上下文，下发设备复现。"
+          "text": "形成测试模型，检测过程故障，得出测试指标。",
+          "target_lufs": -18
+        },
+        {
+          "id": "device_dispatch",
+          "offset": 4.32,
+          "text": "下发测试设备。",
+          "tail_padding_after_last_word": 0.07,
+          "target_lufs": -18
         }
       ]
     }
   ],
-  "revision": "v1.14.0-student-step-glance"
+  "revision": "v1.15.0-step08-execution",
+  "full_film_music_gain": 0.7,
+  "music_level_windows": [
+    [
+      56.5,
+      61.5
+    ]
+  ]
 }

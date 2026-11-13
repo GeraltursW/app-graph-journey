@@ -14,6 +14,14 @@ from render_page_nodes_monochrome import render_page_nodes
 from render_control_exploration import render_control_exploration
 from render_lab_replay_monochrome import render_lab_replay, render_lab_context_bridge
 from render_student_summary import render_student_summary
+from render_case_library import render_case_library
+from patch_case_copy import patch_case_copy
+from patch_ai_completion_label import patch_ai_completion_label
+from render_vectorization_native import render_vectorization
+from render_opening_native import render_opening_native
+from normalize_narration import normalize_narration
+from render_connection_native import render_connection_native
+from remove_legacy_graph_entry import remove_legacy_graph_entry
 
 ROOT=Path(__file__).resolve().parents[1]
 NAME='head-compact-preview'
@@ -31,13 +39,16 @@ async def prepare(cfg):
             raw=folder/(s['id']+'.mp3');wav=raw.with_suffix('.wav')
             words=raw.with_suffix('.words.json');cache=raw.with_suffix('.cache.json')
             signature=hashlib.sha256(json.dumps([cfg['voice'],'+0%',cfg['pitch'],s['text']],ensure_ascii=False).encode()).hexdigest()
-            if not (raw.exists() and words.exists() and cache.exists() and json.loads(cache.read_text())['signature']==signature):
+            regenerate=not (raw.exists() and words.exists() and cache.exists() and json.loads(cache.read_text())['signature']==signature)
+            if regenerate:
                 print('VOICE',s['id'],flush=True)
                 await synthesize(s['text'],cfg,raw,words)
                 cache.write_text(json.dumps({'signature':signature}),encoding='utf-8')
             word_info=json.loads(words.read_text('utf-8'))
             speech_end=max((w['offset']+w['duration'])/1e7 for w in word_info)
-            run(['-i',raw,'-af',f'highpass=f=75,lowpass=f=11500,acompressor=threshold=0.16:ratio=2.2:attack=18:release=120:makeup=1.7,loudnorm=I=-16:LRA=6:TP=-1.5,aresample=48000,asetpts=N/SR/TB,atrim=end={speech_end+.24}','-ac','2','-c:a','pcm_s16le',wav])
+            padding=s.get('tail_padding_after_last_word',.24)
+            if regenerate or not wav.exists():run(['-i',raw,'-af',f'highpass=f=75,lowpass=f=11500,acompressor=threshold=0.16:ratio=2.2:attack=18:release=120:makeup=1.7,loudnorm=I=-16:LRA=6:TP=-1.5,aresample=48000,asetpts=N/SR/TB,atrim=end={speech_end+padding}','-ac','2','-c:a','pcm_s16le',wav])
+            if 'target_lufs' in s:normalize_narration(wav,s['target_lufs'])
             length=duration(wav);window=s.get('window',shot['duration']-s['offset']-.06)
             return {**s,'shot':shot['id'],'start':shot['start']+s['offset'],'audio_duration':length,'speech_end':speech_end,'window':window,'audio':wav.relative_to(ROOT).as_posix(),'words':words.relative_to(ROOT).as_posix(),'time_stretch':1.0}
     voices=await asyncio.gather(*(voice(shot,s) for shot in cfg['shots'] for s in shot['voices']))
@@ -72,7 +83,8 @@ def picture_piece(source,out,name,spec):
 
 
 def final_bridge(source,mechanical,out,name,seconds):
-    run(['-ss',124.7666666667,'-i',source,'-frames:v',1,out/'context-last.png'])
+    context=out/'13-01.mp4'
+    run([*(['-sseof','-0.02','-i',context] if context.exists() else ['-ss',124.7666666667,'-i',source]),'-frames:v',1,out/'context-last.png'])
     run(['-i',mechanical,'-frames:v',1,out/'mechanical-first.png'])
     previous=Image.open(out/'context-last.png').convert('RGB')
     next_frame=Image.open(out/'mechanical-first.png').convert('RGB')
@@ -137,6 +149,10 @@ def main():
     (out/'timeline.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print('VOICE_READY',[(s['id'],s['audio_duration']) for s in manifest['voices']],flush=True)
     if a.prepare_only:return
+    # Prepare the new opening frame before the laboratory-to-case bridge.
+    case=next(s for s in cfg['shots'] if s.get('case_stage')=='single')
+    if not (a.reuse_picture and (out/'09-01.mp4').exists()):
+        render_case_library(a.mechanical.resolve(),out,'09-01',case['duration'],'single',case['title'])
     parts=[]
     for shot in cfg['shots']:
         for j,spec in enumerate(shot.get('pieces',[shot]),1):
@@ -145,10 +161,17 @@ def main():
                 if spec.get('type')=='mechanical_bridge':final_bridge(a.source.resolve(),a.mechanical.resolve(),out,name,spec['duration'])
                 elif spec.get('type')=='lab_context_bridge':render_lab_context_bridge(a.source.resolve(),out,name,spec['duration'])
                 elif spec.get('renderer')=='lab_replay_monochrome':render_lab_replay(a.source.resolve(),out,name,spec['duration'])
-                elif spec.get('renderer')=='control_exploration':render_control_exploration(a.source.resolve(),out,name,spec['duration'])
+                elif spec.get('renderer')=='control_exploration':render_control_exploration(a.source.resolve(),out,name,spec['duration'],aligned_entry=cfg['shots'][1].get('renderer')=='connection_native')
+                elif spec.get('renderer')=='connection_native':render_connection_native(out,name,spec['duration'])
+                elif spec.get('renderer')=='opening_native':render_opening_native(out,name,spec['duration'])
+                elif spec.get('renderer')=='vectorization_native':render_vectorization(a.source.resolve(),out,name,spec['duration'])
                 elif spec.get('renderer')=='page_nodes_monochrome':render_page_nodes(a.source.resolve(),out,name,spec['duration'])
+                elif spec.get('renderer')=='case_library':render_case_library(a.mechanical.resolve(),out,name,spec['duration'],spec['case_stage'],spec.get('title',shot['title']),spec.get('model_copy'))
                 elif spec.get('renderer')=='student_summary':render_student_summary(a.source.resolve(),out,name,spec['duration'],spec['step_preview'])
                 else:picture_piece(a.source.resolve(),out,name,spec)
+                if shot.get('remove_legacy_graph_entry') and j==1:remove_legacy_graph_entry(out/'05-01.mp4',path,out,name)
+                if spec.get('page_copy'):patch_case_copy(path,spec['page_copy'])
+                if shot.get('hide_ai_completion_label'):patch_ai_completion_label(path,spec)
             parts.append(context_thumbnail(path,a.mechanical.resolve(),out,spec['duration']) if spec.get('replace_mechanical_thumbnail') else path)
         print('SHOT_READY',shot['id'],shot['duration'],flush=True)
     for i,shot in enumerate(cfg['shots'][:-1]):

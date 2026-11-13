@@ -1,22 +1,22 @@
 [
   {
     "offset": 1000000,
-    "duration": 3125000,
-    "text": "从"
+    "duration": 5250000,
+    "text": "创建"
   },
   {
-    "offset": 4375000,
-    "duration": 2750000,
+    "offset": 6500000,
+    "duration": 3500000,
     "text": "单个"
   },
   {
-    "offset": 7250000,
-    "duration": 3750000,
-    "text": "场景"
+    "offset": 10125000,
+    "duration": 3250000,
+    "text": "测试"
   },
   {
-    "offset": 11125000,
-    "duration": 3875000,
-    "text": "出发"
+    "offset": 13500000,
+    "duration": 3750000,
+    "text": "用例"
   }
 ]

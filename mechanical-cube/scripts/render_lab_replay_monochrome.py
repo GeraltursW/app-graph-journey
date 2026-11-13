@@ -7,6 +7,7 @@ phone moves into the existing scene-library shot with no historical-frame flash.
 import json
 import subprocess
 from pathlib import Path
+from video_fonts import chinese_font
 from PIL import Image, ImageDraw, ImageFont
 from render_page_nodes_monochrome import ease, mix
 from control_ui_style import BG,PANEL,EDGE,WHITE,MUTED,GREEN,phone_shell,focus_box,checkmark,cursor
@@ -30,9 +31,9 @@ def decoded(source,target,time=None,last=False):
 def render_lab_replay(source,out,name='08-01',duration=4.6,preview=False):
     out=Path(out);out.mkdir(parents=True,exist_ok=True)
     previous=decoded(out/'07-01.mp4',out/'lab-entry-previous.png',last=True) if (out/'07-01.mp4').exists() else decoded(source,out/'lab-entry-previous.png',52-1/FPS)
-    fonts={s:ImageFont.truetype('C:/Windows/Fonts/msyh.ttc',s) for s in (18,20,22,24,26,28,30,32,42)}
-    bold=ImageFont.truetype('C:/Windows/Fonts/msyhbd.ttc',42)
-    ui_bold=ImageFont.truetype('C:/Windows/Fonts/msyhbd.ttc',30)
+    fonts={s:ImageFont.truetype(chinese_font(),s) for s in (18,20,22,24,26,28,30,32,42)}
+    bold=ImageFont.truetype(chinese_font(True),42)
+    ui_bold=ImageFont.truetype(chinese_font(True),30)
 
     def phone(t):
         im=phone_shell();d=ImageDraw.Draw(im)
@@ -105,8 +106,8 @@ def render_lab_replay(source,out,name='08-01',duration=4.6,preview=False):
         d.text((120,38),step_label(8),font=fonts[24],fill=MUTED)
         d.text((1800,41),'APPLICATION KNOWLEDGE GRAPH',font=fonts[20],fill=MUTED,anchor='rt')
         d.line((120,90,1800,90),fill=(47,47,54),width=2)
-        d.text((120,139),'下发实验室手机，按用例逐步复现',font=bold,fill=WHITE)
-        d.text((120,209),'沿绿色正确路径执行 · 定位控件 · 点击并验证页面',font=fonts[26],fill=MUTED)
+        d.text((120,139),'实验室手机执行',font=bold,fill=WHITE)
+        d.text((120,209),'沿用例路径执行 · 定位控件 · 进入并验证页面',font=fonts[26],fill=MUTED)
         im.paste(phone(t),(PHONE[0],PHONE[1]));d=ImageDraw.Draw(im)
         for text,y in [('顶部区域',365),('页面内容',600),('验证结果' if t>=3.22 else '底部 Tab',857)]:
             d.text((155,y),text,font=fonts[28],fill=WHITE,anchor='lm')

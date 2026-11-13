@@ -7,6 +7,7 @@ import json
 import math
 import subprocess
 from pathlib import Path
+from video_fonts import chinese_font
 from PIL import Image, ImageDraw, ImageFont
 from render_page_nodes_monochrome import ease, mix
 from control_ui_style import phone_shell, focus_box
@@ -22,21 +23,24 @@ ORDER=[('top',1),('bottom',1),('top',2),('bottom',3),('top',0),('bottom',2),('bo
 START=.65;STEP=.58
 
 
-def render_control_exploration(source,out,name='03-01',duration=5.6,preview=False):
+def render_control_exploration(source,out,name='03-01',duration=5.6,preview=False,aligned_entry=False):
     out=Path(out);out.mkdir(parents=True,exist_ok=True)
     prior=out/'02-01.mp4';previous_path=out/'control-previous.png'
     args=['-sseof','-0.02','-i',str(prior)] if prior.exists() else ['-ss',str(6-1/FPS),'-i',str(source)]
     subprocess.run(['ffmpeg','-v','error','-y',*args,'-frames:v','1',str(previous_path)],check=True)
     previous=Image.open(previous_path).convert('RGB')
-    fonts={s:ImageFont.truetype('C:/Windows/Fonts/msyh.ttc',s) for s in (18,20,22,24,26,28,30,32,36,42)}
-    bold=ImageFont.truetype('C:/Windows/Fonts/msyhbd.ttc',42)
-    ui_bold=ImageFont.truetype('C:/Windows/Fonts/msyhbd.ttc',30)
+    fonts={s:ImageFont.truetype(chinese_font(),s) for s in (18,20,22,24,26,28,30,32,36,42)}
+    bold=ImageFont.truetype(chinese_font(True),42)
+    ui_bold=ImageFont.truetype(chinese_font(True),30)
 
     def target(zone,index):
         # Local screen coordinates inside a 420 x 700 phone silhouette.
         return (36+index*117,75,36+index*117+112,129) if zone=='top' else (29+index*92,568,29+index*92+86,632)
 
     def frame(t):
+        # The phone is already in its final slot in the preceding connection shot.
+        if aligned_entry and t<.6:
+            return Image.blend(previous,frame(.6),ease(t,0,.6-1/FPS))
         im=Image.new('RGB',SIZE,BG);d=ImageDraw.Draw(im)
         d.text((120,38),step_label(3),font=fonts[24],fill=MUTED)
         d.text((1800,41),'APPLICATION KNOWLEDGE GRAPH',font=fonts[20],fill=MUTED,anchor='rt')
@@ -83,7 +87,7 @@ def render_control_exploration(source,out,name='03-01',duration=5.6,preview=Fals
                 r=9+(phase-.28)*34;alpha=1-(phase-.28)/.52
                 p.ellipse((cx-r,cy-r,cx+r,cy+r),outline=mix(PANEL,GREEN,alpha),width=2)
 
-        move=ease(t,0,.55);box=mix((725,68,1195,940),(390,260,810,960),move)
+        move=1 if aligned_entry else ease(t,0,.55);box=mix((725,68,1195,940),(390,260,810,960),move)
         im.paste(phone.resize((box[2]-box[0],box[3]-box[1]),Image.Resampling.LANCZOS),(box[0],box[1]))
         d=ImageDraw.Draw(im)
         appear=ease(t,.25,.65);c=lambda value:mix(BG,value,appear)

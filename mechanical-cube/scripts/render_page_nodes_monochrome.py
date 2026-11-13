@@ -6,6 +6,7 @@ particle cloud or bloom. The first/last frames match the adjacent clean shots.
 import math
 import subprocess
 from pathlib import Path
+from video_fonts import chinese_font
 from PIL import Image, ImageDraw, ImageFont
 from film_step_labels import step_label
 
@@ -37,8 +38,8 @@ def render_page_nodes(source,out,name='04-01',duration=2.8):
     else:
         previous=still(14-1/FPS,'nodes-previous.png')
     following=still(18,'nodes-following.png')
-    fonts={s:ImageFont.truetype('C:/Windows/Fonts/msyh.ttc',s) for s in (20,22,24,26,28,30,36,42)}
-    bold=ImageFont.truetype('C:/Windows/Fonts/msyhbd.ttc',42)
+    fonts={s:ImageFont.truetype(chinese_font(),s) for s in (20,22,24,26,28,30,36,42)}
+    bold=ImageFont.truetype(chinese_font(True),42)
     def frame(t):
         im=Image.new('RGB',SIZE,BG);d=ImageDraw.Draw(im)
         d.text((120,38),step_label(4),font=fonts[24],fill=MUTED)

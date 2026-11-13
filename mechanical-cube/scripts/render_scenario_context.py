@@ -8,6 +8,7 @@ from pathlib import Path
 from PIL import Image,ImageDraw,ImageFont
 from finalize_subtitled_films import caption_chunks,write_captions
 from render_student_case import StudentScene
+from video_fonts import chinese_font
 
 ROOT=Path(__file__).resolve().parents[1]
 S=1.5;W,H=1920,1080;FPS=60
@@ -21,9 +22,9 @@ def run(args):subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y',*
 
 class Renderer:
     def __init__(self,manifest,out):
-        self.manifest=manifest;self.out=out
-        self.font={n:ImageFont.truetype('C:/Windows/Fonts/msyh.ttc',round(n*S)) for n in (12,14,16,18,20,22,24,28,30,32,36)}
-        self.bold={n:ImageFont.truetype('C:/Windows/Fonts/msyhbd.ttc',round(n*S)) for n in (24,28,30,32,36)}
+        self.manifest=manifest;self.out=out;self.generic=manifest.get('generic_cases',False);self.model_copy=manifest.get('model_copy',{})
+        self.font={n:ImageFont.truetype(chinese_font(),round(n*S),index=1 if self.model_copy and Path(chinese_font()).name.startswith('STHeiti') else 0) for n in (12,14,16,18,20,22,24,28,30,32,36)}
+        self.bold={n:ImageFont.truetype(chinese_font(True),round(n*S),index=1 if self.model_copy and Path(chinese_font(True)).name.startswith('STHeiti') else 0) for n in (24,28,30,32,36)}
         self.cube=Image.open(out/'mechanical-reference.png').convert('RGB').crop((0,0,780,720)).resize((round(380*S),round(351*S)),Image.Resampling.LANCZOS)
         self.base=Image.new('RGB',(W,H),BG)
         self.text_alpha=1
@@ -72,7 +73,7 @@ class Renderer:
     def title(self,i):
         body_alpha=self.text_alpha;self.text_alpha=1
         self.text(48,26,'应用知识图谱  /  场景演进',16,MUTED)
-        self.text(1232,27,'SCENARIO → CONTEXT',12,MUTED,anchor='rt')
+        self.text(1232,27,self.model_copy.get('header','SCENARIO → CONTEXT'),12,MUTED,anchor='rt')
         self.line((48,60),(1232,60),EDGE)
         self.text_alpha=body_alpha
         self.text(48,90,self.manifest['stages'][i]['title'],32,bold=True)
@@ -91,12 +92,12 @@ class Renderer:
             points=[(lerp(515+j*209,493+j*226,move),332-20*move) for j in range(4)]
             self.row(points,['ROOT','我的页面','我的喜欢','视频详情'],smooth(u,.15,1.15),w=146,h=74)
             self.curve((px+pw/2+10,380),(points[0][0]-82,points[0][1]),p=smooth(u,.6,1.5))
-            self.text(812,212,'一条正确路径，一个可复用场景',22,anchor='mt')
+            self.text(812,212,('一条正确路径，一个可复用测试用例' if self.generic else '一条正确路径，一个可复用场景'),22,anchor='mt')
             self.text(812,438,'识别 → 执行 → 验证',20,MUTED,anchor='mt')
             self.rect((665,493,957,538),DARKGREEN,(39,78,52),5)
             self.text(811,516,'仅保留验证成功的操作路径',16,GREEN,anchor='mm')
         elif stage_id=='library':
-            self.text(48,156,'场景库',20);self.text(888,156,'应用知识图谱',20)
+            self.text(48,156,'多个用例 → 场景库' if self.generic else '场景库',20);self.text(888,156,'应用知识图谱',20)
             names=['喜欢视频浏览','内容搜索','消息交互','推荐浏览','标签切换','列表筛选']
             for k,name in enumerate(names):
                 x=48+(k%2)*342;y=208+(k//2)*116;show=smooth(u,.1+k*.38,.7+k*.38);dy=20*(1-show)
@@ -140,9 +141,10 @@ class Renderer:
         elif stage_id.startswith('student_'):
             self.student.play(stage_id,u,duration)
         elif stage_id=='temporal':
-            self.text(48,156,'大学生 A 的用例 × 网络 × 应用状态 × 设备负载',18,MUTED)
-            self.text(1232,156,'基于该用例的故障情境示例',14,MUTED,anchor='rt')
-            perspective=math.sin(math.pi*smooth(u,.3,3.2))
+            self.text(48,156,('场景库 × 网络 × 应用状态 × 设备负载' if self.generic else '大学生 A 的用例 × 网络 × 应用状态 × 设备负载'),18,MUTED)
+            self.text(1232,156,('典型序列与影响因子按时序对齐' if self.generic else '基于该用例的故障情境示例'),14,MUTED,anchor='rt')
+            # Keep STEP 12 lanes fixed; retain the time cursor and condition highlights.
+            perspective=0 if self.generic else math.sin(math.pi*smooth(u,.3,3.2))
             theta=math.radians(-20)*perspective
             def p(x,y,z=0):
                 xx=x-700;zz=(z-100)*perspective;c=math.cos(theta);s=math.sin(theta)
@@ -150,7 +152,7 @@ class Renderer:
                 return (700+xr*f,365+(y-365)*f)
             xs=[374,620,866,1112];ys=[245,328,411,494]
             names=['操作序列','网络状态','应用状态','设备负载']
-            values=[['喜欢列表','上滑 3 次','切换后台','打开视频14'],['稳定','弱网','弱网','弱网'],['前台','前台','后台','恢复前台'],['低负载','升高','高负载','高负载']]
+            values=[(['进入列表','连续滑动','切换后台','打开内容'] if self.generic else ['喜欢列表','上滑 3 次','切换后台','打开视频14']),['稳定','弱网','弱网','弱网'],['前台','前台','后台','恢复前台'],['低负载','升高','高负载','高负载']]
             for j in range(3,-1,-1):
                 z=j*68;y=ys[j];quad=[p(x,yy,z) for x,yy in [(300,y-29),(1190,y-29),(1190,y+29),(300,y+29)]]
                 self.d.polygon([(round(x*S),round(y*S)) for x,y in quad],fill=(13+j,13+j,17+j),outline=EDGE,width=round(S))
@@ -175,10 +177,10 @@ class Renderer:
         else:
             appear=smooth(u,.15,.8)
             self.rect((48,190,734,558),PANEL,EDGE,10)
-            self.text(76,216,'大学生 A · 可执行场景',24,bold=True)
-            self.text(707,220,'上下文已重建',16,GREEN,anchor='rt')
+            self.text(76,216,self.model_copy.get('card_title',('可执行场景 · 故障上下文' if self.generic else '大学生 A · 可执行场景')),24,bold=True)
+            self.text(707,220,self.model_copy.get('status','上下文已重建'),16,GREEN,anchor='rt')
             self.line((76,263),(706,263),EDGE)
-            fields=[('操作序列','喜欢列表 → 上滑3次 → 打开视频14'),('影响因子','弱网 · 后台恢复 · 高负载'),('相对时序','条件变化 → 打开视频 → 检查响应'),('验证目标','目标视频的响应异常是否重现')]
+            fields=[('操作序列',('进入列表 → 连续滑动 → 打开内容' if self.generic else '喜欢列表 → 上滑3次 → 打开视频14')),('影响因子','弱网 · 后台恢复 · 高负载'),('相对时序',('条件变化 → 打开内容 → 检查响应' if self.generic else '条件变化 → 打开视频 → 检查响应')),('验证目标',self.model_copy.get('goal',('目标内容的响应异常是否重现' if self.generic else '目标视频的响应异常是否重现')))]
             for k,(a,b) in enumerate(fields):
                 yy=293+k*63;show=smooth(u,.25+k*.22,.85+k*.22)
                 self.text(77,yy,a,16,MUTED,show)
@@ -189,7 +191,7 @@ class Renderer:
             link=smooth(u,2.5,4)
             self.curve((749,367),(866,367),p=link)
             self.text(801,330,'下发',16,GREEN,link,'mm')
-            self.text(1044,548,'机械手 / 实验室手机',20,WHITE,appear,'mt')
+            self.text(1044,548,('Test Cube / 实验室手机' if self.generic else '机械手 / 实验室手机'),20,WHITE,appear,'mt')
             self.text(1044,581,'进入复现验证',16,GREEN,link,'mt')
         return self.im
     def frame(self,t,subtitles=False):
@@ -200,8 +202,8 @@ class Renderer:
             current=Image.blend(self.old_frames[i],current,smooth(u,0,.7))
         self.im=current;self.d=ImageDraw.Draw(current);self.text_alpha=1
         self.line((48,620),(1232,620),(38,38,45))
-        phase={'single':0,'library':1,'extract':2,'temporal':4,'context':5}.get(stages[i]['id'],3)
-        for j,label in enumerate(['单场景复现','场景库建设','操作序列提取','AI 场景示例','影响因子时序','故障上下文']):
+        phase=({'single':0,'library':2,'extract':3,'temporal':4,'context':5} if self.generic else {'single':0,'library':1,'extract':2,'temporal':4,'context':5}).get(stages[i]['id'],3)
+        for j,label in enumerate(['单个用例','多个用例','场景库','典型操作序列','时序建模',self.model_copy.get('footer','故障上下文')] if self.generic else ['单场景复现','场景库建设','操作序列提取','AI 场景示例','影响因子时序','故障上下文']):
             x=115+j*210;active=j<=phase
             self.dot(x-57,647,3,GREEN if active else EDGE)
             self.text(x-43,647,label,14,WHITE if j==phase else MUTED,anchor='lm')
